@@ -1,6 +1,6 @@
 # Projeto_mobile
 
-**Nome da empresa:** Kookies
+**Nome da empresa:** Kookies \n
 **Nome do aplicativo:** UniKar
 
 
