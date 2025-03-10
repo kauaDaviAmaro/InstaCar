@@ -1,4 +1,4 @@
-## Data: 24/02/2025  
+# Data: 24/02/2025  
 **Duração:** 3 horas  
 
 ### Atividades Realizadas  
@@ -22,3 +22,29 @@
 - Criar o ambiente de desenvolvimento.  
 - Estruturar os primeiros wireframes do aplicativo. 
 - Iniciar o desenvolvimento. 
+
+# 📅 Data: 11/03/2025  
+**Duração:** 3 horas  
+
+### Atividades Realizadas  
+- **Criação do ambiente Flutter**:  
+  - Instalei e configurei o Flutter SDK na máquina.  
+  - Configurei o emulador para testes no Android Studio.  
+  - Inicializei o projeto no repositório e defini a estrutura inicial do código.  
+
+### Dificuldades Encontradas  
+- Pequenos problemas na configuração do ambiente devido a versões conflitantes do Flutter e do Android SDK. 
+- Demora na instalação de dependências.
+
+### Soluções Implementadas  
+- Atualizei o Flutter para a versão mais recente e ajustei as variáveis de ambiente.  
+- Segui a documentação oficial para resolver os erros na configuração. 
+
+### Aprendizados  
+- Como configurar corretamente o ambiente Flutter para desenvolvimento.  
+- Uso de comandos básicos do Flutter para verificar e corrigir problemas (`flutter doctor`, `flutter upgrade`). 
+
+### Próximos Passos  
+- Criar a estrutura inicial do app com navegação entre telas.  
+- Definir o design das telas principais.  
+- Implementar a tela de login/cadastro.  
