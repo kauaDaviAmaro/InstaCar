@@ -23,7 +23,7 @@
 - Estruturar os primeiros wireframes do aplicativo. 
 - Iniciar o desenvolvimento. 
 
-# 📅 Data: 11/03/2025  
+# 📅 Data: 10/03/2025  
 **Duração:** 3 horas  
 
 ### Atividades Realizadas  
