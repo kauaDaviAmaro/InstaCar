@@ -32,7 +32,7 @@
 - **Criação do Business Model Canvas**
 
 
-# Data: 10/02/2025 
+# Data: 10/03/2025 
 **Duração:** 3 horas  
 
 ### Atividades Realizadas 
