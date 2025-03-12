@@ -30,6 +30,11 @@ Criar o Business Model Canvas.
 
 
 
+
+
+
+
+
 Data: 10/03/2025
 Duração: 3 horas
 
