@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../presentation/pages/home_page.dart';
 import '../presentation/pages/login_page.dart';
 import '../presentation/pages/carona_details_page.dart';
+import '../presentation/pages/forgot_password_page.dart';
 
 final GoRouter appRouter = GoRouter(
   // initialLocation: isLoggedIn ? '/home' : '/login',
@@ -11,6 +12,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: '/forgot',
+      builder: (context, state) => ForgotPasswordPage(),
     ),
     GoRoute(
       path: '/home',
