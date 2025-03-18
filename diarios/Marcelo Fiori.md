@@ -47,7 +47,26 @@ Criamos telas de login e alteração de senha no Figma.
 
 Continuamos aprendendo sobre o Flutter.
 
+# Data: 17/03/2025
+**Duração: 3 horas**
+
+**Atividades Realizadas:**
+
+Iniciei o Desenvolvimento do que foi proposto para mim.
+
+**Dificuldades:**
+
+Entender e desenvolver a linguagem.
+
+**Soluções:**
+
+Procurar cursos sobre a linguagem.
+
+**Aprendizados:**
+
+Continuei aprendendo sobre o Flutter.
+
 **Próximos Passos:**
 
-Iniciar o desenvolvimento do projeto.
+Continuação do Projeto.
 Planejar as próximas sprints.
