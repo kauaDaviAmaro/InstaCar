@@ -55,3 +55,34 @@
 - **Iniciar deesenvolvimento do projeto**
 
 - **Criação de próximas sprints**
+
+# Registro de Desenvolvimento - 17/03/2025
+- **Aluno:** Leonardo Nakamura
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+- **User Stories trabalhadas:** 
+
+### Atividades Realizadas 
+
+- Desenvolvimento do figma da landing page
+- Criação das sprint no sistema jira
+- Criação das regras de negócios
+
+### Dificuldades Encontradas
+
+- Decidir design da landing page
+- Escolher as atividades à serem realizadas na sprint 1
+
+### Soluções Implementadas
+
+- Criação da tela no figma para seguir de base visual
+
+### Aprendizados
+
+- Aprendizado de funções novas funções no:
+    - Figma
+    - Jira
+
+### Próximos Passos
+
+- Finalização da pagina de cadastro
