@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../presentation/pages/home_page.dart';
 import '../presentation/pages/login_page.dart';
-import '../presentation/pages/carona_details_page.dart';
 
 final GoRouter appRouter = GoRouter(
   // initialLocation: isLoggedIn ? '/home' : '/login',
