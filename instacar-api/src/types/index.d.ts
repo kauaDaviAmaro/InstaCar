@@ -10,13 +10,19 @@ export interface IUser {
   codeExpires?: number | null;
 }
 
-export interface ICarona {
-  id: string;
-  pontoInicio: string;
-  pontoFinal: string;
-  observacao?: string;
-  userId: string;
+export interface Point {
+  type: 'Point';
+  coordinates: [number, number];
 }
+
+export interface ICarona {
+  id?: string;
+  pontoInicio?: Point;
+  pontoFinal?: Point;
+  observacao?: string;
+  userId?: string;
+}
+
 
 export interface IAuthRequest extends Request {
   user?: { userId: string };
