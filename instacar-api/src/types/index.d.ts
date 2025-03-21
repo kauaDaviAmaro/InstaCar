@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from "express";
 
 export interface IUser {
   id?: string;
@@ -10,19 +10,26 @@ export interface IUser {
   codeExpires?: number | null;
 }
 
-export interface Point {
-  type: 'Point';
-  coordinates: [number, number];
-}
-
 export interface ICarona {
   id?: string;
-  pontoInicio?: Point;
-  pontoFinal?: Point;
+  motoristaId?: string;
+  pontoInicio: string;
+  pontoFinal: string;
   observacao?: string;
-  userId?: string;
+  dataHora: string;
+  recorrente?: boolean;
+  status?: "disponível" | "em andamento" | "concluída" | "cancelada";
 }
 
+export interface IMotorista {
+  id?: string;
+  usuarioId: string;
+  cnh: string;
+  tipoVeiculo: string;
+  corVeiculo?: string;
+  placa: string;
+  verificado?: boolean;
+}
 
 export interface IAuthRequest extends Request {
   user?: { userId: string };

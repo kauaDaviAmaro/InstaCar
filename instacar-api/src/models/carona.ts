@@ -1,44 +1,63 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/db';
-import { ICarona, Point } from '../types';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/db";
+import { ICarona } from "../types";
 
-class Carona extends Model <ICarona> implements ICarona {
-    id?: string;
-    pontoInicio?: Point;
-    pontoFinal?: Point;
-    observacao?: string;
-    userId?: string;
+class Carona extends Model<ICarona> {
+  id?: string;
+  motoristaId?: string;
+  pontoInicio!: string;
+  pontoFinal!: string;
+  observacao?: string;
+  dataHora!: string;
+  recorrente?: boolean;
+  status?: "disponível" | "em andamento" | "concluída" | "cancelada";
 }
 
 Carona.init(
-    {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-        },
-        pontoInicio: {
-            type: DataTypes.GEOGRAPHY('POINT', 4326),
-            allowNull: false,
-        },
-        pontoFinal: {
-            type: DataTypes.GEOGRAPHY('POINT', 4326),
-            allowNull: false,
-        },
-        observacao: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        userId: {
-            type: DataTypes.UUID,
-            allowNull: false,
-        },
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
-    {
-        sequelize,
-        modelName: 'Carona',
-        timestamps: true,
-    }
+    motoristaId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    pontoInicio: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    pontoFinal: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    observacao: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    dataHora: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    recorrente: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.ENUM(
+        "disponível",
+        "em andamento",
+        "concluída",
+        "cancelada"
+      ),
+      allowNull: true,
+    },
+  },
+  {
+    sequelize,
+    modelName: "Carona",
+  }
 );
 
 export default Carona;

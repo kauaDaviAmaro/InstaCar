@@ -16,7 +16,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
 
 export const syncDatabase = async () => {
   try {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: true });
     console.log('Database synchronized!');
   } catch (error) {
     console.error('Error in sync:', error);
