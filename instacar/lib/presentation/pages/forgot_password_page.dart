@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   @override
@@ -55,7 +56,9 @@ class ForgotPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).push('/code');
+              },
               child: Text("Reset Password", style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
@@ -63,6 +66,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 backgroundColor: Colors.blue,
+
               ),
             ),
           ],
