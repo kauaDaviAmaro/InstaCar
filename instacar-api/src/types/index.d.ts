@@ -41,11 +41,3 @@ export interface IUserDTO {
   email: string;
   fotoPerfil?: string;
 }
-
-export interface IRecuperacaoSenha {
-  id?: string;
-  usuarioId: string;
-  codigo: string;
-  expiracao: Date;
-  usado?: boolean;
-}
