@@ -32,11 +32,11 @@ const caronaController = {
 
   createCarona: async (req: Request, res: Response): Promise<void> => {
     try {
-      const newCarona = CaronaService.createCarona(req.body);
+      const newCarona = await CaronaService.createCarona(req.body);
 
       res.status(201).json(newCarona);
-    } catch (error) {
-      res.status(500).json({ message: MESSAGES.CARONA.ERROR });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
     }
   },
 

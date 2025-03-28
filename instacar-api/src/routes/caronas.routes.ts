@@ -5,7 +5,7 @@ const caronaRoutes = Router();
 
 /**
  * @swagger
- * /carona:
+ * /caronas:
  *   get:
  *     summary: Retrieve a list of all caronas
  *     tags: [Caronas]
@@ -20,14 +20,12 @@ const caronaRoutes = Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               // Define the properties of the carona object here
+ *             $ref: '#/components/schemas/CreateCaronaDTO'
  *     responses:
  *       201:
  *         description: Carona created successfully
- * 
- * /carona/{id}:
+ *
+ * /caronas/{id}:
  *   get:
  *     summary: Retrieve a specific carona by ID
  *     tags: [Caronas]
@@ -69,14 +67,12 @@ const caronaRoutes = Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               // Define the properties of the carona object here
+ *             $ref: '#/components/schemas/CreateCaronaDTO'
  *     responses:
  *       200:
  *         description: Carona updated successfully
- * 
- * /carona/near/{latitude}/{longitude}:
+ *
+ * /caronas/near/{latitude}/{longitude}:
  *   get:
  *     summary: Retrieve caronas near a specific location
  *     tags: [Caronas]
@@ -96,8 +92,8 @@ const caronaRoutes = Router();
  *     responses:
  *       200:
  *         description: A list of nearby caronas
- * 
- * /carona/{id}/{status}:
+ *
+ * /caronas/{id}/{status}:
  *   put:
  *     summary: Update the status of a specific carona by ID
  *     tags: [Caronas]
@@ -119,6 +115,46 @@ const caronaRoutes = Router();
  *         description: Carona status updated successfully
  */
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateCaronaDTO:
+ *       type: object
+ *       properties:
+ *         motoristaId:
+ *           type: string
+ *           description: ID of the driver
+ *         origem:
+ *           type: string
+ *           description: Origin of the carona
+ *         destino:
+ *           type: string
+ *           description: Destination of the carona
+ *         dataHora:
+ *           type: string
+ *           format: date-time
+ *           description: Date and time of the carona
+ *         vagas:
+ *           type: integer
+ *           description: Number of available seats
+ *         status:
+ *           type: string
+ *           enum: ["disponível", "lotada", "finalizada"]
+ *           description: Status of the carona
+ *         origem_lat:
+ *           type: number
+ *           description: Latitude of the origin
+ *         origem_lon:
+ *           type: number
+ *           description: Longitude of the origin
+ *         destino_lat:
+ *           type: number
+ *           description: Latitude of the destination
+ *         destino_lon:
+ *           type: number
+ *           description: Longitude of the destination
+ */
 
 caronaRoutes.get("/", caronaController.getCaronas);
 

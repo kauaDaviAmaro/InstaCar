@@ -29,5 +29,8 @@ export const MESSAGES = {
     UPDATE_ERROR: 'Erro ao atualizar carona',
     DELETE_SUCCESS: 'Carona deletada com sucesso!',
     DELETE_ERROR: 'Erro ao deletar carona',
+    MISSING_FIELDS: 'Campos obrigatórios ausentes',
+    VAGAS_INVALID: 'Número de vagas inválido',
+    STATUS_INVALID: 'Status inválido',
   },
 };

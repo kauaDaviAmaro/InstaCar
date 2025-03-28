@@ -7,9 +7,12 @@ import {
 } from "../interfaces/carona-service.interface";
 import Carona from "../models/carona";
 import { ICarona } from "../types";
+import { validateCaronaData } from "../utils/carona-validator";
 
-const CaronaService: ICaronaService =  {
+const CaronaService: ICaronaService = {
   async createCarona(data: CreateCaronaDTO): Promise<Carona> {
+    validateCaronaData(data);
+
     const carona = await Carona.create(data);
     return carona;
   },
@@ -20,7 +23,9 @@ const CaronaService: ICaronaService =  {
   },
 
   async listCaronas(filter?: CaronaFilter): Promise<Carona[]> {
-    const whereClause: FindOptions<ICarona> = filter ? { where: filter as WhereOptions<ICarona> } : {};
+    const whereClause: FindOptions<ICarona> = filter
+      ? { where: filter as WhereOptions<ICarona> }
+      : {};
     const caronas = await Carona.findAll(whereClause);
     return caronas;
   },
@@ -65,7 +70,7 @@ const CaronaService: ICaronaService =  {
       },
     });
     return caronas;
-  }
-}
+  },
+};
 
 export default CaronaService;
