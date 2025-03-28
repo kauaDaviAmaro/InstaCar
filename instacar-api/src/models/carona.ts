@@ -29,7 +29,7 @@ Carona.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "Motorista",
+        model: "Users",
         key: "id",
       },
     },
@@ -73,6 +73,7 @@ Carona.init(
   {
     sequelize,
     modelName: "Carona",
+    tableName: "Caronas",
   }
 );
 
