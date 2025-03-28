@@ -3,14 +3,19 @@ import sequelize from "../config/db";
 import { ICarona } from "../types";
 
 class Carona extends Model<ICarona> {
-  id?: string;
-  motoristaId?: string;
-  pontoInicio!: string;
-  pontoFinal!: string;
-  observacao?: string;
-  dataHora!: string;
-  recorrente?: boolean;
-  status?: "disponível" | "em andamento" | "concluída" | "cancelada";
+  public id!: string;
+  public motoristaId!: string;
+  public origem!: string;
+  public destino!: string;
+  public dataHora!: string;
+  public vagas!: number;
+  public status?: "disponível" | "lotada" | "finalizada";
+  public origem_lat?: number;
+  public origem_lon?: number;
+
+  // timestamps!
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Carona.init(
@@ -23,34 +28,45 @@ Carona.init(
     motoristaId: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "Motorista",
+        key: "id",
+      },
     },
-    pontoInicio: {
+    origem: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    pontoFinal: {
+    destino: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    observacao: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
     dataHora: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    recorrente: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
+    vagas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM(
-        "disponível",
-        "em andamento",
-        "concluída",
-        "cancelada"
-      ),
+      type: DataTypes.ENUM("disponível", "lotada", "finalizada"),
+      defaultValue: "disponível",
+    },
+    origem_lat: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    origem_lon: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    destino_lat: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    destino_lon: {
+      type: DataTypes.FLOAT,
       allowNull: true,
     },
   },

@@ -13,12 +13,15 @@ export interface IUser {
 export interface ICarona {
   id?: string;
   motoristaId?: string;
-  pontoInicio: string;
-  pontoFinal: string;
-  observacao?: string;
+  origem: string;
+  destino: string;
   dataHora: string;
-  recorrente?: boolean;
-  status?: "disponível" | "em andamento" | "concluída" | "cancelada";
+  vagas: number;
+  status?: "disponível" | "lotada" | "finalizada";
+  origem_lat?: number;
+  origem_lon?: number;
+  destino_lat?: number;
+  destino_lon?: number;
 }
 
 export interface IMotorista {
@@ -40,4 +43,18 @@ export interface IUserDTO {
   nome: string;
   email: string;
   fotoPerfil?: string;
+}
+
+export interface ICaronaDTO {
+  id: string;
+  motoristaId?: string;
+  origem: string;
+  destino: string;
+  dataHora: string;
+  vagas: number;
+  status?: "disponível" | "lotada" | "finalizada";
+  origem_lat?: number;
+  origem_lon?: number;
+  destino_lat?: number;
+  destino_lon?: number;
 }
