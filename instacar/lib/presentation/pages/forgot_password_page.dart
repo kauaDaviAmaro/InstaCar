@@ -7,6 +7,7 @@ class ForgotPasswordPage extends StatelessWidget {
     final TextEditingController _emailController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -20,16 +21,16 @@ class ForgotPasswordPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/kookies.png', height: 150),
+            Image.asset('assets/instacar.png', height: 110),
             SizedBox(height: 16),
             SizedBox(height: 32),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Forgot password",
+                "Esqueceu sua senha",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -37,7 +38,7 @@ class ForgotPasswordPage extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Please enter your email to reset the password",
+                "Por favor insira seu email para alterar sua senha",
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
             ),
@@ -45,8 +46,8 @@ class ForgotPasswordPage extends StatelessWidget {
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: "Your Email",
-                hintText: "Enter your email",
+                labelText: "Seu email",
+                hintText: "Digite seu email",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.grey),
@@ -59,7 +60,7 @@ class ForgotPasswordPage extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).push('/code');
               },
-              child: Text("Reset Password", style: TextStyle(color: Colors.white)),
+              child: Text("Redefinir senha", style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(

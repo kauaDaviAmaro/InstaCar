@@ -13,6 +13,7 @@ class _PasswordReset extends State<PasswordReset> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -28,12 +29,12 @@ class _PasswordReset extends State<PasswordReset> {
           children: [
             SizedBox(height: 20),
             Text(
-              "Check your email",
+              "Redefinir senha",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              "We sent a reset link to contact@dscode...com\nEnter the 5-digit code mentioned in the email",
+              "Clique em confirmar para definir uma nova senha",
               style: TextStyle(color: Colors.grey),
             ),
 
@@ -47,7 +48,7 @@ class _PasswordReset extends State<PasswordReset> {
                   backgroundColor: Colors.blue,
                   minimumSize: Size(double.infinity, 50),
                 ),
-                child: Text("Verify Code", style: TextStyle(color: Colors.white)),
+                child: Text("Confirmar", style: TextStyle(color: Colors.white)),
               ),
             ),
             SizedBox(height: 15),

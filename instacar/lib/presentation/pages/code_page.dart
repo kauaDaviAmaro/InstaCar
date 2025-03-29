@@ -13,6 +13,7 @@ class _CodePage extends State<CodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -28,12 +29,12 @@ class _CodePage extends State<CodePage> {
           children: [
             SizedBox(height: 20),
             Text(
-              "Check your email",
+              "Verifique seu email",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              "We sent a reset link to contact@dscode...com\nEnter the 5-digit code mentioned in the email",
+              "Entre com os 5 dígitos que enviamos para (email)",
               style: TextStyle(color: Colors.grey),
             ),
             SizedBox(height: 30),
@@ -62,7 +63,7 @@ class _CodePage extends State<CodePage> {
                   backgroundColor: Colors.blue,
                   minimumSize: Size(double.infinity, 50),
                 ),
-                child: Text("Verify Code", style: TextStyle(color: Colors.white)),
+                child: Text("Verificar código", style: TextStyle(color: Colors.white)),
               ),
             ),
             SizedBox(height: 15),
@@ -70,7 +71,7 @@ class _CodePage extends State<CodePage> {
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  "Haven't got the email yet? Resend email",
+                  "Não recebeu o email ainda? Reenviar email",
                   style: TextStyle(color: Colors.blue),
                 ),
               ),

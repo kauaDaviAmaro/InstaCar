@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   void _login() {
     setState(() {
       if (_passwordController.text != "123456") {
-        _errorText = "Wrong password";
+        _errorText = "Senha incorreta";
       } else {
         _errorText = null;
       }
@@ -25,13 +25,14 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/kookies.png', height: 150),
+            Image.asset('assets/instacar.png', height: 110),
             SizedBox(height: 16),
             SizedBox(height: 32),
             TextField(
