@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^14.8.1
+  pinput: ^3.0.0
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/instacar.png
+    - assets/kookies.png
+    - assets/lottie/success.json
