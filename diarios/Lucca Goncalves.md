@@ -55,3 +55,63 @@
 - **Iniciar deesenvolvimento do projeto**
 
 - **Criação de próximas sprints**
+
+# Data: 17/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+
+- Criação do design da landing page no Figma
+- Inicio do desenvolvimento das primeiras telas em Flutter
+- Definição das regras de negócios
+
+## Dificuldades Encontradas
+
+- Definir o layout da landing page
+- Selecionar as atividades a serem incluídas na sprint 1
+
+## Soluções Implementadas
+
+- Wireframe Figma
+- Telas de esqueci minha senha
+
+## Aprendizados
+
+- Aprendizado de novas funcionalidades no:
+    - Figma
+    - Jira
+
+## Próximos passos
+
+- Concluir o desenvolvimento da página de esqueci minha senha
+- Iniciar desenvolvimento de página de cadastro
+
+# Data: 24/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+ 
+- Finalização página de esqueci minha senha
+- Inicio de desenvolvimento de página de cadastro
+
+## Dificuldades Encontradas
+
+- Definir o layout 
+- Lógica de mostrar a senha com icone de olho
+
+## Soluções Implementadas
+
+- Telas esqueci minha senha
+
+## Aprendizados
+
+- Lógica de mostrar senha
+- Input vermelho ao errar senha
+- Rotas entre telas
+
+## Próximos passos
+
+- Concluir o desenvolvimento da página de cadastro
+- Iniciar desenvolvimento da página principal (landing page)

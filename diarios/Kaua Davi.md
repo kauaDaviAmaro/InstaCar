@@ -48,3 +48,77 @@
 - Criar a estrutura inicial do app com navegação entre telas.  
 - Definir o design das telas principais.  
 - Implementar a tela de login/cadastro.  
+
+# Data: 17/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+
+- Criação do design da landing page no Figma
+- Início do desenvolvimento das primeiras telas em Flutter (autenticação e recuperação de senha)
+- Definição das regras de negócios para as funcionalidades iniciais
+- Criação do fluxo de navegação básico entre as telas
+
+## Dificuldades Encontradas
+
+- Definir o layout da landing page que fosse simples e atraente
+- Priorizar as funcionalidades a serem implementadas na sprint 1
+- A integração entre o Figma e Flutter para garantir que o design fosse fiel
+
+## Soluções Implementadas
+
+- Criação de wireframes e protótipos no Figma para visualizar o design antes do desenvolvimento
+- Implementação das primeiras telas de "Esqueci minha senha" e "Login"
+- Definição do fluxo de navegação entre telas no Flutter
+
+## Aprendizados
+
+- Exploração de novas funcionalidades no Figma, como componentes reutilizáveis
+- Utilização de ferramentas de prototipagem rápida no Figma
+- Novos conhecimentos sobre integração entre Figma e Flutter
+- Como configurar e gerenciar o Jira para controle de tarefas e prazos
+
+## Próximos Passos
+
+- Concluir o desenvolvimento da página de "Esqueci minha senha"
+- Iniciar o desenvolvimento da página de "Cadastro" com validação de campos
+- Realizar testes de navegação entre as telas desenvolvidas
+
+---
+
+# Data: 24/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+
+- Finalização da página de "Esqueci minha senha" com validação de dados
+- Início do desenvolvimento da página de "Cadastro" com integração de campos obrigatórios
+- Implementação da lógica de visualização de senha com ícone de olho
+- Ajustes no layout e cores para melhorar a experiência do usuário
+
+## Dificuldades Encontradas
+
+- Definir o layout da página de "Cadastro" de forma clara e intuitiva
+- Lógica de mostrar/ocultar a senha com o ícone de olho de forma eficiente
+- Garantir que os erros de validação fossem claros para o usuário (exemplo: senha incorreta)
+
+## Soluções Implementadas
+
+- Finalização da tela de "Esqueci minha senha" com todos os fluxos de validação
+- Implementação do ícone de olho para mostrar/ocultar a senha no formulário de login e cadastro
+- Utilização de feedback visual para erros (campo de senha em vermelho quando incorreto)
+
+## Aprendizados
+
+- Aprendizado sobre a lógica de mostrar/ocultar senha utilizando Flutter
+- Implementação de validação visual com cores e mensagens de erro
+- Melhoria na estruturação de rotas entre as telas
+- Experiência com a integração das telas de autenticação com o backend (simulada para testes)
+
+## Próximos Passos
+
+- Concluir o desenvolvimento da página de "Cadastro" com validações completas
+- Iniciar o desenvolvimento da página principal (Landing Page)
+- Implementar funcionalidades de segurança como autenticação e controle de sessão
