@@ -6,7 +6,7 @@ export interface ICaronaService {
   getCaronaById(id: string): Promise<Carona | null>;
   listCaronas(filter?: CaronaFilter): Promise<Carona[]>;
   updateCarona(id: string, data: UpdateCaronaDTO): Promise<Carona>;
-  deleteCarona(id: string): Promise<void>;
+  deleteUserCarona(id: string, userId: string): Promise<void>;
   updateCaronaStatus(id: string, status: string): Promise<Carona>;
   getNearCaronas(latitude: number, longitude: number): Promise<Carona[]>;
 }

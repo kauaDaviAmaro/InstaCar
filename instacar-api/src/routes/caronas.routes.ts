@@ -1,5 +1,6 @@
 import { Router } from "express";
 import caronaController from "../controllers/carona.controller";
+import authMiddleware from "../middlewares/Auth";
 
 const caronaRoutes = Router();
 
@@ -15,6 +16,8 @@ const caronaRoutes = Router();
  *   post:
  *     summary: Create a new carona
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -29,6 +32,8 @@ const caronaRoutes = Router();
  *   get:
  *     summary: Retrieve a specific carona by ID
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -42,6 +47,8 @@ const caronaRoutes = Router();
  *   delete:
  *     summary: Delete a specific carona by ID
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -55,6 +62,8 @@ const caronaRoutes = Router();
  *   put:
  *     summary: Update a specific carona by ID
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -76,6 +85,8 @@ const caronaRoutes = Router();
  *   get:
  *     summary: Retrieve caronas near a specific location
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: latitude
@@ -97,6 +108,8 @@ const caronaRoutes = Router();
  *   put:
  *     summary: Update the status of a specific carona by ID
  *     tags: [Caronas]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -122,9 +135,6 @@ const caronaRoutes = Router();
  *     CreateCaronaDTO:
  *       type: object
  *       properties:
- *         motoristaId:
- *           type: string
- *           description: ID of the driver
  *         origem:
  *           type: string
  *           description: Origin of the carona
@@ -158,16 +168,16 @@ const caronaRoutes = Router();
 
 caronaRoutes.get("/", caronaController.getCaronas);
 
-caronaRoutes.get("/:id", caronaController.getCaronaById);
+caronaRoutes.get("/:id", authMiddleware, caronaController.getCaronaById);
 
-caronaRoutes.get("/near/:latitude/:longitude", caronaController.getNearCaronas);
+caronaRoutes.get("/near/:latitude/:longitude", authMiddleware, caronaController.getNearCaronas);
 
-caronaRoutes.post("/", caronaController.createCarona);
+caronaRoutes.post("/", authMiddleware, caronaController.createCarona);
 
-caronaRoutes.delete("/:id", caronaController.deleteCarona);
+caronaRoutes.delete("/:id", authMiddleware, caronaController.deleteCarona);
 
-caronaRoutes.put("/:id", caronaController.updateCarona);
+caronaRoutes.put("/:id", authMiddleware, caronaController.updateCarona);
 
-caronaRoutes.put("/:id/:status", caronaController.updateCaronaStatus);
+caronaRoutes.put("/:id/:status", authMiddleware, caronaController.updateCaronaStatus);
 
 export default caronaRoutes;

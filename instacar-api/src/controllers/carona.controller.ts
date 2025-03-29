@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import CaronaService from "../services/carona.service";
 import { MESSAGES } from "../utils/messages";
+import { IAuthRequest } from "../types";
+import { CreateCaronaDTO } from "../interfaces/carona-service.interface";
 
 const caronaController = {
   getCaronas: async (req: Request, res: Response): Promise<void> => {
@@ -13,7 +15,7 @@ const caronaController = {
     }
   },
 
-  getCaronaById: async (req: Request, res: Response): Promise<void> => {
+  getCaronaById: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
       const caronaId = req.params.id;
 
@@ -26,13 +28,18 @@ const caronaController = {
 
       res.json(carona);
     } catch (error) {
-      res.status(500).json({ message: MESSAGES.CARONA.ERROR });
+      res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR });
     }
   },
 
-  createCarona: async (req: Request, res: Response): Promise<void> => {
+  createCarona: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
-      const newCarona = await CaronaService.createCarona(req.body);
+      const createCaronaDTO: CreateCaronaDTO = {
+        ...req.body,
+        motoristaId: req.user?.userId,
+      };
+
+      const newCarona = await CaronaService.createCarona(createCaronaDTO);
 
       res.status(201).json(newCarona);
     } catch (error: any) {
@@ -40,19 +47,25 @@ const caronaController = {
     }
   },
 
-  deleteCarona: async (req: Request, res: Response): Promise<void> => {
+  deleteCarona: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        res.status(401).json({ message: MESSAGES.USER.INVALID_USER });
+        return;
+      }
+
       const caronaId = req.params.id;
 
-      await CaronaService.deleteCarona(caronaId);
+      await CaronaService.deleteUserCarona(caronaId, userId);
 
       res.status(204).send();
     } catch (error) {
-      res.status(500).json({ message: MESSAGES.CARONA.ERROR });
+      res.status(500).json({ message: MESSAGES.CARONA.DELETE_ERROR });
     }
   },
 
-  updateCarona: async (req: Request, res: Response): Promise<void> => {
+  updateCarona: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
       const caronaId = req.params.id;
       const updatedCarona = await CaronaService.updateCarona(
@@ -66,7 +79,7 @@ const caronaController = {
     }
   },
 
-  updateCaronaStatus: async (req: Request, res: Response): Promise<void> => {
+  updateCaronaStatus: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
       const caronaId = req.params.id;
       const status = req.params.status;
@@ -82,7 +95,7 @@ const caronaController = {
     }
   },
 
-  getNearCaronas: async (req: Request, res: Response): Promise<void> => {
+  getNearCaronas: async (req: IAuthRequest, res: Response): Promise<void> => {
     try {
       const { latitude, longitude } = req.params;
 
@@ -93,6 +106,8 @@ const caronaController = {
 
       res.json(caronas);
     } catch (error) {
+      console.log(error);
+      
       res.status(500).json({ message: MESSAGES.CARONA.ERROR });
     }
   },

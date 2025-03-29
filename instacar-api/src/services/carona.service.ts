@@ -39,11 +39,12 @@ const CaronaService: ICaronaService = {
     return carona;
   },
 
-  async deleteCarona(id: string): Promise<void> {
-    const carona = await Carona.findByPk(id);
+  async deleteUserCarona(id: string, userId: string): Promise<void> {
+    const carona = await Carona.findOne({ where: { id, motoristaId: userId } });
     if (!carona) {
-      throw new Error("Carona not found");
+      throw new Error("Carona not found or you are not the owner");
     }
+
     await carona.destroy();
   },
 
@@ -62,14 +63,35 @@ const CaronaService: ICaronaService = {
     return carona;
   },
 
-  async getNearCaronas(latitude: number, longitude: number): Promise<Carona[]> {
-    const caronas = await Carona.findAll({
-      where: {
-        origem_lat: { $near: latitude },
-        origem_lon: { $near: longitude },
-      },
-    });
-    return caronas;
+  async getNearCaronas(
+    latitude: number,
+    longitude: number,
+    radioKm: number = 10
+  ): Promise<Carona[]> {
+    const earthRadius = 6371;
+
+    const caronas = await Carona.sequelize?.query(
+      `
+      SELECT * FROM (
+          SELECT *, (
+              ${earthRadius} * ACOS(
+                  COS(RADIANS(:latitude)) * COS(RADIANS(origem_lat)) *
+                  COS(RADIANS(origem_lon) - RADIANS(:longitude)) +
+                  SIN(RADIANS(:latitude)) * SIN(RADIANS(origem_lat))
+              )
+          ) AS distance
+          FROM "Caronas"
+      ) AS subquery
+      ORDER BY distance ASC;
+      `,
+      {
+        replacements: { latitude, longitude, radioKm },
+        model: Carona,
+        mapToModel: true,
+      }
+    );
+
+    return caronas || [];
   },
 };
 
