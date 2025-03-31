@@ -20,5 +20,17 @@ export const MESSAGES = {
   EMAIL: {
     SUBJECT: 'Código de Recuperação',
     SUCCESS: 'Código enviado para o e-mail.'
-  }
+  },
+  CARONA: {
+    SUCCESS: 'Carona criada com sucesso!',
+    ERROR: 'Erro ao criar carona',
+    NOT_FOUND: 'Carona não encontrada',
+    UPDATE_SUCCESS: 'Carona atualizada com sucesso!',
+    UPDATE_ERROR: 'Erro ao atualizar carona',
+    DELETE_SUCCESS: 'Carona deletada com sucesso!',
+    DELETE_ERROR: 'Erro ao deletar carona',
+    MISSING_FIELDS: 'Campos obrigatórios ausentes',
+    VAGAS_INVALID: 'Número de vagas inválido',
+    STATUS_INVALID: 'Status inválido',
+  },
 };
