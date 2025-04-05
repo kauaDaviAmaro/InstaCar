@@ -12,6 +12,7 @@ dependencies:
   go_router: ^14.8.1
   pinput: ^3.0.0
   lottie: ^3.3.1
+  awesome_bottom_bar: any
 
 dev_dependencies:
   flutter_test:
@@ -22,5 +23,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/instacar.png
+    - assets/instacar_escrito.png
     - assets/kookies.png
     - assets/lottie/success.json
