@@ -12,7 +12,7 @@ import '../presentation/pages/profile_page.dart';
 
 final GoRouter appRouter = GoRouter(
   // initialLocation: isLoggedIn ? '/home' : '/login',
-  initialLocation: '/profile',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/login',
