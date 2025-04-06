@@ -27,12 +27,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: currentIndex,
-        onItemSelected: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-      ),
+      )
     );
   }
 }

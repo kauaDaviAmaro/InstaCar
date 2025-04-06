@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int currentIndex = 4;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -12,7 +15,6 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Column(
@@ -50,10 +52,15 @@ class ProfileScreen extends StatelessWidget {
           _buildMenuItem(icon: Icons.logout, text: "Logout", isLogout: true),
         ],
       ),
+      bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
     );
   }
 
-  Widget _buildMenuItem({required IconData icon, required String text, bool isLogout = false}) {
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String text,
+    bool isLogout = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
@@ -63,7 +70,10 @@ class ProfileScreen extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 16, color: isLogout ? Colors.red : Colors.black),
+              style: TextStyle(
+                fontSize: 16,
+                color: isLogout ? Colors.red : Colors.black,
+              ),
             ),
           ),
           const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black54),
