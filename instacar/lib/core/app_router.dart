@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:instacar/presentation/pages/chat/chat_list_page.dart';
-import 'package:instacar/presentation/pages/favorites_page.dart';
-import 'package:instacar/presentation/pages/password_reset.dart';
-import '../presentation/pages/home_page.dart';
-import '../presentation/pages/login_page.dart';
-import '../presentation/pages/forgot_password_page.dart';
-import '../presentation/pages/code_page.dart';
-import '../presentation/pages/set_password.dart';
-import '../presentation/pages/profile_page.dart';
+import 'package:instacar/presentation/pages/main/favorites_page.dart';
+import 'package:instacar/presentation/pages/auth/password_reset.dart';
+import '../presentation/pages/main/home_page.dart';
+import '../presentation/pages/auth/login_page.dart';
+import '../presentation/pages/auth/forgot_password_page.dart';
+import '../presentation/pages/auth/code_page.dart';
+import '../presentation/pages/auth/set_password.dart';
+import '../presentation/pages/main/profile_page.dart';
 
 
 final GoRouter appRouter = GoRouter(
