@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:instacar/presentation/pages/auth/register_page.dart';
 import 'package:instacar/presentation/pages/chat/chat_list_page.dart';
 import 'package:instacar/presentation/pages/main/favorites_page.dart';
 import 'package:instacar/presentation/pages/auth/password_reset.dart';
@@ -45,6 +46,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/chat',
       builder: (context, state) => ChatListPage(userId: "1"),
+    ),
+    GoRoute(
+      path: "/register",
+      builder: (context, state) => RegisterPage(),
     ),
     GoRoute(
       path: '/home',

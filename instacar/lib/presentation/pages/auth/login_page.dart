@@ -117,7 +117,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text("Não tem uma conta?"),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    GoRouter.of(context).go('/register');
+                  },
                   child: Text("Criar", style: TextStyle(color: Colors.blue)),
                 ),
               ],
