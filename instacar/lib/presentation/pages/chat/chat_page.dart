@@ -4,9 +4,10 @@ import 'package:instacar/core/services/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String userId;
+  final String receiveName;
   final String receiverId;
 
-  const ChatPage({super.key, required this.userId, required this.receiverId});
+  const ChatPage({super.key, required this.userId, required this.receiveName, required this.receiverId});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -59,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          "Chat com ${widget.receiverId}",
+          "Chat com ${widget.receiveName}",
           style: TextStyle(color: Colors.white),
         ),
       ),
