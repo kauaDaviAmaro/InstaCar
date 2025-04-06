@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 
-class TopNavbar extends StatelessWidget {
+class TopNavbar extends StatefulWidget {
+  final Function(String) onSearchChanged;
+
+  const TopNavbar({super.key, required this.onSearchChanged});
+
+  @override
+  State<TopNavbar> createState() => _TopNavbarState();
+}
+
+class _TopNavbarState extends State<TopNavbar> {
+  final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.only(top: 0),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: Colors.blue,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
             ),
@@ -33,7 +44,7 @@ class TopNavbar extends StatelessWidget {
                     width: 160,
                     height: 30,
                   ),
-                  Text(
+                  const Text(
                     'Página Principal',
                     style: TextStyle(
                       color: Colors.white,
@@ -43,17 +54,19 @@ class TopNavbar extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: _controller,
+                      onChanged: widget.onSearchChanged,
                       decoration: InputDecoration(
                         hintText: 'Buscar...',
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle: const TextStyle(color: Colors.grey),
                         filled: true,
                         fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide.none,
@@ -61,15 +74,17 @@ class TopNavbar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.filter_list, color: Colors.blue, size: 24),
-                      onPressed: () {},
+                      icon: const Icon(Icons.filter_list, color: Colors.blue, size: 24),
+                      onPressed: () {
+                        // Você pode adicionar um modal de filtros aqui
+                      },
                     ),
                   ),
                 ],

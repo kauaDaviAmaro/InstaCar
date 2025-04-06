@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
+import 'package:instacar/presentation/widgets/RideListWidget.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,23 +12,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          TopNavbar(),
-          Expanded(
-            child: Center(
-              child: Text("Conteúdo da página"),
-            ),
+          TopNavbar(
+            onSearchChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
           ),
+          Expanded(child: RideListWidget(searchQuery: searchQuery)),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: currentIndex,
-      )
+      bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
     );
   }
 }
