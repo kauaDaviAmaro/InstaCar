@@ -4,7 +4,7 @@ import 'chat_page.dart';
 class ChatListPage extends StatefulWidget {
   final String userId;
 
-  const ChatListPage({Key? key, required this.userId}) : super(key: key);
+  const ChatListPage({super.key, required this.userId});
 
   @override
   _ChatListPageState createState() => _ChatListPageState();

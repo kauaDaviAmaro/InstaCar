@@ -3,12 +3,9 @@ import 'package:instacar/presentation/pages/chat/chat_list_page.dart';
 import 'package:instacar/presentation/pages/password_reset.dart';
 import '../presentation/pages/home_page.dart';
 import '../presentation/pages/login_page.dart';
-import '../presentation/pages/carona_details_page.dart';
 import '../presentation/pages/forgot_password_page.dart';
 import '../presentation/pages/code_page.dart';
-import '../presentation/pages/password_reset.dart';
 import '../presentation/pages/set_password.dart';
-import '../presentation/pages/chat/chat_page.dart';
 
 final GoRouter appRouter = GoRouter(
   // initialLocation: isLoggedIn ? '/home' : '/login',

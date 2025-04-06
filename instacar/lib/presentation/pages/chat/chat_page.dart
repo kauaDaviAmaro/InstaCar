@@ -6,8 +6,7 @@ class ChatPage extends StatefulWidget {
   final String userId;
   final String receiverId;
 
-  const ChatPage({Key? key, required this.userId, required this.receiverId})
-    : super(key: key);
+  const ChatPage({super.key, required this.userId, required this.receiverId});
 
   @override
   _ChatPageState createState() => _ChatPageState();

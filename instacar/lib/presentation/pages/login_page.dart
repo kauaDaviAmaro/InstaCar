@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -79,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: _login,
-              child: Text("Entrar", style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
@@ -87,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 backgroundColor: Colors.blue,
               ),
+              child: Text("Entrar", style: TextStyle(color: Colors.white)),
             ),
             SizedBox(height: 16),
             Row(
