@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:instacar/presentation/pages/favorites_page.dart';
 import 'package:instacar/presentation/pages/password_reset.dart';
 import '../presentation/pages/home_page.dart';
 import '../presentation/pages/login_page.dart';
@@ -17,6 +18,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: '/favorites', 
+      builder: (context, state) => FavoritesPage(),
     ),
     GoRoute(
       path: '/forgot',

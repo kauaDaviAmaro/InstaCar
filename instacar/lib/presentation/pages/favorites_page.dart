@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 import 'package:instacar/presentation/widgets/RideListWidget.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
+import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({
+    super.key,
+  });
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int currentIndex = 0;
+class _FavoritesPageState extends State<FavoritesPage> {
   String searchQuery = '';
 
   @override
@@ -20,17 +21,21 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           TopNavbar(
-            title: "Página Principal",
+            title: "Favoritos",
             onSearchChanged: (value) {
               setState(() {
                 searchQuery = value;
               });
             },
           ),
-          Expanded(child: RideListWidget(searchQuery: searchQuery)),
+          Expanded(
+            child: RideListWidget(
+              searchQuery: searchQuery,
+            ),
+          ),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
+      bottomNavigationBar: BottomNavBar(selectedIndex: 1),
     );
   }
 }

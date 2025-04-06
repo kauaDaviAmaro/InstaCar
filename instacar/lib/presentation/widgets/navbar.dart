@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class TopNavbar extends StatefulWidget {
   final Function(String) onSearchChanged;
+  final String title;
 
-  const TopNavbar({super.key, required this.onSearchChanged});
+  const TopNavbar({super.key, required this.onSearchChanged, required this.title});
 
   @override
   State<TopNavbar> createState() => _TopNavbarState();
@@ -44,9 +45,9 @@ class _TopNavbarState extends State<TopNavbar> {
                     width: 160,
                     height: 30,
                   ),
-                  const Text(
-                    'Página Principal',
-                    style: TextStyle(
+                  Text(
+                    widget.title, // Use widget.title here
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -83,7 +84,7 @@ class _TopNavbarState extends State<TopNavbar> {
                     child: IconButton(
                       icon: const Icon(Icons.filter_list, color: Colors.blue, size: 24),
                       onPressed: () {
-                        // Você pode adicionar um modal de filtros aqui
+                        // You can add a filter modal here
                       },
                     ),
                   ),
