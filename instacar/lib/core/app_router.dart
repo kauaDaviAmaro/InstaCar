@@ -10,7 +10,7 @@ import '../presentation/pages/set_password.dart';
 
 final GoRouter appRouter = GoRouter(
   // initialLocation: isLoggedIn ? '/home' : '/login',
-  initialLocation: '/login',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/login',
