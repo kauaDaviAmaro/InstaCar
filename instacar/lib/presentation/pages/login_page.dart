@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorText = "Senha incorreta";
       } else {
         _errorText = null;
+        GoRouter.of(context).push('/home');
       }
     });
   }
