@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  const ForgotPasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -44,7 +46,7 @@ class ForgotPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             TextField(
-              controller: _emailController,
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: "Seu email",
                 hintText: "Digite seu email",
@@ -60,7 +62,6 @@ class ForgotPasswordPage extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).push('/code');
               },
-              child: Text("Redefinir senha", style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
@@ -69,6 +70,7 @@ class ForgotPasswordPage extends StatelessWidget {
                 backgroundColor: Colors.blue,
 
               ),
+              child: Text("Redefinir senha", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

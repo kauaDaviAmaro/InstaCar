@@ -3,6 +3,8 @@ import 'package:pinput/pinput.dart';
 import 'package:go_router/go_router.dart';
 
 class CodePage extends StatefulWidget {
+  const CodePage({super.key});
+
   @override
   _CodePage createState() => _CodePage();
 }

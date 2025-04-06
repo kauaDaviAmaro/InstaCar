@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 class SetPassword extends StatefulWidget {
+  const SetPassword({super.key});
+
   @override
   _SetPassword createState() => _SetPassword();
 }
