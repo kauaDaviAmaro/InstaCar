@@ -6,10 +6,7 @@ import 'package:go_router/go_router.dart';
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
 
-  const BottomNavBar({
-    Key? key,
-    required this.selectedIndex,
-  }) : super(key: key);
+  const BottomNavBar({Key? key, required this.selectedIndex}) : super(key: key);
 
   static const List<TabItem> items = [
     TabItem(icon: Icons.home, title: 'Home'),
@@ -41,18 +38,16 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBarInspiredInside(
+    return BottomBarDefault(
       items: items,
-      backgroundColor: const Color(0xFF1752FE),
-      color: const Color(0xFF96B1FD),
+      backgroundColor: Colors.blue,
+      color: const Color.fromARGB(255, 230, 230, 230),
       colorSelected: Colors.white,
       indexSelected: selectedIndex,
       onTap: (index) => onItemSelected(context, index),
-      chipStyle: const ChipStyle(
-        convexBridge: true,
-      ),
-      itemStyle: ItemStyle.circle,
-      animated: false,
+      // chipStyle: const ChipStyle(convexBridge: true),
+      // itemStyle: ItemStyle.circle,
+      animated: true,
     );
   }
 }
