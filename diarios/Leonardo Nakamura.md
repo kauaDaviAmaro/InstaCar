@@ -118,3 +118,35 @@
 - Finalizar a página "Cadastro" e testar os fluxos de validação
 - Começar o desenvolvimento da página principal (Landing Page)
 - Realizar testes de usabilidade nas páginas de login e cadastro
+
+- # Data: 07/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+
+- Organizado todo projeto, criação de todas as demais tasks
+- Adicionamento de story telling, para adicionar features que serão criadas em um futuro possível ou ficarão de backlog 
+- Edição da nova logo nossa nas páginas logadas do aplicativo
+- Debbug de algumas páginas para auxiliar colegas
+
+## Dificuldades Encontradas
+
+- Construção do arquivo para utilizar o darkmode no projeto e talvez usar o provider
+- Criação em cascata dos cards na página de login e favoritos conforme objetos
+
+## Soluções Implementadas
+
+- Perguntado melhor forma para professor e talvez somente será feito por meio de login novamente
+- Criação cascata dos objetos de forma mockada, somente após integração será totalmente integrado
+
+## Aprendizados
+
+- Como utilizar o darktheme e o provider
+- Criação de objeto em cascata e reinderização para display
+
+## Próximos Passos
+
+- Iniciar página de criação de caronas e histórico de caronas
+- Criação do modal para criação de caronas
+- Criação do chat modelo
