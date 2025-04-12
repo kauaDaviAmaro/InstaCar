@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:instacar/presentation/widgets/filter_option_choice.dart';
-import 'package:instacar/presentation/widgets/filter_range.dart';
+import 'package:instacar/presentation/widgets/filter_option_choice_gender.dart';
+import 'package:instacar/presentation/widgets/filter_option_choice_space_car.dart';
+import 'package:instacar/presentation/widgets/filter_option_choice_vehicle.dart';
+import 'package:instacar/presentation/widgets/filter_order.dart';
+// import 'package:instacar/presentation/widgets/filter_option_choice_vehicles.dart';
+import 'package:instacar/presentation/widgets/filter_range_age.dart';
+import 'package:instacar/presentation/widgets/tittle_generator.dart';
 
 class HomeModalAdd extends StatefulWidget {
   const HomeModalAdd({super.key});
@@ -10,31 +15,53 @@ class HomeModalAdd extends StatefulWidget {
 }
 
 class _HomeModalAddState extends State<HomeModalAdd> {
+  get floatingActionButton => null;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-        child: Form(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Tipo de veículo",
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold  ),
-              ),
-              SingleSegmentedButton(),
-              Padding(padding: EdgeInsets.only(bottom: 25)),
-              Divider(),
-              Text(
-                "Faixa etária",
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold  ),
-              ),
-              CustomThumbShapeRangeSlider(),
-            ],
-          )),
+         child: SingleChildScrollView(
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                //Opções para selecao de Veiculos
+                TittleGenerator(context, 'Tipo de veículo:'),
+                ChoiceChipWidgetVehicle(),
+                Divider(),
+                Padding(padding: EdgeInsets.only(bottom: 25)),
+                //Range de idade
+                TittleGenerator(context, 'Faixa etária:'),
+                CustomThumbShapeRangeSlider(),
+                Divider(),
+                Padding(padding: EdgeInsets.only(bottom: 25)),
+                TittleGenerator(context, 'Gênero:'),
+                //Opções para selecao de Gênero
+                ChoiceChipWidget(),
+                Divider(),
+                Padding(padding: EdgeInsets.only(bottom: 25)),
+                //Opções para selecao de Vagas no carro
+                TittleGenerator(context, 'Vagas no carro:'),
+                ChoiceChipWidgetSpace(),
+                Divider(),
+                Padding(padding: EdgeInsets.only(bottom: 25)),
+                //Opções para ordenar o filtro
+                TittleGenerator(context, 'Ordenar Filtro por:'),
+                ChoiceChipFilterOrder(),
+
+                Divider(),
+                Padding(padding: EdgeInsets.only(bottom: 25)),
+                ElevatedButton(onPressed: () {},
+                child: Text('Filtrar'))
+              ],
+
+            )
+          ),
         ),
+      )
     );
   }
 }

@@ -41,7 +41,7 @@ class _CustomThumbShapeRangeSliderState extends State<CustomThumbShapeRangeSlide
               child: Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(25)),
+                    color: Colors.white, borderRadius: BorderRadius.circular(20)),
               ),
             ),
           ),
