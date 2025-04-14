@@ -3,12 +3,33 @@ import 'package:pinput/pinput.dart';
 import 'package:go_router/go_router.dart';
 
 class CodePage extends StatefulWidget {
+  const CodePage({super.key});
+
   @override
   _CodePage createState() => _CodePage();
 }
 
 class _CodePage extends State<CodePage> {
   final TextEditingController _pinController = TextEditingController();
+  bool _isLoading = false;
+  bool _isSuccess = false;
+
+  void _validateCode() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+        _isSuccess = true;
+      });
+
+      Future.delayed(Duration(seconds: 1), () {
+        GoRouter.of(context).push('/set');
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +77,14 @@ class _CodePage extends State<CodePage> {
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).push('/reset');
-                },
+                onPressed: _isLoading ? null : _validateCode,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   minimumSize: Size(double.infinity, 50),
                 ),
-                child: Text("Verificar código", style: TextStyle(color: Colors.white)),
+                child: _isLoading
+                    ? CircularProgressIndicator(color: Colors.white)
+                    : Text("Atualizar senha", style: TextStyle(color: Colors.white)),
               ),
             ),
             SizedBox(height: 15),
