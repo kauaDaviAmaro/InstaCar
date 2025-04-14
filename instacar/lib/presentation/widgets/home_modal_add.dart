@@ -23,7 +23,7 @@ class _HomeModalAddState extends State<HomeModalAdd> {
       height: MediaQuery.of(context).size.height * 0.9,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-         child: SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,14 +54,21 @@ class _HomeModalAddState extends State<HomeModalAdd> {
 
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
-                ElevatedButton(onPressed: () {},
-                child: Text('Filtrar'))
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(100, 141, 219, 1),
+                  ),
+                  child: Text(
+                    'Filtrar',
+                    style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
+                  ),
+                ),
               ],
-
-            )
+            ),
           ),
         ),
-      )
+      ),
     );
   }
 }
