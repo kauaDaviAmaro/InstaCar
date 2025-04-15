@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 
 class RideCard extends StatefulWidget {
@@ -201,6 +203,17 @@ class _RideCardState extends State<RideCard> {
                           setState(() {
                             isFavorited = !isFavorited;
                           });
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            content: AwesomeSnackbarContent(
+                              title: 'Carona Favoritada!',
+                              message:
+                                  'Você marcou a carona como favorita.',
+                              contentType: ContentType.help,
+                            ),
+                          ));
                           // Callback externo se necessário
                         },
                         child: Padding(

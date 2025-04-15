@@ -58,6 +58,9 @@ final GoRouter appRouter = GoRouter(
       //   return isLoggedIn ? HomePage() : LoginPage(); // Redirecionamento
       // },
     ),
+    
+
+
     // GoRoute(
     //   path: '/carona/:id', // Rota dinâmica
     //   builder: (context, state) {

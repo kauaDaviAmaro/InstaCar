@@ -12,14 +12,48 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
-  String? _errorText;
+  bool _isLoading = false;
+  bool _isSuccess = false;
+  String? _emailErrorText;
+  String? _passwordErrorText;
+
+  bool _isEmailValid(String email) {
+    final RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    return emailRegex.hasMatch(email);
+  }
+
+  bool _isPasswordValid(String password) {
+    return password != "";
+  }
 
   void _login() {
     setState(() {
-      if (_passwordController.text != "123456") {
-        _errorText = "Senha incorreta";
-      } else {
-        _errorText = null;
+      _isLoading = true;
+      _emailErrorText = null; // Limpa mensagens de erro anteriores
+      _passwordErrorText = null; // Limpa mensagens de erro anteriores
+    });
+
+    // Valida o e-mail
+    if (!_isEmailValid(_emailController.text)) {
+      setState(() {
+        _isLoading = false;
+        _emailErrorText = "E-mail inválido";
+      });
+    }
+    if (!_isPasswordValid(_passwordController.text)) {
+      setState(() {
+        _passwordErrorText = "Senha incorreta";
+      });
+    }
+
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+      if (_isEmailValid(_emailController.text) &&
+          _isPasswordValid(_passwordController.text)) {
         GoRouter.of(context).push('/home');
       }
     });
@@ -42,6 +76,8 @@ class _LoginPageState extends State<LoginPage> {
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: "Email",
+                errorText:
+                    _emailErrorText, // Exibe mensagem de erro do e-mail aqui
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.grey),
@@ -49,18 +85,22 @@ class _LoginPageState extends State<LoginPage> {
               ),
               keyboardType: TextInputType.emailAddress,
             ),
+
             SizedBox(height: 12),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: "Senha",
-                errorText: _errorText,
+                errorText:
+                    _passwordErrorText, // Exibe mensagem de erro da senha aqui
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: Colors.grey),
                 ),
                 suffixIcon: IconButton(
-                  icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                  ),
                   onPressed: () {
                     setState(() {
                       _obscurePassword = !_obscurePassword;
@@ -70,26 +110,33 @@ class _LoginPageState extends State<LoginPage> {
               ),
               obscureText: _obscurePassword,
             ),
+
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
                   GoRouter.of(context).push('/forgot');
                 },
-                child: Text("Esqueci minha senha", style: TextStyle(color: Colors.blue)),
+                child: Text(
+                  "Esqueci minha senha",
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: _isLoading ? null : _login,
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 backgroundColor: Colors.blue,
+                minimumSize: Size(double.infinity, 50),
               ),
-              child: Text("Entrar", style: TextStyle(color: Colors.white)),
+              child:
+                  _isLoading
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : Text("Entrar", style: TextStyle(color: Colors.white)),
             ),
             SizedBox(height: 16),
             Row(
@@ -105,11 +152,17 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 16),
             TextButton(
               onPressed: () {},
-              child: Text("Login with Apple", style: TextStyle(color: Colors.black)),
+              child: Text(
+                "Login with Apple",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             TextButton(
               onPressed: () {},
-              child: Text("Login with Google", style: TextStyle(color: Colors.black)),
+              child: Text(
+                "Login with Google",
+                style: TextStyle(color: Colors.black),
+              ),
             ),
             SizedBox(height: 16),
             Row(
@@ -123,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text("Criar", style: TextStyle(color: Colors.blue)),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

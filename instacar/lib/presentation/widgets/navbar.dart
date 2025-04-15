@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instacar/presentation/widgets/home_modal_add.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class TopNavbar extends StatefulWidget {
   final Function(String) onSearchChanged;
@@ -84,6 +86,10 @@ class _TopNavbarState extends State<TopNavbar> {
                     child: IconButton(
                       icon: const Icon(Icons.filter_list, color: Colors.blue, size: 24),
                       onPressed: () {
+                        showBarModalBottomSheet(
+                          context: context,
+                          builder: (context) => HomeModalAdd()
+                        );
                         // You can add a filter modal here
                       },
                     ),
