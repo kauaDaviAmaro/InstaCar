@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
+import 'edit_profile_page.dart';
+
+
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,8 +16,12 @@ class ProfileScreen extends StatelessWidget {
     GoRouter.of(context).go('/edit-profile');
   }
 
-  void navigateToSettings(BuildContext context) {
-    GoRouter.of(context).go('/settings');
+  void navigateToTerms(BuildContext context) {
+    GoRouter.of(context).go('/terms');
+  }
+
+  void navigateToContact(BuildContext context) {
+    GoRouter.of(context).go('/contact');
   }
 
   @override
@@ -41,13 +48,16 @@ class ProfileScreen extends StatelessWidget {
                 backgroundColor: Colors.grey[300],
                 child: const Icon(Icons.person, size: 60, color: Colors.blue),
               ),
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
+              GestureDetector(
+                onTap: () => navigateToEditProfile(context),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.edit, size: 16, color: Colors.white),
                 ),
-                child: const Icon(Icons.edit, size: 16, color: Colors.white),
               ),
             ],
           ),
@@ -63,9 +73,14 @@ class ProfileScreen extends StatelessWidget {
             onTap: () => navigateToEditProfile(context),
           ),
           _buildMenuItem(
-            icon: Icons.settings,
-            text: "Configurações",
-            onTap: () => navigateToSettings(context),
+            icon: Icons.description,
+            text: "Termos de serviço",
+            onTap: () => navigateToTerms(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.headphones,
+            text: "Fale conosco",
+            onTap: () => navigateToContact(context),
           ),
           _buildMenuItem(
             icon: Icons.logout,
