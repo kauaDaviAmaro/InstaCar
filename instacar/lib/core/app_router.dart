@@ -10,9 +10,9 @@ import '../presentation/pages/auth/code_page.dart';
 import '../presentation/pages/auth/set_password.dart';
 import '../presentation/pages/main/profile_page.dart';
 
+import '../presentation/pages/main/edit_profile_page.dart';
 
 final GoRouter appRouter = GoRouter(
-  // initialLocation: isLoggedIn ? '/home' : '/login',
   initialLocation: '/home',
   routes: [
     GoRoute(
@@ -20,7 +20,7 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => LoginPage(),
     ),
     GoRoute(
-      path: '/favorites', 
+      path: '/favorites',
       builder: (context, state) => FavoritesPage(),
     ),
     GoRoute(
@@ -54,19 +54,11 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => HomePage(),
-      // builder: (context, state) {
-      //   return isLoggedIn ? HomePage() : LoginPage(); // Redirecionamento
-      // },
     ),
-    
 
-
-    // GoRoute(
-    //   path: '/carona/:id', // Rota dinâmica
-    //   builder: (context, state) {
-    //     final String caronaId = state.pathParameters['id']!;
-    //     return CaronaDetailsPage(caronaId: caronaId);
-    //   },
-    // ),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) => const UserProfilePage(),
+    ),
   ],
 );
