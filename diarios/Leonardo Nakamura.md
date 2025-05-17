@@ -150,3 +150,186 @@
 - Iniciar página de criação de caronas e histórico de caronas
 - Criação do modal para criação de caronas
 - Criação do chat modelo
+
+# Registro de Desenvolvimento - 14/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+- Desenvolvimento da tela "Esqueci minha senha", incluindo validações de entrada.
+- Início do desenvolvimento da página "Cadastro", com validação de campos e layout inicial.
+- Adição da funcionalidade de "mostrar/ocultar senha" com ícone.
+- Ajustes no design para melhorar a navegação entre as telas.
+
+## Dificuldades Encontradas
+- Ajustar a lógica de visibilidade de senha sem afetar a segurança.
+- Exibir mensagens de erro no campo de senha.
+
+## Soluções Implementadas
+- Implementação do ícone de "mostrar/ocultar senha".
+- Inclusão de mensagens de erro em tempo real no campo de senha.
+
+## Aprendizados
+- Animações para melhor experiência do usuário.
+- Validação de campos.
+
+## Próximos Passos
+- Finalizar a página "Cadastro" e testar os fluxos de validação.
+- Começar o desenvolvimento da página principal (Landing Page).
+- Realizar testes de usabilidade nas páginas de login e cadastro.
+
+---
+
+# Registro de Desenvolvimento - 21/03/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 1
+
+## Atividades Realizadas
+- Organização do projeto e criação de todas as tasks restantes.
+- Adição de storytelling para incluir features futuras ou backlog.
+- Edição da nova logo nas páginas logadas do aplicativo.
+- Debug de algumas páginas para auxiliar colegas.
+
+## Dificuldades Encontradas
+- Criação em cascata dos cards na página de login e favoritos.
+
+## Soluções Implementadas
+- Criação em cascata dos objetos de forma mockada, a ser integrada posteriormente.
+
+## Aprendizados
+- Criação de objetos em cascata e renderização para display.
+
+## Próximos Passos
+- Iniciar a página de criação de caronas e histórico de caronas.
+- Criação do modal para criação de caronas.
+- Criação do chat modelo.
+
+---
+
+# Registro de Desenvolvimento - 14/04/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da página de "Criar Carona", incluindo validações de entrada e layout inicial.
+- Implementação da funcionalidade de "Caronas Favoritas", permitindo que os usuários salvem caronas que desejam utilizar.
+- Criação do layout da tela de "Perfil", onde os usuários podem visualizar e editar suas informações.
+
+## Dificuldades Encontradas
+- Ajustar o layout da tela de "Criar Carona" para ser intuitivo e responsivo.
+
+## Soluções Implementadas
+- Ajustes no design da tela de "Criar Carona" com base no feedback dos usuários.
+
+## Aprendizados
+- Aprendizado sobre gerenciamento de estado no Flutter.
+- Melhoria nas habilidades de design de interface do usuário.
+
+## Próximos Passos
+- Finalizar a tela de "Perfil" e implementar a funcionalidade de edição de informações.
+- Iniciar o desenvolvimento da tela de "Chat" para comunicação entre usuários.
+
+---
+
+# Registro de Desenvolvimento - 21/04/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da tela de "Chat", incluindo a funcionalidade de envio de mensagens com respostas automáticas simuladas.
+- Integração do sistema de notificações para alertar os usuários sobre novas mensagens e caronas disponíveis.
+- Testes de usabilidade nas telas de "Criar Carona" e "Caronas Favoritas".
+
+## Dificuldades Encontradas
+- Garantir que as respostas automáticas sejam relevantes e úteis para os usuários.
+
+## Soluções Implementadas
+- Criação de um conjunto de respostas automáticas para simular interações no chat.
+
+## Aprendizados
+- Aprendizado sobre como criar interações simuladas em aplicativos.
+- Melhoria nas habilidades de design de interface e usabilidade.
+
+## Próximos Passos
+- Finalizar a implementação do chat e realizar testes de integração.
+- Iniciar o desenvolvimento da tela de "Histórico de Caronas".
+
+---
+
+# Registro de Desenvolvimento - 05/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da tela de "Histórico de Caronas", permitindo que os usuários visualizem caronas passadas.
+- Implementação de filtros para facilitar a busca por caronas no histórico.
+- Ajustes finais na tela de "Perfil" para garantir que todas as informações sejam exibidas corretamente.
+
+## Dificuldades Encontradas
+- Garantir que os filtros funcionem de maneira eficiente.
+- Ajustar a apresentação das caronas no histórico para ser clara e intuitiva.
+
+## Soluções Implementadas
+- Implementação de filtros dinâmicos que atualizam a visualização em tempo real.
+- Ajustes no layout da tela de "Histórico de Caronas" para melhorar a usabilidade.
+
+## Aprendizados
+- Aprendizado sobre gerenciamento de dados em Flutter.
+- Melhoria na implementação de funcionalidades de filtragem e apresentação de dados.
+
+## Próximos Passos
+- Realizar testes de integração em todas as funcionalidades desenvolvidas até agora.
+- Preparar uma apresentação para demonstrar o progresso do projeto.
+
+---
+
+# Registro de Desenvolvimento - 12/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 3
+
+## Atividades Realizadas
+- Realização de testes de integração em todas as telas do aplicativo.
+- Coleta de feedback dos usuários sobre a usabilidade do aplicativo.
+- Preparação de uma apresentação para stakeholders sobre o progresso do projeto.
+
+## Dificuldades Encontradas
+- Identificar e corrigir bugs durante os testes de integração.
+- Organizar o feedback de forma que seja útil para futuras iterações.
+
+## Soluções Implementadas
+- Criação de um documento para registrar todos os bugs encontrados e as soluções implementadas.
+- Reunião com a equipe para discutir o feedback e planejar melhorias.
+
+## Aprendizados
+- Aprendizado sobre a importância de testes de integração e feedback do usuário.
+- Melhoria na capacidade de documentação e organização de informações.
+
+## Próximos Passos
+- Implementar melhorias com base no feedback recebido.
+- Iniciar a fase de preparação para o lançamento do aplicativo.
+
+---
+
+# Registro de Desenvolvimento - 19/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 3
+
+## Atividades Realizadas
+- Implementação de melhorias com base no feedback dos usuários.
+- Finalização de todas as funcionalidades do aplicativo, incluindo ajustes de design e usabilidade.
+- Revisão final da funcionalidade de "Chat" com respostas automáticas simuladas.
+
+## Dificuldades Encontradas
+- Garantir que todas as funcionalidades estejam funcionando corretamente antes da apresentação.
+
+## Soluções Implementadas
+- Realização de testes finais em todas as funcionalidades do aplicativo.
+- Ajustes de última hora no design e na usabilidade com base no feedback recebido.
+
+## Aprendizados
+- Aprendizado sobre a importância de revisões finais antes do lançamento.
+- Melhoria nas habilidades de apresentação e comunicação de resultados.
+
+## Próximos Passos
+- Preparar a documentação final do projeto.
+- Apresentar o aplicativo para os stakeholders e coletar feedback final.
