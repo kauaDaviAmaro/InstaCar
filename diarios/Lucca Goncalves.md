@@ -115,3 +115,151 @@
 
 - Concluir o desenvolvimento da página de cadastro
 - Iniciar desenvolvimento da página principal (landing page)
+
+# Data: 31/03/2025
+**Duração:** 3 horas  
+**Sprint:** 1
+
+## Atividades Realizadas
+- Finalização da página de cadastro.
+- Desenvolvimento da tela de login.
+- Implementação da navegação entre as telas principais.
+
+## Dificuldades Encontradas
+- Integração da lógica de autenticação com o backend.
+- Definir a experiência do usuário na transição entre telas.
+
+## Soluções Implementadas
+- Utilização de pacotes Flutter para gerenciar o estado da aplicação.
+- Criação de um fluxo de navegação claro e intuitivo.
+
+## Aprendizados
+- Aprendizado sobre gerenciamento de estado em Flutter.
+- Melhoria na utilização de rotas e navegação.
+
+## Próximos Passos
+- Iniciar desenvolvimento da tela de perfil do usuário.
+- Planejar a segunda sprint no Jira.
+
+---
+
+# Data: 07/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Criação da tela de perfil do usuário.
+- Implementação de funcionalidades de edição de perfil.
+- Discussão sobre a integração com APIs para caronas.
+
+## Dificuldades Encontradas
+- Definir quais informações do perfil são essenciais.
+- Dificuldade em integrar a API de caronas.
+
+## Soluções Implementadas
+- Pesquisa sobre melhores práticas para design de perfis.
+- Contato com o professor para esclarecer dúvidas sobre a API.
+
+## Aprendizados
+- Aprendizado sobre integração de APIs em Flutter.
+- Melhoria na estruturação de dados do usuário.
+
+## Próximos Passos
+- Concluir a tela de perfil.
+- Iniciar desenvolvimento da tela de caronas disponíveis.
+
+---
+
+# Data: 14/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da tela de caronas disponíveis.
+- Implementação de filtros de busca para caronas.
+
+## Dificuldades Encontradas
+- Definir a lógica de filtragem e ordenação das caronas.
+- Dificuldade em exibir os dados da API corretamente.
+
+## Soluções Implementadas
+- Criação de mockups para testar a interface antes da implementação.
+- Ajustes na chamada da API para garantir a correta exibição dos dados.
+
+## Aprendizados
+- Aprendizado sobre manipulação de listas em Flutter.
+- Melhoria na utilização de APIs REST.
+
+## Próximos Passos
+- Iniciar desenvolvimento da tela de criação de carona.
+- Planejar testes de usabilidade com colegas.
+
+---
+
+# Data: 21/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da tela de criação de carona.
+- Implementação de validações nos formulários.
+
+## Dificuldades Encontradas
+- Definir quais campos são obrigatórios na criação de carona.
+- Dificuldade em implementar validações de entrada.
+
+## Soluções Implementadas
+- Criação de um checklist para os campos obrigatórios.
+- Utilização de pacotes de validação para facilitar a implementação.
+
+## Aprendizados
+- Aprendizado sobre validação de formulários em Flutter.
+- Melhoria na experiência do usuário com feedback visual.
+
+## Próximos Passos
+- Concluir a tela de criação de carona.
+- Iniciar desenvolvimento do chat entre usuários.
+
+---
+
+# Data: 28/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da tela de chat entre usuários.
+- Implementação de notificações para novas mensagens.
+
+## Dificuldades Encontradas
+- Definir a lógica de envio e recebimento de mensagens.
+- Dificuldade em gerenciar o estado do chat.
+
+## Soluções Implementadas
+- Utilização de WebSockets para comunicação em tempo real.
+- Criação de um modelo de dados para mensagens.
+
+## Aprendizados
+- Aprendizado sobre comunicação em tempo real em aplicativos Flutter.
+- Melhoria na estruturação de dados para chats.
+
+## Próximos Passos
+- Testar a funcionalidade de chat com usuários reais.
+- Planejar a terceira sprint no Jira.
+
+---
+
+# Data: 05/05/2025
+**Duração:** 3 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Planejamento da terceira sprint no Jira.
+- Revisão do código e melhorias na performance do app.
+
+## Dificuldades Encontradas
+- Identificar áreas do código que precisam de otimização.
+- Dificuldade em manter a documentação atualizada.
+
+## Soluções Implementadas
+- Realização de uma sessão de code review entre os integrantes.
+- Criação de um documento de boas práticas para o projeto.
