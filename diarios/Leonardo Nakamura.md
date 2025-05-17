@@ -119,7 +119,7 @@
 - Começar o desenvolvimento da página principal (Landing Page)
 - Realizar testes de usabilidade nas páginas de login e cadastro
 
-- # Data: 07/03/2025
+- # Data: 31/03/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 1
 
@@ -151,7 +151,7 @@
 - Criação do modal para criação de caronas
 - Criação do chat modelo
 
-# Registro de Desenvolvimento - 14/03/2025
+# Registro de Desenvolvimento - 07/04/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 1
 
@@ -180,7 +180,7 @@
 
 ---
 
-# Registro de Desenvolvimento - 21/03/2025
+# Registro de Desenvolvimento - 14/04/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 1
 
@@ -206,7 +206,7 @@
 
 ---
 
-# Registro de Desenvolvimento - 14/04/2025
+# Registro de Desenvolvimento - 21/04/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 2
 
@@ -231,7 +231,7 @@
 
 ---
 
-# Registro de Desenvolvimento - 21/04/2025
+# Registro de Desenvolvimento - 05/05/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 2
 
@@ -256,7 +256,7 @@
 
 ---
 
-# Registro de Desenvolvimento - 05/05/2025
+# Registro de Desenvolvimento - 12/05/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 2
 
@@ -283,7 +283,7 @@
 
 ---
 
-# Registro de Desenvolvimento - 12/05/2025
+# Registro de Desenvolvimento - 19/05/2025
 - **Duração da sessão:** 3 horas
 - **Sprint:** 3
 
@@ -308,28 +308,3 @@
 - Implementar melhorias com base no feedback recebido.
 - Iniciar a fase de preparação para o lançamento do aplicativo.
 
----
-
-# Registro de Desenvolvimento - 19/05/2025
-- **Duração da sessão:** 3 horas
-- **Sprint:** 3
-
-## Atividades Realizadas
-- Implementação de melhorias com base no feedback dos usuários.
-- Finalização de todas as funcionalidades do aplicativo, incluindo ajustes de design e usabilidade.
-- Revisão final da funcionalidade de "Chat" com respostas automáticas simuladas.
-
-## Dificuldades Encontradas
-- Garantir que todas as funcionalidades estejam funcionando corretamente antes da apresentação.
-
-## Soluções Implementadas
-- Realização de testes finais em todas as funcionalidades do aplicativo.
-- Ajustes de última hora no design e na usabilidade com base no feedback recebido.
-
-## Aprendizados
-- Aprendizado sobre a importância de revisões finais antes do lançamento.
-- Melhoria nas habilidades de apresentação e comunicação de resultados.
-
-## Próximos Passos
-- Preparar a documentação final do projeto.
-- Apresentar o aplicativo para os stakeholders e coletar feedback final.
