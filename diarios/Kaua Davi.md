@@ -179,3 +179,122 @@
 - Conectar os dados da listagem de caronas à API (ou mock inicialmente).  
 - Criar filtros por data, origem/destino e valor.  
 - Iniciar a estruturação da tela de **detalhes da carona**.
+
+---
+# Registro de Desenvolvimento - 14/04/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da API para gerenciar as caronas, incluindo endpoints para criar, listar e editar caronas.
+- Implementação da funcionalidade de "Caronas Favoritas" no backend, permitindo que os usuários salvem caronas de interesse.
+- Configuração do banco de dados para armazenar informações dos usuários e das caronas.
+
+## Dificuldades Encontradas
+- Dificuldade em garantir a segurança dos dados durante a comunicação entre o aplicativo e o backend.
+
+## Soluções Implementadas
+- Implementação de autenticação e autorização para proteger os endpoints da API.
+
+## Aprendizados
+- Aprendizado sobre a criação de APIs RESTful e a integração com o banco de dados.
+
+## Próximos Passos
+- Concluir a implementação da API de gerenciamento de usuários.
+- Colaborar com a equipe de frontend para garantir a integração correta entre o aplicativo e o backend.
+
+---
+
+# Registro de Desenvolvimento - 21/04/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da funcionalidade de mensagens no backend, permitindo a troca de mensagens entre usuários.
+- Implementação de um sistema de notificações para alertar os usuários sobre novas caronas e mensagens.
+- Testes de integração da API com o frontend para garantir a comunicação correta.
+
+## Dificuldades Encontradas
+- Garantir que as mensagens sejam entregues em tempo real e que o sistema de notificações funcione corretamente.
+
+## Soluções Implementadas
+- Utilização de WebSockets para permitir comunicação em tempo real entre o aplicativo e o servidor.
+
+## Aprendizados
+- Aprendizado sobre a implementação de WebSockets e como isso melhora a experiência do usuário.
+
+## Próximos Passos
+- Finalizar a implementação do sistema de notificações e realizar testes de carga na API.
+- Trabalhar com a equipe de frontend para garantir a correta gestão das mensagens.
+
+---
+
+# Registro de Desenvolvimento - 05/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvimento da funcionalidade de histórico de caronas no backend, permitindo que os usuários acessem suas caronas anteriores.
+- Implementação de filtros na API para facilitar a busca por caronas no histórico.
+- Revisão da estrutura do banco de dados para garantir a eficiência nas consultas.
+
+## Dificuldades Encontradas
+- Dificuldade em otimizar as consultas ao banco de dados para garantir um desempenho rápido.
+
+## Soluções Implementadas
+- Implementação de índices no banco de dados para melhorar a performance das consultas.
+
+## Aprendizados
+- Aprendizado sobre otimização de banco de dados e a importância de índices para consultas eficientes.
+
+## Próximos Passos
+- Realizar testes de integração em todas as funcionalidades do backend.
+- Preparar uma apresentação sobre o progresso do desenvolvimento da API.
+
+---
+
+# Registro de Desenvolvimento - 12/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 3
+
+## Atividades Realizadas
+- Testes de integração em todos os endpoints da API.
+- Coleta de feedback da equipe sobre a usabilidade da API.
+- Preparação de uma apresentação para a turma sobre o status do backend.
+
+## Dificuldades Encontradas
+- Identificação e correção de bugs durante os testes de integração.
+
+## Soluções Implementadas
+- Resolução dos bugs encontrados e ajustes nas funcionalidades.
+
+## Aprendizados
+- Importância dos testes de integração e da colaboração em equipe.
+
+## Próximos Passos
+- Implementar melhorias com base no feedback recebido.
+- Iniciar a fase de testes finais antes do lançamento da API.
+
+---
+
+# Registro de Desenvolvimento - 19/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 3
+
+## Atividades Realizadas
+- Finalização das funcionalidades da API, incluindo ajustes de segurança e performance.
+- Implementação de melhorias sugeridas pela equipe.
+- Preparação para a fase de lançamento da API.
+
+## Dificuldades Encontradas
+- Ajustar a performance da API para suportar um maior número de requisições.
+
+## Soluções Implementadas
+- Otimização das consultas e ajustes na lógica de processamento.
+
+## Aprendizados
+- Aprendizado sobre a importância da performance em aplicações web.
+
+## Próximos Passos
+- Realizar uma apresentação final do backend para a turma.
+- Planejar o lançamento da API e estratégias de divulgação.
