@@ -263,3 +263,63 @@
 ## Soluções Implementadas
 - Realização de uma sessão de code review entre os integrantes.
 - Criação de um documento de boas práticas para o projeto.
+
+## Aprendizados
+- Aprendizado sobre técnicas de otimização de código.
+- Importância da documentação no desenvolvimento colaborativo.
+
+## Próximos Passos
+- Iniciar desenvolvimento da tela de feedback dos usuários.
+- Planejar a integração com a exibição de cards de caronas.
+
+---
+
+# Data: 12/05/2025
+**Duração:** 3 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Desenvolvimento da tela de feedback dos usuários (mockup).
+- Criação de um sistema de avaliação para caronas (mockup).
+
+## Dificuldades Encontradas
+- Definir critérios de avaliação e feedback.
+- Dificuldade em integrar o sistema de feedback com o banco de dados.
+
+## Soluções Implementadas
+- Criação de um modelo de dados para armazenar feedbacks.
+- Discussão em grupo para definir critérios de avaliação.
+
+## Aprendizados
+- Aprendizado sobre armazenamento e recuperação de dados em Flutter.
+- Importância do feedback para a melhoria contínua do serviço.
+
+## Próximos Passos
+- Concluir o mockup da tela de feedback.
+- Iniciar desenvolvimento do mockup da tela de exibição de cards de caronas.
+
+---
+
+# Data: 19/05/2025
+**Duração:** 3 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Desenvolvimento do mockup da tela de exibição de cards de caronas.
+- Implementação da lógica para exibir caronas disponíveis (em mockup).
+
+## Dificuldades Encontradas
+- Dificuldade em definir o layout dos cards.
+- Garantir que as informações das caronas sejam exibidas corretamente no mockup.
+
+## Soluções Implementadas
+- Criação de mockups para testar o design dos cards.
+- Ajustes na chamada da API para garantir a correta exibição dos dados no mockup.
+
+## Aprendizados
+- Aprendizado sobre design responsivo em Flutter.
+- Melhoria na manipulação de dados para exibição em listas.
+
+## Próximos Passos
+- Testar a funcionalidade de exibição de caronas com usuários reais (mockup).
+
