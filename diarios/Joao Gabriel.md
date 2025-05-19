@@ -88,49 +88,49 @@
 - **Sprint:** 2
 
 ## Atividades Realizadas
-Desenvolvimento inicial do filtro da página home.
-Implementação de uma classe para geração de título.
+- Desenvolvimento inicial do filtro da página home.
+- Implementação de uma classe para geração de título.
 
 ## Dificuldades Encontradas
-Centralização de cada opção do filtro
-Tamanho que o filtro cobrirá a tela do usuário
-Acomodar todos os filtros no espaço de tela
+- Centralização de cada opção do filtro
+- Tamanho que o filtro cobrirá a tela do usuário
+- Acomodar todos os filtros no espaço de tela
 
 ## Soluções Implementadas
-Utilização do "EdgeInsets.symmetric(horizontal: 40, vertical: 30)" para deixar todos os elementos centralizados.
-Utilização do "MediaQuery.of(context).size.height * 0.9" para cobrir 90% da tela do usuário, se adaptando ao tamanho da tela.
-Utilização do "SingleChildScrollView()" para permitir que o usuário deslize a tela com os dedos para baixo ou para cima.
+- Utilização do "EdgeInsets.symmetric(horizontal: 40, vertical: 30)" para deixar todos os elementos centralizados.
+- Utilização do "MediaQuery.of(context).size.height * 0.9" para cobrir 90% da tela do usuário, se adaptando ao tamanho da tela.
+- Utilização do "SingleChildScrollView()" para permitir que o usuário deslize a tela com os dedos para baixo ou para cima.
 
 ## Aprendizados
-Aprendizado sobre o recurso "EdgeInsets.symmetric".
-Aprendizado sobre o recurso "MediaQuery" complementando com "of (passando o contexto)", "size" e "height" para ajustar o tamanho da tela do filtro.
-Aprendizado sobre o recurso "SingleChildScrollView()" para permitir que o filtro seja "deslizável".
+- Aprendizado sobre o recurso "EdgeInsets.symmetric".
+- Aprendizado sobre o recurso "MediaQuery" complementando com "of (passando o contexto)", "size" e "height" para ajustar o tamanho da tela do filtro.
+- Aprendizado sobre o recurso "SingleChildScrollView()" para permitir que o filtro seja "deslizável".
 
 ## Próximos Passos
-Implementação dos filtros
+- Implementação dos filtros
 
 # Data: 07/04/2025
 - **Duração da sessão:** 2:00h
 - **Sprint:** 2
 
 ## Atividades Realizadas
-Implementação de todos os filtros (veículo, faixa etária, gênero do motorista, quantidade de vagas disponíveis e tempo de postagem da carona).
+- Implementação de todos os filtros (veículo, faixa etária, gênero do motorista, quantidade de vagas disponíveis e tempo de postagem da carona).
 
 ## Dificuldades Encontradas
-Implementação da funcionalidade visual de cada filtro, de forma organizada e limpa
+- Implementação da funcionalidade visual de cada filtro, de forma organizada e limpa
 
 ## Soluções Implementadas
-Implementação de classes separadas para cada filtro.
-Implementação do recurso "ChoiceChipWidget"
-Implementação do recurso "CustomThumbShapeRangeSlider"
+- Implementação de classes separadas para cada filtro.
+- Implementação do recurso "ChoiceChipWidget"
+- Implementação do recurso "CustomThumbShapeRangeSlider"
 
 ## Aprendizados
-Utilização de ferramentas para permitir ou não, a seleção e uma ou mais opções do filtro específico.
-Utilização de ferramentas para a filtragem de uma faixa de idade (Exemplo: de 25 a 30 anos).
+- Utilização de ferramentas para permitir ou não, a seleção e uma ou mais opções do filtro específico.
+- Utilização de ferramentas para a filtragem de uma faixa de idade (Exemplo: de 25 a 30 anos).
 
 
 ## Próximos Passos
-Implementação de snackbar
+- Implementação de snackbar
 
 
 # Data: 21/04/2025
@@ -138,22 +138,22 @@ Implementação de snackbar
 - **Sprint:** 2
 
 ## Atividades Realizadas
-Implementação do snackbar ao favoritar alguma carona
+- Implementação do snackbar ao favoritar alguma carona
 
 ## Dificuldades Encontradas
-Inclusão da snackbar junto ao local correto do código
-Apresentação correta do snackbar junto a parte inferior central da tela
+- Inclusão da snackbar junto ao local correto do código
+- Apresentação correta do snackbar junto a parte inferior central da tela
 
 ## Soluções Implementadas
-Implementação do snackbar dentro da model "RideCard" para apresentação de uma notificação para cada carona
-Implementação de uma ROW com "ScaffoldMessenger" e método "showSnackBar" para apresentação da notificação para cada carona favoritada
+- Implementação do snackbar dentro da model "RideCard" para apresentação de uma notificação para cada carona
+- Implementação de uma ROW com "ScaffoldMessenger" e método "showSnackBar" para apresentação da notificação para cada carona favoritada
 
 ## Aprendizados
-Utilização do widget "ScaffoldMessenger"
-Utilização do método "ShowSnackBar"
+- Utilização do widget "ScaffoldMessenger"
+- Utilização do método "ShowSnackBar"
 
 ## Próximos Passos
-Ajudar o Davi no backend
+- Ajudar o Davi no backend
 
 
 # Data: 05/05/2025
@@ -161,20 +161,20 @@ Ajudar o Davi no backend
 - **Sprint:** 2
 
 ## Atividades Realizadas
-Implementação de histórico de caronas no backend, apresentando este histórico no frontend.
-Implementação de um filtro para busca de caronas que estão no histórico.
+- Implementação de histórico de caronas no backend, apresentando este histórico no frontend.
+- Implementação de um filtro para busca de caronas que estão no histórico.
 
 ## Dificuldades Encontradas
-Dificuldade na otimização das consultas, para uma consulta mais rápida.
+- Dificuldade na otimização das consultas, para uma consulta mais rápida.
 
 ## Soluções Implementadas
-Implementação de índices.
+- Implementação de índices.
 
 ## Aprendizados
-Aprendizados sobre a eficiência em uma consulta no banco de dados
+- Aprendizados sobre a eficiência em uma consulta no banco de dados
 
 ## Próximos Passos
-Trabalhar com o pessoal do grupo para ajudar no chat, para gestão de mensagens
+- Trabalhar com o pessoal do grupo para ajudar no chat, para gestão de mensagens
 
 
 # Data: 12/05/2025
@@ -182,18 +182,18 @@ Trabalhar com o pessoal do grupo para ajudar no chat, para gestão de mensagens
 - **Sprint:** 2
 
 ## Atividades Realizadas
-Rodando o projeto completo em minha máquina
-Testando implementação do chat
+- Rodando o projeto completo em minha máquina
+- Testando implementação do chat
 
 ## Dificuldades Encontradas
-Apresentação da nova mensagem em tempo real
+- Apresentação da nova mensagem em tempo real
 
 ## Soluções Implementadas
-Implementação das função "initState" para iniciar a conversa
-Implementação da função "sendMessage" para adição da mensagem junto ao bloco de mensagens anteriores
+- Implementação das função "initState" para iniciar a conversa
+- Implementação da função "sendMessage" para adição da mensagem junto ao bloco de mensagens anteriores
 
 ## Aprendizados
-Apresentação do histórico de mensagens anteriores e o processo de envio da mensagem
+- Apresentação do histórico de mensagens anteriores e o processo de envio da mensagem
 
 ## Próximos Passos
 ##
