@@ -145,7 +145,7 @@
 
 ## 📅 Data: 14/04/2025  
 **Duração:** 3 horas  
-**Sprint:** 3  
+**Sprint:** 2 
 
 ### Atividades Realizadas:
 - Desenvolvi o botão "Termo de Serviço".
@@ -169,7 +169,7 @@
 
 ## 📅 Data: 22/04/2025  
 **Duração:** 3 horas  
-**Sprint:** 3  
+**Sprint:** 2 
 
 ### Atividades Realizadas:
 - Finalizei e testei a integração das telas de perfil e edição.
@@ -192,7 +192,7 @@
 
 ## 📅 Data: 29/04/2025  
 **Duração:** 3 horas  
-**Sprint:** 4  
+**Sprint:** 3 
 
 ### Atividades Realizadas:
 - Reunião de revisão da sprint anterior.
@@ -215,7 +215,7 @@
 
 ## 📅 Data: 06/05/2025  
 **Duração:** 3 horas  
-**Sprint:** 4  
+**Sprint:** 3  
 
 ### Atividades Realizadas:
 - Desenvolvimento inicial da tela de pedidos.
@@ -238,7 +238,7 @@
 
 ## 📅 Data: 13/05/2025  
 **Duração:** 3 horas  
-**Sprint:** 5  
+**Sprint:** 3  
 
 ### Atividades Realizadas:
 - Ajustes visuais finais na tela de perfil.
@@ -262,7 +262,7 @@
 
 ## 📅 Data: 19/05/2025  
 **Duração:** 3 horas  
-**Sprint:** 5  
+**Sprint:** 3  
 
 ### Atividades Realizadas:
 - Revisão geral do app.
