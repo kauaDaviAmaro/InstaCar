@@ -17,11 +17,11 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void navigateToTerms(BuildContext context) {
-    GoRouter.of(context).go('/terms');
+    GoRouter.of(context).push('/terms');
   }
 
   void navigateToContact(BuildContext context) {
-    GoRouter.of(context).go('/contact');
+    GoRouter.of(context).push('/contact');
   }
 
   @override
