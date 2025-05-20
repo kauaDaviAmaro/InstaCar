@@ -91,3 +91,186 @@
 ## Próximos Passos
 - Concluir o desenvolvimento da página de cadastro
 - Iniciar desenvolvimento da página principal (landing page)
+
+# Data: 31/03/2025
+**Duração:** 3 horas  
+**Sprint:** 1
+
+## Atividades Realizadas
+- Finalização da página de cadastro.
+- Implementação da navegação entre as telas principais.
+
+## Dificuldades Encontradas
+- Integração da lógica de autenticação com o backend.
+- Alinhamento de componentes responsivos.
+
+## Soluções Implementadas
+- Consultei videos para ligação com dados reais.
+- Criação de um fluxo de navegação claro e intuitivo.
+
+## Aprendizados
+- Conexão com o backend
+- Melhoria na utilização de rotas e navegação.
+- Alinhar componentes
+
+## Próximos Passos
+- Iniciar desenvolvimento da tela de perfil do usuário.
+- Planejar a segunda sprint no Jira.
+
+---
+
+# Data: 07/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas:
+- Iniciei o botão "Fale Conosco" na tela de perfil.
+- Finalizei a tela de Edição de Perfil com campos e validações.
+
+## Dificuldades Encontradas:
+- Definir quais informações do perfil são essenciais.
+
+## Soluções:
+- Pesquisa sobre melhores práticas para design de perfis.
+
+## Aprendizados:
+- Melhoria na estruturação de dados do usuário.
+
+## Próximos Passos:
+- Finalizar o botão "Fale Conosco".
+- Criar tela ou link para "Termo de Serviço".
+
+---
+
+# Data: 14/04/2025
+**Duração:** 2 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Desenvolvi o botão "Termo de Serviço".
+- Criei nova tela com o texto do termo.
+
+## Dificuldades:
+- Escolha entre modal ou nova tela para exibição do termo.
+
+## Soluções:
+- Implementação com Navigator.push() para melhor leitura.
+
+## Aprendizados
+- Navegação entre telas e organização de conteúdo estático.
+
+## Próximos Passos
+- Testes de usabilidade.
+
+---
+
+# Data: 21/04/2025
+**Duração:** 3 horas  
+**Sprint:** 2
+
+## Atividades Realizadas
+- Estilização final do botão "Fale Conosco" com link funcional.
+
+## Dificuldades Encontradas
+- Responsividade para telas diferentes
+
+## Soluções Implementadas
+- Uso de MediaQuery e Flexible.
+
+## Aprendizados
+- Responsividade
+
+## Próximos Passos
+- Iniciar integração com APIs externas (ex.: cadastro e login).
+- Reunir feedbacks de usabilidade.
+
+---
+
+# Data: 28/04/2025
+**Duração:** 1 hora
+**Sprint:** 2
+
+## Atividades Realizadas
+- Reunião de revisão da sprint anterior.
+- Definir tarefas da próxima sprint.
+
+## Dificuldades Encontradas
+-
+
+## Soluções Implementadas
+-
+
+## Aprendizados
+- Documentação colaborativa no GitHub.
+
+## Próximos Passos
+- Começar as tarefas da nova sprint: tela de pedidos e histórico.
+
+---
+
+# Data: 05/05/2025
+**Duração:** 2 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Inicio do desenvolvimento da tela de pedidos
+
+## Dificuldades Encontradas
+- Quais dados iriam aparecer na tela
+
+## Soluções Implementadas
+- Modelo local de dados simulados para testes visuais.
+
+## Aprendizados
+- Uso de listas dinâmicas com ListView.builder.
+
+## Próximos Passos
+- Adicionar filtros
+
+---
+
+# Data: 12/05/2025
+**Duração:** 3 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Ajustes visuais finais na tela de perfil.
+- Criação da tela inicial para visitantes não logados.
+
+## Dificuldades Encontradas
+- Garantir consistência entre modo logado e não logado.
+
+## Soluções Implementadas
+- Utilização de estrutura condicional para alternar o estado de autenticação.
+
+## Aprendizados
+- Gerenciamento de estado simples com Flutter (setState).
+
+## Próximos Passos
+- Finalizar fluxo de autenticação.
+- Revisar todo o fluxo de navegação.
+
+---
+
+# Data: 19/05/2025
+**Duração:** 1 horas  
+**Sprint:** 3
+
+## Atividades Realizadas
+- Revisão geral do app.
+- Correções finais de responsividade e design.
+- Início da preparação para apresentação final do projeto.
+
+## Dificuldades Encontradas
+- Ajustes de responsividade
+
+## Soluções Implementadas
+- Uso de MediaQuery e Flexible.
+
+## Aprendizados
+- Responsividade
+- Organização e planejamento
+
+## Próximos Passos
+- Apresentar o projeto.
+- Submeter documentação e código final.
