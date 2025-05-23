@@ -3,7 +3,7 @@ import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   void logout(BuildContext context) {
     GoRouter.of(context).go('/login');

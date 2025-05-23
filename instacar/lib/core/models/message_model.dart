@@ -11,12 +11,17 @@ class Message {
     required this.timestamp,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) {
-    return Message(
-      senderId: json['senderId'],
-      receiverId: json['receiverId'],
-      message: json['message'],
-      timestamp: DateTime.parse(json['timestamp']),
-    );
-  }
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
+    senderId: json['senderId'],
+    receiverId: json['receiverId'],
+    message: json['message'],
+    timestamp: DateTime.parse(json['timestamp']),
+  );
+
+  Map<String, dynamic> toJson() => {
+    'senderId': senderId,
+    'receiverId': receiverId,
+    'message': message,
+    'timestamp': timestamp.toIso8601String(),
+  };
 }

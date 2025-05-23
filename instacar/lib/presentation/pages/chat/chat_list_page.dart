@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
-import 'chat_page.dart';
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
+
+import '../../widgets/ChatBlocList.dart';
+import 'chat_page.dart';
+import '../../widgets/ChatBlocProvider.dart';
+import 'package:instacar/core/services/chat_service.dart';
 
 class ChatListPage extends StatefulWidget {
   final String userId;
-
   const ChatListPage({super.key, required this.userId});
 
   @override
@@ -13,103 +17,88 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
-  List<Map<String, dynamic>> chats = [];
+  late ChatListBloc chatListBloc;
   int currentIndex = 3;
-  String searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    loadChats();
+    chatListBloc = ChatListBloc();
+    chatListBloc.add(LoadChats());
   }
 
-  void loadChats() async {
-    // Simulação de requisição ao backend (substituir por API real)
-    await Future.delayed(Duration(seconds: 1));
-    setState(() {
-      chats = [
-        {
-          "userId": "2",
-          "name": "João",
-          "LastMessage": "Oi! Como você está?",
-          "lastMessageTime": "10:00",
-          "initials": "J",
-        },
-        {
-          "userId": "3",
-          "name": "Maria",
-          "LastMessage": "Vamos nos encontrar?",
-          "lastMessageTime": "09:30",
-          "initials": "M",
-        },
-        {
-          "userId": "4",
-          "name": "Carlos",
-          "LastMessage": "Oi! Tudo bem?",
-          "lastMessageTime": "08:45",
-          "initials": "C",
-        },
-        {
-          "userId": "5",
-          "name": "Ana",
-          "LastMessage": "Oi! Tudo certo?",
-          "lastMessageTime": "08:00",
-          "initials": "A",
-        },
-      ];
-    });
+  @override
+  void dispose() {
+    chatListBloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Filter chats based on the search query
-    final filteredChats =
-        chats.where((chat) {
-          return chat["name"].toLowerCase().contains(searchQuery.toLowerCase());
-        }).toList();
-
-    return Scaffold(
-      body: Column(
-        children: [
-          TopNavbar(
-            title: "Chats",
-            onSearchChanged: (value) {
-              setState(() {
-                searchQuery = value;
-              });
-            },
-          ),
-          Expanded(
-            // Wrap ListView in Expanded to avoid overflow
-            child: ListView.builder(
-              itemCount: filteredChats.length,
-              itemBuilder: (context, index) {
-                final chat = filteredChats[index];
-                return ListTile(
-                  leading: CircleAvatar(child: Text(chat["initials"])),
-                  title: Text(chat["name"]),
-                  subtitle: Text(chat["LastMessage"]),
-                  trailing: Text(chat["lastMessageTime"]),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => ChatPage(
-                              receiveName: chat["name"],
-                              userId: widget.userId,
-                              receiverId: chat["userId"],
-                            ),
-                      ),
-                    );
-                  },
-                );
+    return BlocProvider.value(
+      value: chatListBloc,
+      child: Scaffold(
+        body: Column(
+          children: [
+            TopNavbar(
+              title: "Chats",
+              onSearchChanged: (value) {
+                chatListBloc.add(SearchChats(value));
               },
             ),
-          ),
-        ],
+            Expanded(
+              child: BlocBuilder<ChatListBloc, ChatListState>(
+                builder: (context, state) {
+                  if (state is ChatListLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is ChatListLoaded) {
+                    final chats = state.chats;
+                    if (chats.isEmpty) {
+                      return const Center(child: Text('Nenhum chat encontrado.'));
+                    }
+                    return ListView.builder(
+                      itemCount: chats.length,
+                      itemBuilder: (context, index) {
+                        final chat = chats[index];
+                        return ListTile(
+                          leading: CircleAvatar(child: Text(chat["initials"])),
+                          title: Text(chat["name"]),
+                          subtitle: Text(chat["LastMessage"]),
+                          trailing: Text(chat["lastMessageTime"]),
+                          onTap: () {
+                            final history = chatListBloc.getChatHistory(chat["userId"]);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BlocProvider(
+                                  create: (_) => ChatBloc(
+                                    chatService: ChatService(),
+                                    userId: widget.userId,
+                                    receiverId: chat["userId"],
+                                    initialMessages: history,
+                                  ),
+                                  child: ChatPage(
+                                    userId: widget.userId,
+                                    receiveName: chat["name"],
+                                    receiverId: chat["userId"],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
       ),
-      bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
     );
   }
 }
