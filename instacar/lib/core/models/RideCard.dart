@@ -1,5 +1,7 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../presentation/widgets/FavoriteBloc.dart'; // importe o arquivo do BLoC criado
 
 class RideCard extends StatefulWidget {
   final String name;
@@ -37,242 +39,240 @@ class RideCard extends StatefulWidget {
 
 class _RideCardState extends State<RideCard> {
   bool isExpanded = false;
-  bool isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Top Row: Name + Age + Date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  widget.genderAge,
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                Text(widget.date, style: const TextStyle(color: Colors.grey)),
-              ],
-            ),
-
-            const Divider(height: 16),
-
-            // Locations
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Column(
-                  children: [
-                    const Icon(Icons.circle, size: 10),
-                    Container(
-                      height: 50, // Takes maximum height of the parent
-                      width: 1, // Width of the line
-                      color: Colors.black, // Color of the line
-                    ),
-                    const Icon(Icons.square, size: 10),
-                  ],
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Locations
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              widget.from,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              widget.to,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isExpanded = !isExpanded;
-                    });
-                  },
-                ),
-              ],
-            ),
-
-            // Expandable content
-            AnimatedCrossFade(
-              firstChild: const SizedBox.shrink(),
-              secondChild: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return BlocProvider(
+      create: (_) => FavoriteRideBloc(),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Top Row: Name + Age + Date
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 10,
+                  Text(
+                    widget.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    widget.genderAge,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  Text(widget.date, style: const TextStyle(color: Colors.grey)),
+                ],
+              ),
+
+              const Divider(height: 16),
+
+              // Locations
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
                     children: [
-                      Text(
-                        "Tipo:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      const Icon(Icons.circle, size: 10),
+                      Container(
+                        height: 50,
+                        width: 1,
+                        color: Colors.black,
                       ),
-                      Text(widget.type),
-                      Text(
-                        "Modelo:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(widget.model),
-                      Text(
-                        "Cor:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(widget.color),
-                      Text(
-                        "Placa:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(widget.plate),
+                      const Icon(Icons.square, size: 10),
                     ],
                   ),
-
-                  const SizedBox(height: 8),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(
-                      12,
-                    ), // Add padding for better spacing
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Set the background color to white
-                      borderRadius: BorderRadius.circular(4),
-                    ),
+                  const SizedBox(width: 8),
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Observação:",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: Colors.white,
+                              ),
+                              child: Text(
+                                widget.from,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: Colors.white,
+                              ),
+                              child: Text(
+                                widget.to,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          widget.observation,
-                        ), // Display the observation text
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        onTap: () {
-                          setState(() {
-                            isFavorited = !isFavorited;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            content: AwesomeSnackbarContent(
-                              title: 'Carona Favoritada!',
-                              message:
-                                  'Você marcou a carona como favorita.',
-                              contentType: ContentType.help,
-                            ),
-                          ));
-                          // Callback externo se necessário
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                isFavorited
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: Colors.pink,
-                              ),
-                              const SizedBox(width: 4),
-                              const Text(
-                                "Favoritar",
-                                style: TextStyle(color: Colors.pink),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Text("Vagas ${widget.takenSpots}/${widget.totalSpots}"),
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        onTap: () {
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.chat_bubble_outline,
-                                color: Colors.blue,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                "Chat",
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  IconButton(
+                    icon: Icon(
+                      isExpanded ? Icons.expand_less : Icons.expand_more,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
                   ),
                 ],
               ),
-              crossFadeState:
-                  isExpanded
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-              duration: const Duration(milliseconds: 300),
-            ),
-          ],
+
+              // Expandable content
+              AnimatedCrossFade(
+                firstChild: const SizedBox.shrink(),
+                secondChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 10,
+                      children: [
+                        const Text(
+                          "Tipo:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.type),
+                        const Text(
+                          "Modelo:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.model),
+                        const Text(
+                          "Cor:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.color),
+                        const Text(
+                          "Placa:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.plate),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Observação:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(widget.observation),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Aqui a Row com Favoritar usando BLoC
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BlocBuilder<FavoriteRideBloc, FavoriteRideState>(
+                          builder: (context, state) {
+                            return InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: () {
+                                context.read<FavoriteRideBloc>().add(ToggleFavorite());
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  elevation: 0,
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.transparent,
+                                  content: AwesomeSnackbarContent(
+                                    title: state.isFavorited
+                                        ? 'Carona Desfavoritada!'
+                                        : 'Carona Favoritada!',
+                                    message: state.isFavorited
+                                        ? 'Você removeu a carona dos favoritos.'
+                                        : 'Você marcou a carona como favorita.',
+                                    contentType: ContentType.help,
+                                  ),
+                                ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      state.isFavorited
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: Colors.pink,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    const Text(
+                                      "Favoritar",
+                                      style: TextStyle(color: Colors.pink),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+
+                        Text("Vagas ${widget.takenSpots}/${widget.totalSpots}"),
+
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            // Aqui pode abrir chat
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.chat_bubble_outline,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  "Chat",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                crossFadeState:
+                    isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                duration: const Duration(milliseconds: 300),
+              ),
+            ],
+          ),
         ),
       ),
     );
