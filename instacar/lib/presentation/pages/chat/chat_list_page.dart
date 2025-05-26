@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 import 'chat_page.dart';
@@ -62,10 +63,14 @@ class _ChatListPageState extends State<ChatListPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Filter chats based on the search query
+    // Normalize search query
+    final normalizedQuery = removeDiacritics(searchQuery).toLowerCase();
+
+    // Filter chats based on normalized search query
     final filteredChats =
         chats.where((chat) {
-          return chat["name"].toLowerCase().contains(searchQuery.toLowerCase());
+          final normalizedName = removeDiacritics(chat["name"]).toLowerCase();
+          return normalizedName.contains(normalizedQuery);
         }).toList();
 
     return Scaffold(
@@ -78,6 +83,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 searchQuery = value;
               });
             },
+            showFilter: false,
           ),
           Expanded(
             // Wrap ListView in Expanded to avoid overflow

@@ -5,8 +5,14 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 class TopNavbar extends StatefulWidget {
   final Function(String) onSearchChanged;
   final String title;
+  final bool showFilter; // New parameter
 
-  const TopNavbar({super.key, required this.onSearchChanged, required this.title});
+  const TopNavbar({
+    super.key,
+    required this.onSearchChanged,
+    required this.title,
+    this.showFilter = true, // Default is true
+  });
 
   @override
   State<TopNavbar> createState() => _TopNavbarState();
@@ -48,7 +54,7 @@ class _TopNavbarState extends State<TopNavbar> {
                     height: 30,
                   ),
                   Text(
-                    widget.title, // Use widget.title here
+                    widget.title,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -69,7 +75,10 @@ class _TopNavbarState extends State<TopNavbar> {
                         hintStyle: const TextStyle(color: Colors.grey),
                         filled: true,
                         fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 12,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide.none,
@@ -77,23 +86,28 @@ class _TopNavbarState extends State<TopNavbar> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                  if (widget.showFilter) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.filter_list,
+                          color: Colors.blue,
+                          size: 24,
+                        ),
+                        onPressed: () {
+                          showBarModalBottomSheet(
+                            context: context,
+                            builder: (context) => HomeModalAdd(),
+                          );
+                        },
+                      ),
                     ),
-                    child: IconButton(
-                      icon: const Icon(Icons.filter_list, color: Colors.blue, size: 24),
-                      onPressed: () {
-                        showBarModalBottomSheet(
-                          context: context,
-                          builder: (context) => HomeModalAdd()
-                        );
-                        // You can add a filter modal here
-                      },
-                    ),
-                  ),
+                  ],
                 ],
               ),
             ],

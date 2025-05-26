@@ -14,7 +14,7 @@ class CaronasPage extends StatefulWidget {
 }
 
 class _CaronasPageState extends State<CaronasPage> {
-  int currentIndex = 3;
+  int currentIndex = 2;
   String searchQuery = '';
   List<dynamic> caronas = [];
   bool isLoading = true;
