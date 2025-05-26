@@ -196,5 +196,25 @@
 - Apresentação do histórico de mensagens anteriores e o processo de envio da mensagem
 
 ## Próximos Passos
-##
+- Trabalhar na inclusão do padrão BLoC junto ao chat
+
+
+# Data: 19/05/2025
+- **Duração da sessão:** 2:30 horas
+- **Sprint:** 2
+
+## Atividades Realizadas
+- Alterando o projeto para se enquadrar no padrão BLoC
+- Implementando o padrão BLoC dentro do chat
+
+## Dificuldades Encontradas
+- Fazer tudo se encaixar com o restante do código já pronto
+
+## Soluções Implementadas
+- Criação das classes: ChatBlocList e ChatBlocProvider
+- Criação de eventos e estados: chat_event, chat_State, chat_list_event e chat_list_State
+- 
+
+## Aprendizados
+- Implementação do BLoC
 
