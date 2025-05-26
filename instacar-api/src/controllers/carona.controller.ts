@@ -4,13 +4,53 @@ import { MESSAGES } from "../utils/messages";
 import { IAuthRequest } from "../types";
 import { CreateCaronaDTO } from "../interfaces/carona-service.interface";
 
+function calcularIdade(dataNascimento: string): number {
+  const nascimento = new Date(dataNascimento);
+  const hoje = new Date();
+  let idade = hoje.getFullYear() - nascimento.getFullYear();
+  const m = hoje.getMonth() - nascimento.getMonth();
+
+  if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+    idade--;
+  }
+
+  return idade;
+}
+
+function formatarDataHora(dataHora: string): string {
+  const date = new Date(dataHora);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+}
+
+
 const caronaController = {
   getCaronas: async (req: Request, res: Response): Promise<void> => {
     try {
       const caronas = await CaronaService.getAllCaronas();
 
-      res.json(caronas);
+      const formatted = caronas.map((carona) => {
+        const motorista = carona.motorista;
+
+        return {
+          id: carona.id,
+          name: motorista?.name || "Motorista",
+          genderAge: `${motorista?.gender || "N/D"}, ${motorista?.birthDate ? calcularIdade(motorista.birthDate) : "N/D"}`,
+          date: formatarDataHora(carona.dataHora),
+          from: carona.origem,
+          to: carona.destino,
+          type: motorista?.tipoVeiculo || "N/D",
+          model: motorista?.modeloVeiculo || "N/D",
+          color: motorista?.corVeiculo || "N/D",
+          plate: motorista?.placa || "N/D",
+          totalSpots: carona.vagas,
+          takenSpots: carona.vagas - (carona.vagasDisponiveis || 0),
+          observation: carona.observacao || "",
+        };
+      });
+
+      res.json(formatted);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR });
     }
   },
@@ -107,7 +147,7 @@ const caronaController = {
       res.json(caronas);
     } catch (error) {
       console.log(error);
-      
+
       res.status(500).json({ message: MESSAGES.CARONA.ERROR });
     }
   },

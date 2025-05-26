@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instacar/core/services/FavoritesService.dart';
 import 'package:instacar/presentation/widgets/RideListWidget.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
@@ -14,6 +15,20 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   String searchQuery = '';
+  List<String> favoriteRideIds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadFavorites();
+  }
+
+  Future<void> loadFavorites() async {
+    final ids = await FavoritesService.getFavorites();
+    setState(() {
+      favoriteRideIds = ids;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +46,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           Expanded(
             child: RideListWidget(
               searchQuery: searchQuery,
+              favoriteRideIds: favoriteRideIds,
             ),
           ),
         ],

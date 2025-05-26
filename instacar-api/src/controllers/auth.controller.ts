@@ -27,33 +27,46 @@ export const sendRecoveryCode = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-  const verificationCode = await createRecoveryCode(email);
-  if (!verificationCode) {
-    res.status(404).json({ message: MESSAGES.USER.NOT_FOUND });
-    return;
+    const verificationCode = await createRecoveryCode(email);
+    if (!verificationCode) {
+      res.status(404).json({ message: MESSAGES.USER.NOT_FOUND });
+      return;
+    }
+
+    await sendEmail(
+      email,
+      MESSAGES.EMAIL.SUBJECT,
+      `Seu código de verificação é: ${verificationCode}`
+    );
+    res.json({ message: MESSAGES.EMAIL.SUCCESS });
+  } catch (error: any) {
+    console.error('Error sending recovery code:', error);
+    if (error.message === 'USER_NOT_FOUND') {
+      res.status(404).json({ message: MESSAGES.USER.NOT_FOUND });
+      return;
+    }
+    res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR, error });
   }
-
-  await sendEmail(
-    email,
-    MESSAGES.EMAIL.SUBJECT,
-    `Seu código de verificação é: ${verificationCode}`
-  );
-  res.json({ message: MESSAGES.EMAIL.SUCCESS });
 };
 
 export const verifyRecoveryCode = async (req: Request, res: Response): Promise<void> => {
-  const { email, code } = req.body;
+  try {
+    const { email, code } = req.body;
 
-  const isValid = await verifyCode(email, code);
+    const isValid = await verifyCode(email, code);
 
-  if (!isValid) {
-    res.status(400).json({ message: MESSAGES.GENERAL.UNAUTHORIZED });
-    return;
+    if (!isValid) {
+      res.status(400).json({ message: MESSAGES.GENERAL.UNAUTHORIZED });
+      return;
+    }
+
+    res.json({ message: MESSAGES.AUTH.RESET_CODE_SUCCESS });
+  } catch (error: any) {
+    res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR, error });
   }
-
-  res.json({ message: MESSAGES.AUTH.RESET_CODE_SUCCESS });
 };
 
 export const resetPassword = async (

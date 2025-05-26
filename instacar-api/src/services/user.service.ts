@@ -3,16 +3,25 @@ import User from '../models/User';
 import { IUser } from '../types';
 
 export const createUser = async (userData: IUser) => {
-  const { nome, email, senha } = userData;
+  const { name, email, password, birthDate, phone, cep, number } = userData;
 
-  if (!nome || !email || !senha) {
+  if (!password || !email || !password) {
     throw new Error('INVALID_USER');
   }
 
-  const hashedPassword = await bcrypt.hash(senha, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  return User.create({ nome, email, senha: hashedPassword });
+  return User.create({
+    name,
+    email,
+    password: hashedPassword,
+    birthDate,
+    phone,
+    cep,
+    number,
+  });
 };
+
 
 export const getUserById = async (id: string) => {
   const user = await User.findOne({ where: { id } });

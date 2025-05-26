@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({super.key});
@@ -9,7 +11,39 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController commentController = TextEditingController();
   int selectedStars = 4;
+  bool isLoading = false;
+
+  Future<void> submitFeedback() async {
+    setState(() => isLoading = true);
+
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/api/feedback'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': nameController.text,
+        'email': emailController.text,
+        'rating': selectedStars,
+        'comment': commentController.text,
+      }),
+    );
+
+    setState(() => isLoading = false);
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Obrigado pelo seu feedback!')),
+      );
+      GoRouter.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Erro ao enviar feedback')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +51,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            GoRouter.of(context).pop();
-          },
+          onPressed: () => GoRouter.of(context).pop(),
         ),
         title: const Text('Fale Conosco'),
         centerTitle: true,
@@ -31,43 +63,40 @@ class _FeedbackPageState extends State<FeedbackPage> {
           children: [
             const Center(
               child: Text(
-                'De sua opinião, feedback ou algo mais:',
+                'Deixe sua opinião, sugestão ou elogio:',
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ),
             const SizedBox(height: 24),
-
-            // Nome
-            const Text('Name'),
+            const Text('Nome'),
             const SizedBox(height: 4),
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.person),
-                hintText: 'Enter your name',
+                hintText: 'Digite seu nome',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
             const SizedBox(height: 16),
-
-            // Email
-            const Text('Email Address'),
+            const Text('Email'),
             const SizedBox(height: 4),
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.email),
-                hintText: 'Enter your email',
+                hintText: 'Digite seu email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 24),
-
-            // Avaliação
             const Text(
-              'Share your experience in scaling',
+              'Como você avalia sua experiência?',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -78,81 +107,51 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     index < selectedStars ? Icons.star : Icons.star_border,
                     color: Colors.amber,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      selectedStars = index + 1;
-                    });
-                  },
+                  onPressed: () => setState(() => selectedStars = index + 1),
                 );
               }),
             ),
             const SizedBox(height: 16),
-
-            // Comentário
             TextField(
+              controller: commentController,
               maxLines: 5,
               decoration: InputDecoration(
                 hintText:
-                'Fale mais sobre sua experiência  que podemos fazer para melhorar sua',
+                    'Fale mais sobre sua experiência ou o que podemos melhorar.',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
             const SizedBox(height: 24),
-
-            // Botões
             Row(
               children: [
                 Expanded(
                   child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Cancel'),
+                    onPressed: () => GoRouter.of(context).pop(),
+                    child: const Text('Cancelar'),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: isLoading ? null : submitFeedback,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('SUBMIT'),
+                    child:
+                        isLoading
+                            ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                            : const Text('ENVIAR'),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
-      ),
-      // Barra de navegação inferior (simulada)
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
       ),
     );
   }

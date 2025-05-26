@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:instacar/presentation/pages/auth/register_page.dart';
 import 'package:instacar/presentation/pages/chat/chat_list_page.dart';
+import 'package:instacar/presentation/pages/main/caronas_page.dart';
 import 'package:instacar/presentation/pages/main/favorites_page.dart';
 import 'package:instacar/presentation/pages/auth/password_reset.dart';
 import '../presentation/pages/main/contact_page.dart';
@@ -15,7 +16,7 @@ import '../presentation/pages/main/edit_profile_page.dart';
 import '../presentation/pages/main/terms_page.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/login',
@@ -68,6 +69,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/contact',
       builder: (context, state) => FeedbackPage(),
+    ),
+    GoRoute(
+      path: '/caronas',
+      builder: (context, state) => CaronasPage(), // Placeholder for caronas page
     ),
   ],
 );

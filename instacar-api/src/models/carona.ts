@@ -1,19 +1,41 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../config/db";
-import { ICarona } from "../types";
+import Usuario from "./User";
 
-class Carona extends Model<ICarona> {
+interface CaronaAttributes {
+  id: string;
+  motoristaId: string;
+  origem: string;
+  destino: string;
+  dataHora: string;
+  vagas: number;
+  status: "disponível" | "lotada" | "finalizada";
+  origem_lat?: number;
+  origem_lon?: number;
+  destino_lat?: number;
+  destino_lon?: number;
+  observacao?: string;
+  vagasDisponiveis?: number; // se você quiser rastrear isso separadamente
+}
+
+type CaronaCreationAttributes = Optional<CaronaAttributes, "id" | "status" | "origem_lat" | "origem_lon" | "destino_lat" | "destino_lon" | "observacao" | "vagasDisponiveis">;
+
+class Carona extends Model<CaronaAttributes, CaronaCreationAttributes> implements CaronaAttributes {
+  [x: string]: any;
   public id!: string;
   public motoristaId!: string;
   public origem!: string;
   public destino!: string;
   public dataHora!: string;
   public vagas!: number;
-  public status?: "disponível" | "lotada" | "finalizada";
+  public status!: "disponível" | "lotada" | "finalizada";
   public origem_lat?: number;
   public origem_lon?: number;
+  public destino_lat?: number;
+  public destino_lon?: number;
+  public observacao?: string;
+  public vagasDisponiveis?: number;
 
-  // timestamps!
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -28,10 +50,6 @@ Carona.init(
     motoristaId: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: {
-        model: "Users",
-        key: "id",
-      },
     },
     origem: {
       type: DataTypes.STRING,
@@ -42,7 +60,7 @@ Carona.init(
       allowNull: false,
     },
     dataHora: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     vagas: {
@@ -69,6 +87,14 @@ Carona.init(
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    observacao: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    vagasDisponiveis: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,
@@ -76,5 +102,11 @@ Carona.init(
     tableName: "Caronas",
   }
 );
+
+// 🔁 Relacionamento com o modelo Usuario
+Carona.belongsTo(Usuario, {
+  foreignKey: "motoristaId",
+  as: "motorista",
+});
 
 export default Carona;

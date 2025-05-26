@@ -8,6 +8,7 @@ import {
 import Carona from "../models/carona";
 import { ICarona } from "../types";
 import { validateCaronaData } from "../utils/carona-validator";
+import User from "../models/User";
 
 const CaronaService: ICaronaService = {
   async createCarona(data: CreateCaronaDTO): Promise<Carona> {
@@ -23,10 +24,25 @@ const CaronaService: ICaronaService = {
   },
 
   async listCaronas(filter?: CaronaFilter): Promise<Carona[]> {
-    const whereClause: FindOptions<ICarona> = filter
-      ? { where: filter as WhereOptions<ICarona> }
-      : {};
-    const caronas = await Carona.findAll(whereClause);
+    function cleanFilter(filter: CaronaFilter): Partial<CaronaFilter> {
+      return Object.fromEntries(
+        Object.entries(filter).filter(([_, v]) => v !== undefined)
+      ) as Partial<CaronaFilter>;
+    }
+
+    const whereFilter = filter ? cleanFilter(filter) : {};
+
+    const caronas = await Carona.findAll({
+      where: whereFilter,
+      include: [
+        {
+          model: User,
+          as: "motorista",
+          attributes: ["id", "name", "email", "fotoPerfil", "birthDate"],
+        },
+      ],
+    });
+
     return caronas;
   },
 
@@ -49,7 +65,15 @@ const CaronaService: ICaronaService = {
   },
 
   async getAllCaronas() {
-    const caronas = await Carona.findAll();
+    const caronas = await Carona.findAll({
+      include: [
+        {
+          model: User,
+          as: "motorista",
+          attributes: ["id", "name", "email", "fotoPerfil", "birthDate"],
+        },
+      ],
+    });
     return caronas;
   },
 

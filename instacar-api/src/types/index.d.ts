@@ -2,10 +2,17 @@ import { Request } from "express";
 
 export interface IUser {
   id?: string;
-  nome: string;
+  name: string;
   email: string;
-  senha: string;
+  password: string;
   fotoPerfil?: string;
+
+  // Novos campos
+  birthDate?: string;
+  phone?: string;
+  cep?: string;
+  number?: string;
+
   verificationCode?: string;
   codeExpires?: number | null;
 }

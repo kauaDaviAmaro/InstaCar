@@ -4,12 +4,18 @@ import { IUser } from '../types';
 
 class User extends Model<IUser> implements IUser {
   id?: string;
-  nome!: string;
+  name!: string;
   email!: string;
-  senha!: string;
+  password!: string;
   fotoPerfil?: string;
   verificationCode?: string;
   codeExpires?: number | null;
+
+  // Novos campos
+  birthDate?: string;
+  phone?: string;
+  cep?: string;
+  number?: string;
 }
 
 User.init(
@@ -19,12 +25,18 @@ User.init(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    nome: { type: DataTypes.STRING, allowNull: false },
+    name: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
-    senha: { type: DataTypes.STRING, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
     fotoPerfil: { type: DataTypes.STRING },
     verificationCode: { type: DataTypes.STRING },
     codeExpires: { type: DataTypes.BIGINT },
+
+    // Novos campos
+    birthDate: { type: DataTypes.STRING },
+    phone: { type: DataTypes.STRING },
+    cep: { type: DataTypes.STRING },
+    number: { type: DataTypes.STRING },
   },
   {
     sequelize,

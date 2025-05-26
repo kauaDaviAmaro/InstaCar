@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -18,10 +20,54 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController cepController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  Future<void> registerUser() async {
+    final url = Uri.parse('http://localhost:3000/api/users/register');
+
+    final body = {
+      'name': nameController.text.trim(),
+      'email': emailController.text.trim(),
+      'birthDate': birthDateController.text.trim(),
+      'phone': phoneController.text.trim(),
+      'cep': cepController.text.trim(),
+      'number': numberController.text.trim(),
+      'password': passwordController.text.trim(),
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 201) {
+        // Cadastro bem-sucedido
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Cadastro realizado com sucesso!')),
+        );
+        GoRouter.of(context).go('/login');
+      } else {
+        final responseData = jsonDecode(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Erro: ${responseData['message'] ?? 'Falha no cadastro'}',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Erro de rede: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       phoneController,
                       keyboardType: TextInputType.phone,
                       hintText: 'Digite seu número de celular',
-                      inputFormatters: [PhoneInputFormatter()],
+                      inputFormatters: [MaskedInputFormatter('## #####-####')],
                     ),
                     _buildTextField(
                       'CEP',
@@ -108,9 +154,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            print('Cadastro realizado com sucesso!');
+                            if (_formKey.currentState!.validate()) {
+                              if (passwordController.text !=
+                                  confirmPasswordController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('As senhas não coincidem'),
+                                  ),
+                                );
+                                return;
+                              }
+                              await registerUser();
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -165,8 +222,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               hintText: hintText,
             ),
-            validator: (value) =>
-                (value == null || value.isEmpty) ? 'Campo obrigatório' : null,
+            validator:
+                (value) =>
+                    (value == null || value.isEmpty)
+                        ? 'Campo obrigatório'
+                        : null,
           ),
         ],
       ),
@@ -202,8 +262,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller.text = DateFormat('dd/MM/yyyy').format(picked);
               }
             },
-            validator: (value) =>
-                (value == null || value.isEmpty) ? 'Campo obrigatório' : null,
+            validator:
+                (value) =>
+                    (value == null || value.isEmpty)
+                        ? 'Campo obrigatório'
+                        : null,
           ),
         ],
       ),
@@ -252,8 +315,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
             ),
-            validator: (value) =>
-                (value == null || value.isEmpty) ? 'Campo obrigatório' : null,
+            validator:
+                (value) =>
+                    (value == null || value.isEmpty)
+                        ? 'Campo obrigatório'
+                        : null,
           ),
         ],
       ),

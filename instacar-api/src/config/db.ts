@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize';
 import User from '../models/User'; // Ensure the User model is imported
 
 const sequelize = new Sequelize(process.env.DATABASE_URL as string, {
-  dialect: 'postgres',
+  dialect: 'mysql',
   logging: false,
 });
 

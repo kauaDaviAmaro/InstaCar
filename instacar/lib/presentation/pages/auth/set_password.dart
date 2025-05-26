@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
 class SetPassword extends StatefulWidget {
@@ -11,27 +14,80 @@ class SetPassword extends StatefulWidget {
 
 class _SetPassword extends State<SetPassword> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;  // Variável separada para o campo de confirmar senha
+  bool _obscureConfirmPassword = true;
   bool _isLoading = false;
   bool _isSuccess = false;
 
-  void _validatePassword() {
-    setState(() {
-      _isLoading = true;
-    });
+  String email = '';
+  String code = '';
 
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-        _isSuccess = true;
-      });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-      Future.delayed(Duration(seconds: 2), () {
+    final extra = GoRouterState.of(context).extra;
+    if (extra is Map<String, dynamic>) {
+      email = extra['email'] ?? '';
+      code = extra['code'] ?? '';
+    }
+  }
+
+  Future<void> _validatePassword() async {
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    if (password.isEmpty || confirmPassword.isEmpty) {
+      _showSnackBar('Preencha todos os campos.');
+      return;
+    }
+
+    if (password.length < 6) {
+      _showSnackBar('A senha deve ter pelo menos 6 caracteres.');
+      return;
+    }
+
+    if (password != confirmPassword) {
+      _showSnackBar('As senhas não coincidem.');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/api/auth/reset-password'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'code': code,
+          'newPassword': password,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _isSuccess = true;
+        });
+        await Future.delayed(Duration(seconds: 2));
         GoRouter.of(context).push('/login');
-      });
-    });
+      } else {
+        _showSnackBar('Erro: ${response.body}');
+      }
+    } catch (e) {
+      _showSnackBar('Erro ao conectar com o servidor.');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
   }
 
   @override
@@ -54,18 +110,33 @@ class _SetPassword extends State<SetPassword> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20),
-                Text("Insira uma nova senha", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                Text(
+                  "Insira uma nova senha",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
                 SizedBox(height: 10),
-                Text("Crie uma nova senha diferente das anteriores.", style: TextStyle(color: Colors.grey)),
+                Text(
+                  "Crie uma nova senha diferente das anteriores.",
+                  style: TextStyle(color: Colors.grey),
+                ),
                 SizedBox(height: 30),
                 TextField(
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: "Senha",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed:
+                          () => setState(
+                            () => _obscurePassword = !_obscurePassword,
+                          ),
                     ),
                   ),
                   obscureText: _obscurePassword,
@@ -75,10 +146,21 @@ class _SetPassword extends State<SetPassword> {
                   controller: _confirmPasswordController,
                   decoration: InputDecoration(
                     labelText: "Confirmar senha",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirmPassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                      icon: Icon(
+                        _obscureConfirmPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed:
+                          () => setState(
+                            () =>
+                                _obscureConfirmPassword =
+                                    !_obscureConfirmPassword,
+                          ),
                     ),
                   ),
                   obscureText: _obscureConfirmPassword,
@@ -91,9 +173,13 @@ class _SetPassword extends State<SetPassword> {
                       backgroundColor: Colors.blue,
                       minimumSize: Size(double.infinity, 50),
                     ),
-                    child: _isLoading
-                        ? CircularProgressIndicator(color: Colors.white)
-                        : Text("Atualizar senha", style: TextStyle(color: Colors.white)),
+                    child:
+                        _isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text(
+                              "Atualizar senha",
+                              style: TextStyle(color: Colors.white),
+                            ),
                   ),
                 ),
               ],
@@ -104,14 +190,25 @@ class _SetPassword extends State<SetPassword> {
           if (_isSuccess)
             Positioned.fill(
               child: Container(
-                color: Colors.white,  // Para escurecer o fundo
+                color: Colors.white, // Para escurecer o fundo
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Lottie.asset('assets/lottie/success.json', width: 150, repeat: false),
+                      Lottie.asset(
+                        'assets/lottie/success.json',
+                        width: 150,
+                        repeat: false,
+                      ),
                       SizedBox(height: 10),
-                      Text("Senha alterada com sucesso!", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                      Text(
+                        "Senha alterada com sucesso!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
                       SizedBox(height: 400),
                     ],
                   ),

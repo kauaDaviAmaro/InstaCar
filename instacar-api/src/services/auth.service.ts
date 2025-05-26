@@ -5,7 +5,7 @@ import { getUserByEmail } from './user.service';
 export const authenticateUser = async (email: string, senha: string) => {
   const user = await getUserByEmail(email);
 
-  if (!(await bcrypt.compare(senha, user.senha))) {
+  if (!(await bcrypt.compare(senha, user.password))) {
     throw new Error('INVALID_CREDENTIALS');
   }
 
@@ -24,6 +24,9 @@ const generateCode = (): string => {
 
 export const createRecoveryCode = async (email: string): Promise<string> => {
   const user = await getUserByEmail(email)
+    .catch(() => {
+      throw new Error('USER_NOT_FOUND');
+    });
 
   const verificationCode = generateCode();
   user.verificationCode = verificationCode;
@@ -38,8 +41,12 @@ export const verifyCode = async (
   email: string,
   code: string
 ): Promise<boolean | null> => {
-  const user = await getUserByEmail(email);
-  
+  console.log('Verifying code for email:', email, 'with code:', code);
+  const user = await getUserByEmail(email).catch(() => {
+    throw new Error('USER_NOT_FOUND');
+  }
+  );
+
   return (
     user.verificationCode === code && user.codeExpires! >= Date.now()
   );
@@ -52,7 +59,7 @@ export const resetUserPassword = async (
   const user = await getUserByEmail(email);
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
-  user.senha = hashedPassword;
+  user.password = hashedPassword;
 
   user.verificationCode = "";
   user.codeExpires = null;

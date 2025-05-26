@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:instacar/core/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,35 +29,46 @@ class _LoginPageState extends State<LoginPage> {
     return password != "";
   }
 
-  void _login() {
+  void _login() async {
     setState(() {
       _isLoading = true;
-      _emailErrorText = null; // Limpa mensagens de erro anteriores
-      _passwordErrorText = null; // Limpa mensagens de erro anteriores
+      _emailErrorText = null;
+      _passwordErrorText = null;
     });
 
-    // Valida o e-mail
-    if (!_isEmailValid(_emailController.text)) {
+    final email = _emailController.text;
+    final senha = _passwordController.text;
+
+    if (!_isEmailValid(email)) {
       setState(() {
         _isLoading = false;
         _emailErrorText = "E-mail inválido";
       });
-    }
-    if (!_isPasswordValid(_passwordController.text)) {
-      setState(() {
-        _passwordErrorText = "Senha incorreta";
-      });
+      return;
     }
 
-    Future.delayed(Duration(seconds: 2), () {
+    if (!_isPasswordValid(senha)) {
       setState(() {
         _isLoading = false;
+        _passwordErrorText = "Senha incorreta";
       });
-      if (_isEmailValid(_emailController.text) &&
-          _isPasswordValid(_passwordController.text)) {
-        GoRouter.of(context).push('/home');
-      }
+      return;
+    }
+
+    final token = await AuthService.login(email, senha);
+
+    setState(() {
+      _isLoading = false;
     });
+
+    if (token != null) {
+      GoRouter.of(context).go('/home');
+    } else {
+      setState(() {
+        _emailErrorText = "E-mail ou senha incorretos";
+        _passwordErrorText = "E-mail ou senha incorretos";
+      });
+    }
   }
 
   @override
@@ -137,32 +149,6 @@ class _LoginPageState extends State<LoginPage> {
                   _isLoading
                       ? CircularProgressIndicator(color: Colors.white)
                       : Text("Entrar", style: TextStyle(color: Colors.white)),
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(child: Divider()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text("Ou"),
-                ),
-                Expanded(child: Divider()),
-              ],
-            ),
-            SizedBox(height: 16),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Login with Apple",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Login with Google",
-                style: TextStyle(color: Colors.black),
-              ),
             ),
             SizedBox(height: 16),
             Row(

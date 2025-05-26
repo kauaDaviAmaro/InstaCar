@@ -6,6 +6,9 @@ import routes from "./routes/index.routes";
 import { Socket } from "dgram";
 import { Server } from "socket.io";
 import http from "http";
+import Conversation from "./models/conversation.model";
+import Message from "./models/message.model";
+import { sendMessage } from "./controllers/chat.controller";
 
 const app = express();
 
@@ -17,31 +20,30 @@ const io = new Server(server, {
   },
 });
 
+const users: { [userId: string]: string } = {};
+
 io.on("connection", (socket) => {
-  console.log(`Usuário conectado: ${socket.id}`);
+  const userId = socket.handshake.query.userId as string;
+  users[userId] = socket.id;
 
-  // Evento para entrar em uma sala (baseado no ID da carona)
-  socket.on("joinRoom", (caronaId) => {
-    socket.join(caronaId);
-    console.log(`Usuário ${socket.id} entrou na sala: ${caronaId}`);
-  });
+  console.log(`Usuário conectado: ${userId} (${socket.id})`);
 
-  // Evento para enviar mensagens
-  socket.on("sendMessage", ({ caronaId, userId, message }) => {
-    const chatMessage = {
-      userId,
-      message,
-      timestamp: new Date(),
-    };
 
-    // Enviar mensagem para todos na sala da carona
-    io.to(caronaId).emit("receiveMessage", chatMessage);
+  socket.on("sendMessage", async ({ senderId, receiverId, message }) => {
+    const savedMessage = await sendMessage(senderId, receiverId, message);
+    const receiverSocketId = users[receiverId];
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("receiveMessage", savedMessage);
+    }
   });
 
   socket.on("disconnect", () => {
-    console.log(`Usuário desconectado: ${socket.id}`);
+    delete users[userId];
+    console.log(`Usuário desconectado: ${userId}`);
   });
 });
+
 
 app.use(express.json());
 app.use(cors());
@@ -49,5 +51,9 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 app.use("/api", routes);
+
+
+Conversation.hasMany(Message, { foreignKey: 'conversationId' });
+Message.belongsTo(Conversation, { foreignKey: 'conversationId' });
 
 export default app;

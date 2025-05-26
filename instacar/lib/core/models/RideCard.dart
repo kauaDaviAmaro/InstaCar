@@ -1,8 +1,9 @@
-import 'dart:io';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:instacar/core/services/FavoritesService.dart';
 
 class RideCard extends StatefulWidget {
+  final String id;
   final String name;
   final String genderAge;
   final String date;
@@ -18,6 +19,7 @@ class RideCard extends StatefulWidget {
 
   const RideCard({
     super.key,
+    required this.id,
     required this.name,
     required this.genderAge,
     required this.date,
@@ -38,7 +40,47 @@ class RideCard extends StatefulWidget {
 
 class _RideCardState extends State<RideCard> {
   bool isExpanded = false;
-  bool isFavorited = false;
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkFavorite();
+  }
+
+  Future<void> checkFavorite() async {
+    final fav = await FavoritesService.isFavorite(widget.id);
+    setState(() {
+      isFavorite = fav;
+    });
+  }
+
+  void toggleFavorite() async {
+    if (isFavorite) {
+      await FavoritesService.removeFavorite(widget.id);
+    } else {
+      await FavoritesService.addFavorite(widget.id);
+    }
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        content: AwesomeSnackbarContent(
+          title: isFavorite ? 'Carona Favoritada!' : 'Favorito Removido',
+          message: isFavorite
+              ? 'Você marcou a carona como favorita.'
+              : 'Você removeu a carona dos favoritos.',
+          contentType:
+              isFavorite ? ContentType.success : ContentType.warning,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +101,7 @@ class _RideCardState extends State<RideCard> {
                   widget.name,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  widget.genderAge,
-                  style: const TextStyle(color: Colors.grey),
-                ),
+                Text(widget.genderAge, style: const TextStyle(color: Colors.grey)),
                 Text(widget.date, style: const TextStyle(color: Colors.grey)),
               ],
             ),
@@ -77,9 +116,9 @@ class _RideCardState extends State<RideCard> {
                   children: [
                     const Icon(Icons.circle, size: 10),
                     Container(
-                      height: 50, // Takes maximum height of the parent
-                      width: 1, // Width of the line
-                      color: Colors.black, // Color of the line
+                      height: 50,
+                      width: 1,
+                      color: Colors.black,
                     ),
                     const Icon(Icons.square, size: 10),
                   ],
@@ -89,44 +128,30 @@ class _RideCardState extends State<RideCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Locations
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              widget.from,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              widget.to,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ],
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Text(widget.from, style: const TextStyle(fontSize: 16)),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Text(widget.to, style: const TextStyle(fontSize: 16)),
                       ),
                     ],
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                  ),
+                  icon: Icon(isExpanded ? Icons.expand_less : Icons.expand_more),
                   onPressed: () {
                     setState(() {
                       isExpanded = !isExpanded;
@@ -146,50 +171,31 @@ class _RideCardState extends State<RideCard> {
                   Wrap(
                     spacing: 10,
                     children: [
-                      Text(
-                        "Tipo:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      const Text("Tipo:", style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(widget.type),
-                      Text(
-                        "Modelo:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      const Text("Modelo:", style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(widget.model),
-                      Text(
-                        "Cor:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      const Text("Cor:", style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(widget.color),
-                      Text(
-                        "Placa:",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      const Text("Placa:", style: TextStyle(fontWeight: FontWeight.bold)),
                       Text(widget.plate),
                     ],
                   ),
-
                   const SizedBox(height: 8),
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(
-                      12,
-                    ), // Add padding for better spacing
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white, // Set the background color to white
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Observação:",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                        const Text("Observação:",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         const SizedBox(height: 12),
-                        Text(
-                          widget.observation,
-                        ), // Display the observation text
+                        Text(widget.observation),
                       ],
                     ),
                   ),
@@ -199,41 +205,17 @@ class _RideCardState extends State<RideCard> {
                     children: [
                       InkWell(
                         borderRadius: BorderRadius.circular(8),
-                        onTap: () {
-                          setState(() {
-                            isFavorited = !isFavorited;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            content: AwesomeSnackbarContent(
-                              title: 'Carona Favoritada!',
-                              message:
-                                  'Você marcou a carona como favorita.',
-                              contentType: ContentType.help,
-                            ),
-                          ));
-                          // Callback externo se necessário
-                        },
+                        onTap: toggleFavorite,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           child: Row(
                             children: [
                               Icon(
-                                isFavorited
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
+                                isFavorite ? Icons.favorite : Icons.favorite_border,
                                 color: Colors.pink,
                               ),
                               const SizedBox(width: 4),
-                              const Text(
-                                "Favoritar",
-                                style: TextStyle(color: Colors.pink),
-                              ),
+                              const Text("Favoritar", style: TextStyle(color: Colors.pink)),
                             ],
                           ),
                         ),
@@ -242,23 +224,15 @@ class _RideCardState extends State<RideCard> {
                       InkWell(
                         borderRadius: BorderRadius.circular(8),
                         onTap: () {
+                          // Navegar para o chat, se desejar
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           child: Row(
                             children: const [
-                              Icon(
-                                Icons.chat_bubble_outline,
-                                color: Colors.blue,
-                              ),
+                              Icon(Icons.chat_bubble_outline, color: Colors.blue),
                               SizedBox(width: 4),
-                              Text(
-                                "Chat",
-                                style: TextStyle(color: Colors.blue),
-                              ),
+                              Text("Chat", style: TextStyle(color: Colors.blue)),
                             ],
                           ),
                         ),
@@ -268,9 +242,7 @@ class _RideCardState extends State<RideCard> {
                 ],
               ),
               crossFadeState:
-                  isExpanded
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
+                  isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
               duration: const Duration(milliseconds: 300),
             ),
           ],

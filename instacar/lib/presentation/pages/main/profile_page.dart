@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:instacar/core/services/auth_service.dart' as core_auth;
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 import 'edit_profile_page.dart';
-
-
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   void logout(BuildContext context) {
+    core_auth.AuthService.logout();
     GoRouter.of(context).go('/login');
   }
 
@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const Text(
-            "Lucas Scott",
+            "Bem-vindo, Usuário",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 30),
