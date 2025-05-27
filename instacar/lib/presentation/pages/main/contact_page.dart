@@ -49,12 +49,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue, // Add blue background color
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: Colors.white, // Make back arrow white for better contrast
           onPressed: () => GoRouter.of(context).pop(),
         ),
         title: const Text('Fale Conosco'),
         centerTitle: true,
+        foregroundColor: Colors.white, // Make title text white
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

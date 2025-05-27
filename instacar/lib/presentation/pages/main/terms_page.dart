@@ -20,16 +20,15 @@ class TermosDeServicoPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: Text(
-              'Última atualização',
-              style: TextStyle(fontSize: 12, color: Colors.white70),
+              'Última atualização 28/05/2025',
+              style: TextStyle(fontSize: 12, color: Colors.black38),
             ),
           ),
         ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: const Text(
-          '''
+        child: const Text('''
   Termos e Condições de Uso
 Este Termo e Condições de Uso regulamenta o uso do aplicativo de caronas compartilhadas (“Aplicativo”) desenvolvido pela nossa startup, destinado à conexão de motoristas e passageiros interessados em compartilhar trajetos urbanos e interurbanos. Ao utilizar o Aplicativo, o usuário concorda com todas as condições aqui descritas.
   1. Sobre o Aplicativo
@@ -49,9 +48,7 @@ Todos os direitos relacionados ao Aplicativo, incluindo layout, logotipos, algor
   8. Disposições Finais
 A startup poderá alterar este Termo a qualquer momento, sendo responsabilidade do usuário manter-se atualizado com a versão vigente. O uso contínuo do Aplicativo após alterações será considerado como aceite tácito. Em caso de dúvidas, o contato deve ser feito via canal oficial de suporte dentro do aplicativo.
 
-''',
-          style: TextStyle(fontSize: 14, height: 1.6),
-        ),
+''', style: TextStyle(fontSize: 14, height: 1.6)),
       ),
     );
   }
