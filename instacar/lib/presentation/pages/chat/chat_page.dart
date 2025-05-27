@@ -1,31 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:instacar/core/models/message_model.dart';
-import 'package:instacar/core/services/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String userId;
-  final String receiveName;
+  final String receiveName; // This is the bot's name
   final String receiverId;
 
-  const ChatPage({super.key, required this.userId, required this.receiveName, required this.receiverId});
+  const ChatPage({
+    super.key,
+    required this.userId,
+    required this.receiveName,
+    required this.receiverId,
+  });
 
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final ChatService chatService = ChatService();
   final TextEditingController messageController = TextEditingController();
   List<Message> messages = [];
+  final ScrollController _scrollController = ScrollController();
+  String? _userName; // To store the user's name
 
-  @override
-  void initState() {
-    super.initState();
-    chatService.connect(widget.userId);
+  void _generateAutoReply(String userMessage) {
+    // Extract user's name if provided
+    if (_userName == null &&
+        (userMessage.toLowerCase().contains('meu nome é') ||
+            userMessage.toLowerCase().contains('eu sou'))) {
+      final nameStart =
+          userMessage.toLowerCase().contains('meu nome é')
+              ? userMessage.toLowerCase().indexOf('meu nome é') +
+                  'meu nome é'.length
+              : userMessage.toLowerCase().indexOf('eu sou') + 'eu sou'.length;
 
-    chatService.socket!.on('receiveMessage', (data) {
+      _userName = userMessage.substring(nameStart).trim();
+      if (_userName!.endsWith('.')) {
+        _userName = _userName!.substring(0, _userName!.length - 1);
+      }
+    }
+
+    String reply = '';
+
+    if (userMessage.toLowerCase().contains('oi') ||
+        userMessage.toLowerCase().contains('olá') ||
+        userMessage.toLowerCase().contains('ola')) {
+      reply =
+          _userName != null
+              ? 'Olá $_userName! Eu sou ${widget.receiveName}. Como posso te ajudar hoje?'
+              : 'Olá! Eu sou ${widget.receiveName}. Qual é o seu nome?';
+    } else if (userMessage.toLowerCase().contains('tudo bem') ||
+        userMessage.toLowerCase().contains('como vai')) {
+      reply =
+          _userName != null
+              ? 'Estou ótimo, obrigado por perguntar $_userName! Eu sou ${widget.receiveName}. E com você?'
+              : 'Estou ótimo! Eu sou ${widget.receiveName}. Qual é o seu nome?';
+    } else if (userMessage.toLowerCase().contains('horário') ||
+        userMessage.toLowerCase().contains('hora')) {
+      reply =
+          'Agora são ${DateTime.now().hour}:${DateTime.now().minute.toString().padLeft(2, '0')}';
+    } else if (userMessage.toLowerCase().contains('carona') ||
+        userMessage.toLowerCase().contains('viagem')) {
+      reply =
+          'Eu sou ${widget.receiveName}, posso te ajudar com informações sobre caronas. Você quer ofertar ou solicitar uma carona?';
+    } else if (userMessage.toLowerCase().contains('obrigado') ||
+        userMessage.toLowerCase().contains('obrigada')) {
+      reply =
+          'De nada${_userName != null ? ' $_userName' : ''}! Eu sou ${widget.receiveName}, estou aqui para ajudar. 😊';
+    } else if (userMessage.toLowerCase().contains('ajuda')) {
+      reply =
+          'Claro${_userName != null ? ' $_userName' : ''}! Eu sou ${widget.receiveName}, posso te ajudar com:\n'
+          '- Informações sobre caronas\n'
+          '- Configurações da sua conta\n'
+          '- Problemas técnicos\n'
+          'O que você precisa?';
+    } else if (_userName == null) {
+      reply =
+          'Eu sou ${widget.receiveName}. Antes de continuarmos, qual é o seu nome?';
+    } else {
+      reply =
+          'Desculpe $_userName, não entendi. Eu sou ${widget.receiveName}, pode reformular sua pergunta?';
+    }
+
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        messages.add(Message.fromJson(data));
+        messages.add(
+          Message(
+            senderId: widget.receiverId,
+            receiverId: widget.userId,
+            message: reply,
+            timestamp: DateTime.now(),
+          ),
+        );
+        _scrollToBottom();
       });
     });
   }
@@ -33,7 +99,7 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage() {
     if (messageController.text.trim().isNotEmpty) {
       String message = messageController.text.trim();
-      chatService.sendMessage(widget.userId, widget.receiverId, message);
+
       setState(() {
         messages.add(
           Message(
@@ -43,15 +109,44 @@ class _ChatPageState extends State<ChatPage> {
             timestamp: DateTime.now(),
           ),
         );
+        _scrollToBottom();
       });
+
+      _generateAutoReply(message);
       messageController.clear();
     }
   }
 
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
   @override
-  void dispose() {
-    chatService.disconnect();
-    super.dispose();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+
+    // Initial greeting from the bot
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        messages.add(
+          Message(
+            senderId: widget.receiverId,
+            receiverId: widget.userId,
+            message: 'Olá! Eu sou ${widget.receiveName}. Qual é o seu nome?',
+            timestamp: DateTime.now(),
+          ),
+        );
+      });
+    });
   }
 
   @override
@@ -60,14 +155,18 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(
-          "Chat com ${widget.receiveName}",
-          style: TextStyle(color: Colors.white),
+          _userName != null
+              ? "Conversa com $_userName"
+              : "Conversa com ${widget.receiveName}",
+          style: const TextStyle(color: Colors.white),
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: messages.length,
               itemBuilder: (context, index) {
                 final msg = messages[index];
@@ -86,8 +185,8 @@ class _ChatPageState extends State<ChatPage> {
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.7,
                         ),
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.symmetric(
                           vertical: 5,
                           horizontal: 10,
                         ),
@@ -96,7 +195,7 @@ class _ChatPageState extends State<ChatPage> {
                               msg.senderId == widget.userId
                                   ? Colors.blue
                                   : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           msg.message,
@@ -109,26 +208,13 @@ class _ChatPageState extends State<ChatPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              msg.senderId == widget.userId ? "Você" : "Outro",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                              "${msg.timestamp.hour}:${msg.timestamp.minute.toString().padLeft(2, '0')}",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          "${msg.timestamp.hour}:${msg.timestamp.minute.toString().padLeft(2, '0')} - ${msg.senderId == widget.userId ? "Você" : widget.receiveName}",
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ],
@@ -141,51 +227,33 @@ class _ChatPageState extends State<ChatPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: Text(
-                      "${messageController.text.length}/200",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color:
-                            messageController.text.length >= 200
-                                ? Colors.red
-                                : Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
                 Row(
                   children: [
                     Expanded(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 100),
-                        child: TextField(
-                          controller: messageController,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: "Digite sua mensagem...",
-                            border: OutlineInputBorder(),
+                      child: TextField(
+                        controller: messageController,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          hintText: "Digite sua mensagem...",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          keyboardType: TextInputType.multiline,
-                          onChanged: (text) {
-                            if (text.length > 200) {
-                              messageController.text = text.substring(0, 200);
-                              messageController
-                                  .selection = TextSelection.fromPosition(
-                                TextPosition(
-                                  offset: messageController.text.length,
-                                ),
-                              );
-                            }
-                            setState(() {});
-                          },
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                         ),
+                        keyboardType: TextInputType.multiline,
+                        onChanged: (text) {
+                          setState(() {});
+                        },
                       ),
                     ),
-                    IconButton(icon: Icon(Icons.send), onPressed: sendMessage),
+                    IconButton(
+                      icon: const Icon(Icons.send),
+                      color: Colors.blue,
+                      onPressed: sendMessage,
+                    ),
                   ],
                 ),
               ],
@@ -195,4 +263,18 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+}
+
+class Message {
+  final String senderId;
+  final String receiverId;
+  final String message;
+  final DateTime timestamp;
+
+  Message({
+    required this.senderId,
+    required this.receiverId,
+    required this.message,
+    required this.timestamp,
+  });
 }
