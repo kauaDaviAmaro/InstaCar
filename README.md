@@ -21,6 +21,10 @@ O aplicativo possui a finalidade de conectar pessoas para conseguirem caronas. E
 
 O aplicativo será gratuito aos usuários, sendo apenas acordado entre as pessoas o valor das caronas para lidar com os gastos, como combustível, pedágio, etc… Por outro lado o app será como uma assinatura para as empresas e universidades, em que elas pagam mensalmente para poder utilizar e disponibilizar para os funcionários e alunos.
 
+## Rodar para adicionar corridas e users ao banco de dados
+
+Por favor rodar os inserts que estão no arquivo insert.sql para adicionar tanto o usuário como a corrida. 
+
 
 [**Jira Sprint e Scrum**](https://learningcode75.atlassian.net/jira/software/projects/SCRUM/boards/1/timeline?cloudId=5792cbcf-a254-4977-88ff-66f40fa57566)
 

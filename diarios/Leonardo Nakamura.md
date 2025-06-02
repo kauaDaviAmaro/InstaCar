@@ -308,3 +308,11 @@
 - Implementar melhorias com base no feedback recebido.
 - Iniciar a fase de preparação para o lançamento do aplicativo.
 
+# Registro de Desenvolvimento - 19/05/2025
+- **Duração da sessão:** 3 horas
+- **Sprint:** 3 e atividaes
+
+## Atividades realizadas
+- **Sprint 3:** Relizei a finalização a interção mockada do chat, realizei a criação de todo modal de criação de corrida, arrumei a página de termos e condições dos usuários, arrumei a página de feedback do usuário a integrei e fiz o checkup das páginas e fiz o debbug de todo projeto confome possível. 
+
+- **Atividades a entregar:** Realizei as atividades conforme foi pedido em sala que não haviamos entregados, somente as atividades da atividade a PI: Gerenciamento de Estado, o resto foi finalizado e entregue.
