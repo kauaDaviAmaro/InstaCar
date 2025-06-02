@@ -4,7 +4,9 @@ import 'package:instacar/presentation/pages/main/edit_ride_page.dart';
 import 'dart:convert';
 
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
+import 'package:instacar/presentation/widgets/create_ride_page.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CaronasPage extends StatefulWidget {
   const CaronasPage({Key? key}) : super(key: key);
@@ -103,6 +105,19 @@ class _CaronasPageState extends State<CaronasPage> {
         ],
       ),
       bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
+      floatingActionButton: FloatingActionButton(
+        onPressed:
+            () => {
+              showBarModalBottomSheet(
+                context: context,
+                builder: (context) => CreateRidePage(),
+              ),
+            },
+        backgroundColor: Colors.blue, // Blue background
+        foregroundColor: Colors.white, // White icon color
+        child: Icon(Icons.add),
+        splashColor: Colors.blue,
+      ),
     );
   }
 }
