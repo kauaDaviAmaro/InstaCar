@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db";
-import Conversation from "./conversation.model";
 
 const Message = sequelize.define("Message", {
   id: {
@@ -23,7 +22,5 @@ const Message = sequelize.define("Message", {
 }, {
   timestamps: true,
 });
-
-Message.belongsTo(Conversation, { foreignKey: 'conversationId' });
 
 export default Message;

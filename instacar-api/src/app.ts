@@ -6,8 +6,6 @@ import routes from "./routes/index.routes";
 import { Socket } from "dgram";
 import { Server } from "socket.io";
 import http from "http";
-import Conversation from "./models/conversation.model";
-import Message from "./models/message.model";
 import { sendMessage } from "./controllers/chat.controller";
 
 const app = express();
@@ -28,7 +26,6 @@ io.on("connection", (socket) => {
 
   console.log(`Usuário conectado: ${userId} (${socket.id})`);
 
-
   socket.on("sendMessage", async ({ senderId, receiverId, message }) => {
     const savedMessage = await sendMessage(senderId, receiverId, message);
     const receiverSocketId = users[receiverId];
@@ -44,16 +41,11 @@ io.on("connection", (socket) => {
   });
 });
 
-
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
 app.use("/api", routes);
-
-
-Conversation.hasMany(Message, { foreignKey: 'conversationId' });
-Message.belongsTo(Conversation, { foreignKey: 'conversationId' });
 
 export default app;
