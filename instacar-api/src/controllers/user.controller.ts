@@ -10,7 +10,19 @@ export const register = async (
 ): Promise<void> => {
   try {
     console.log('Registering user:', req.body);
-    const newUser = await createUser(req.body);
+    const anyBody: any = req.body as any;
+    const newUser = await createUser({
+      name: anyBody.name ?? anyBody.nome,
+      email: anyBody.email,
+      password: anyBody.password ?? anyBody.senha,
+      fotoPerfil: anyBody.fotoPerfil,
+      verificationCode: anyBody.verificationCode,
+      codeExpires: anyBody.codeExpires,
+      birthDate: anyBody.birthDate,
+      phone: anyBody.phone,
+      cep: anyBody.cep,
+      number: anyBody.number,
+    });
     res
       .status(201)
       .json({ message: MESSAGES.USER.SUCCESS, userId: newUser.id });

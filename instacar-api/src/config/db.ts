@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Dialect } from 'sequelize';
 
 // Check if DATABASE_URL is provided, otherwise use fallback configuration
 const databaseUrl = process.env.DATABASE_URL;
@@ -8,13 +8,22 @@ if (!databaseUrl) {
 }
 
 // Create a connection without specifying the database first
+const envDialect = process.env.DB_DIALECT as Dialect | undefined;
+const dialect: Dialect = envDialect ?? 'mysql';
+
+const defaultPort = dialect === 'postgres' ? '5432' : '3306';
+const defaultUser = dialect === 'postgres' ? 'postgres' : 'root';
+const defaultPassword = dialect === 'postgres' ? 'postgres' : 'root';
+
 const sequelizeWithoutDB = new Sequelize({
-  dialect: 'mysql',
+  dialect,
   logging: false,
   host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306'),
-  username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
+  port: parseInt(process.env.DB_PORT || defaultPort),
+  username: process.env.DB_USER || defaultUser,
+  password: process.env.DB_PASSWORD || defaultPassword,
+  // For Postgres, connect to the default 'postgres' database to manage DB creation
+  ...(dialect === 'postgres' ? { database: 'postgres' } : {}),
   retry: {
     max: 3,
     timeout: 5000,
@@ -23,12 +32,12 @@ const sequelizeWithoutDB = new Sequelize({
 
 // Create the main sequelize instance with the database
 const sequelize = new Sequelize({
-  dialect: 'mysql',
+  dialect,
   logging: false,
   host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306'),
-  username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
+  port: parseInt(process.env.DB_PORT || defaultPort),
+  username: process.env.DB_USER || defaultUser,
+  password: process.env.DB_PASSWORD || (dialect === 'postgres' ? 'postgres' : 'password'),
   database: process.env.DB_NAME || 'instacar',
   retry: {
     max: 3,
@@ -38,16 +47,27 @@ const sequelize = new Sequelize({
 
 export const initializeDatabase = async () => {
   try {
-    console.log('Attempting to connect to MySQL server...');
+    console.log(`Attempting to connect to ${dialect} server...`);
     
     // First, connect without database to create it if it doesn't exist
     await sequelizeWithoutDB.authenticate();
-    console.log('✅ MySQL server connected successfully!');
+    console.log(`✅ ${dialect} server connected successfully!`);
     
     // Create database if it doesn't exist
     const dbName = process.env.DB_NAME || 'instacar';
     console.log(`Creating database '${dbName}' if it doesn't exist...`);
-    await sequelizeWithoutDB.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
+    if (dialect === 'postgres') {
+      const [rows] = await sequelizeWithoutDB.query(
+        'SELECT 1 FROM pg_database WHERE datname = :dbName',
+        { replacements: { dbName } }
+      );
+      const exists = Array.isArray(rows) && rows.length > 0;
+      if (!exists) {
+        await sequelizeWithoutDB.query(`CREATE DATABASE "${dbName}"`);
+      }
+    } else {
+      await sequelizeWithoutDB.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
+    }
     console.log(`✅ Database '${dbName}' is ready!`);
     
     // Close the connection without database
@@ -63,7 +83,6 @@ export const initializeDatabase = async () => {
     const Conversation = require('../models/conversation.model').default;
     const Message = require('../models/message.model').default;
     const Carona = require('../models/carona').default;
-    const Feedback = require('../models/feedback.model').default;
     
     // Set up associations
     Conversation.hasMany(Message, { foreignKey: 'conversationId' });
@@ -75,7 +94,7 @@ export const initializeDatabase = async () => {
     await Conversation.sync({ alter: true });
     await Message.sync({ alter: true });
     await Carona.sync({ alter: true });
-    await Feedback.sync({ alter: true });
+    // Feedback model removed
     
     console.log('✅ Database synchronized successfully!');
     console.log('🎉 Database initialization completed!');
@@ -86,11 +105,11 @@ export const initializeDatabase = async () => {
     if (error && typeof error === 'object' && 'code' in error) {
       const dbError = error as { code: string };
       if (dbError.code === 'ECONNREFUSED') {
-        console.error('💡 Make sure MySQL server is running on the specified host and port.');
+        console.error('💡 Make sure the database server is running on the specified host and port.');
       } else if (dbError.code === 'ER_ACCESS_DENIED_ERROR') {
-        console.error('💡 Check your MySQL username and password.');
+        console.error('💡 Check your database username and password.');
       } else if (dbError.code === 'ENOTFOUND') {
-        console.error('💡 Check your MySQL host configuration.');
+        console.error('💡 Check your database host configuration.');
       }
     }
     
