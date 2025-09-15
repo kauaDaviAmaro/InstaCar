@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
-  bool _isSuccess = false;
+  final bool _isSuccess = false;
   String? _emailErrorText;
   String? _passwordErrorText;
 

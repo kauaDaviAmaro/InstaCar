@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
 import 'package:instacar/presentation/pages/auth/register_page.dart';
 import 'package:instacar/presentation/pages/chat/chat_list_page.dart';
 import 'package:instacar/presentation/pages/main/caronas_page.dart';
@@ -20,59 +21,213 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/login',
-      builder: (context, state) => LoginPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: LoginPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/favorites',
-      builder: (context, state) => FavoritesPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: FavoritesPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/forgot',
-      builder: (context, state) => ForgotPasswordPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: ForgotPasswordPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/code',
-      builder: (context, state) => CodePage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: CodePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/reset',
-      builder: (context, state) => PasswordReset(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: PasswordReset(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/profile',
-      builder: (context, state) => ProfileScreen(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: ProfileScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/set',
-      builder: (context, state) => SetPassword(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: SetPassword(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/chat',
-      builder: (context, state) => ChatListPage(userId: "1"),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: ChatListPage(userId: "current_user"),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: "/register",
-      builder: (context, state) => RegisterPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: RegisterPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => HomePage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: HomePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/edit-profile',
-      builder: (context, state) => const UserProfilePage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const UserProfilePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/terms',
-      builder: (context, state) => TermosDeServicoPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: TermosDeServicoPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/contact',
-      builder: (context, state) => FeedbackPage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: FeedbackPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/caronas',
-      builder: (context, state) => CaronasPage(), // Placeholder for caronas page
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: CaronasPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
     ),
   ],
 );

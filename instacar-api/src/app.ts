@@ -3,7 +3,6 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import routes from "./routes/index.routes";
-import { Socket } from "dgram";
 import { Server } from "socket.io";
 import http from "http";
 import { sendMessage } from "./controllers/chat.controller";
@@ -48,4 +47,4 @@ app.use(morgan("dev"));
 
 app.use("/api", routes);
 
-export default app;
+export { app, server, io };

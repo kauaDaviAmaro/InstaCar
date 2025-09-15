@@ -4,7 +4,7 @@ import 'package:instacar/presentation/widgets/RideListWidget.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:instacar/core/services/auth_service.dart' as core_auth;
 import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
-import 'edit_profile_page.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   void logout(BuildContext context) {
     core_auth.AuthService.logout();
@@ -117,6 +116,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
+
           ),
           const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black54),
         ],

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import app from './app';
+import { app, server } from './app';
 import { initializeDatabase } from './config/db';
 import { setupSwagger } from './config/swagger';
 
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 initializeDatabase().then(() => {
   setupSwagger(app);
   
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server running in http://localhost:${PORT}`);
   });
 }).catch((error) => {

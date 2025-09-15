@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { IAuthRequest } from '../types';
 import { MESSAGES } from '../utils/messages';
@@ -9,7 +9,7 @@ export const authMiddleware = (
   next: NextFunction
 ): void => {
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith('Bearer ')) {
     res.status(403).json({ message: MESSAGES.AUTH.NO_TOKEN });
     return;
   }
@@ -25,8 +25,12 @@ export const authMiddleware = (
 
     next();
   } catch (error) {
+    console.error('JWT verification error:', error);
     res.status(401).json({ message: MESSAGES.AUTH.INVALID_TOKEN });
   }
 };
+
+// Alias for compatibility
+export const authenticateToken = authMiddleware;
 
 export default authMiddleware;

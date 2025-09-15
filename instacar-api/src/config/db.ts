@@ -1,12 +1,5 @@
 import { Sequelize, Dialect } from 'sequelize';
 
-// Check if DATABASE_URL is provided, otherwise use fallback configuration
-const databaseUrl = process.env.DATABASE_URL;
-
-if (!databaseUrl) {
-  console.warn('DATABASE_URL environment variable is not set. Using fallback configuration.');
-}
-
 // Create a connection without specifying the database first
 const envDialect = process.env.DB_DIALECT as Dialect | undefined;
 const dialect: Dialect = envDialect ?? 'mysql';

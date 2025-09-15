@@ -1,5 +1,4 @@
 import { CreateCaronaDTO } from "../interfaces/carona-service.interface";
-import { getUserById } from "../services/user.service";
 import { MESSAGES } from "../utils/messages";
 
 export function validateCaronaData(data: CreateCaronaDTO): void {

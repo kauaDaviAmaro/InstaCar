@@ -19,7 +19,7 @@ class _HomeModalAddState extends State<HomeModalAdd> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.9,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),

@@ -16,6 +16,13 @@ class User extends Model<IUser> implements IUser {
   phone?: string;
   cep?: string;
   number?: string;
+
+  // Campos de veículo
+  gender?: string;
+  tipoVeiculo?: string;
+  modeloVeiculo?: string;
+  corVeiculo?: string;
+  placa?: string;
 }
 
 User.init(
@@ -37,6 +44,13 @@ User.init(
     phone: { type: DataTypes.STRING },
     cep: { type: DataTypes.STRING },
     number: { type: DataTypes.STRING },
+
+    // Campos de veículo
+    gender: { type: DataTypes.STRING },
+    tipoVeiculo: { type: DataTypes.STRING },
+    modeloVeiculo: { type: DataTypes.STRING },
+    corVeiculo: { type: DataTypes.STRING },
+    placa: { type: DataTypes.STRING },
   },
   {
     sequelize,

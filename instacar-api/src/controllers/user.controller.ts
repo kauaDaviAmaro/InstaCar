@@ -22,6 +22,7 @@ export const register = async (
       phone: anyBody.phone,
       cep: anyBody.cep,
       number: anyBody.number,
+      gender: anyBody.gender,
     });
     res
       .status(201)
@@ -46,6 +47,7 @@ export const updateUser = async (req: IAuthRequest, res: Response) => {
 
     res.status(200).json({ message: 'Usuário atualizado com sucesso', updatedUser });
   } catch (error) {
+    console.error('Error updating user:', error);
     res.status(500).json({ error: 'Erro ao atualizar usuário' });
   }
 };
@@ -73,6 +75,7 @@ export const getUser = async (
       }
     });
   } catch (error) {
+    console.error('Error getting user:', error);
     res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR });
   }
 };
