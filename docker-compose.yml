@@ -27,6 +27,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_NAME: instacar
+      JWT_SECRET: instacar_dev_secret
     depends_on:
       db:
         condition: service_healthy
