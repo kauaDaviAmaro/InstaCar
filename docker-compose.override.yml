@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: ./instacar-api
+      target: dev
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_DIALECT: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: instacar
+    volumes:
+      - ./instacar-api/src:/app/src
+      - ./instacar-api/nodemon.json:/app/nodemon.json
+    command: ["npx", "nodemon", "--config", "nodemon.json", "--exec", "npx ts-node src/server.ts"]
+
