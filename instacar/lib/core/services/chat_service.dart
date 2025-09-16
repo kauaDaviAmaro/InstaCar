@@ -6,7 +6,7 @@ class ChatService {
     await Future.delayed(Duration(milliseconds: 300)); // Simulate network delay
     
     return {
-      'id': 'conv_${user2Id}',
+      'id': 'conv_$user2Id',
       'user1Id': 'current_user',
       'user2Id': user2Id,
       'createdAt': DateTime.now().toIso8601String(),
@@ -26,7 +26,7 @@ class ChatService {
       'senderId': 'current_user',
       'receiverId': receiverId,
       'createdAt': DateTime.now().toIso8601String(),
-      'conversationId': 'conv_${receiverId}',
+      'conversationId': 'conv_$receiverId',
     };
   }
 

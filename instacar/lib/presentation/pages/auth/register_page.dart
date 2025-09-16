@@ -291,7 +291,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Gênero
               DropdownButtonFormField<String>(
-                value: _selectedGender,
+                initialValue: _selectedGender,
                 decoration: InputDecoration(
                   labelText: "Gênero",
                   errorText: _genderErrorText,
