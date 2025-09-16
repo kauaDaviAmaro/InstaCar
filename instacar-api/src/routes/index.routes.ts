@@ -7,13 +7,18 @@ const router = express.Router();
 const routesPath = __dirname;
 
 fs.readdirSync(routesPath).forEach((file) => {
-  if (file !== 'index.routes.ts' && file.endsWith('.routes.ts')) {
-    const route = require(path.join(routesPath, file));
-    if (route.default) {
-      const routePath = `/${file.replace('.routes.ts', '')}`;
-      router.use(routePath, route.default);
-    }
-  }
+  if (file === 'index.routes.ts' || file === 'index.routes.js') return;
+
+  const isRouteFile = file.endsWith('.routes.ts') || file.endsWith('.routes.js');
+  if (!isRouteFile) return;
+
+  const routeModule = require(path.join(routesPath, file));
+  const routeExport = routeModule.default ?? routeModule;
+  if (!routeExport) return;
+
+  const routeName = file.replace(/\.routes\.(ts|js)$/i, '');
+  const routePathMount = `/${routeName}`;
+  router.use(routePathMount, routeExport);
 });
 
 export default router;

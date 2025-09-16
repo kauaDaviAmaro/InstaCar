@@ -13,6 +13,13 @@ export interface IUser {
   cep?: string;
   number?: string;
 
+  // Campos de veículo
+  gender?: string;
+  tipoVeiculo?: string;
+  modeloVeiculo?: string;
+  corVeiculo?: string;
+  placa?: string;
+
   verificationCode?: string;
   codeExpires?: number | null;
 }

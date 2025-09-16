@@ -1,4 +1,3 @@
-import { FindOptions, WhereOptions } from "sequelize";
 import {
   CaronaFilter,
   CreateCaronaDTO,
@@ -6,7 +5,6 @@ import {
   UpdateCaronaDTO,
 } from "../interfaces/carona-service.interface";
 import Carona from "../models/carona";
-import { ICarona } from "../types";
 import { validateCaronaData } from "../utils/carona-validator";
 import User from "../models/User";
 
@@ -38,7 +36,7 @@ const CaronaService: ICaronaService = {
         {
           model: User,
           as: "motorista",
-          attributes: ["id", "name", "email", "fotoPerfil", "birthDate"],
+          attributes: ["id", "name", "email", "fotoPerfil", "birthDate", "gender", "tipoVeiculo", "modeloVeiculo", "corVeiculo", "placa"],
         },
       ],
     });
@@ -70,7 +68,7 @@ const CaronaService: ICaronaService = {
         {
           model: User,
           as: "motorista",
-          attributes: ["id", "name", "email", "fotoPerfil", "birthDate"],
+          attributes: ["id", "name", "email", "fotoPerfil", "birthDate", "gender", "tipoVeiculo", "modeloVeiculo", "corVeiculo", "placa"],
         },
       ],
     });

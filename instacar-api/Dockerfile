@@ -1,19 +1,40 @@
-FROM node:18-alpine
+# ====== Build stage ======
+FROM node:20-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Install build dependencies
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund
 
-# Install dependencies
-RUN npm install
+# Copy source and build
+COPY tsconfig.json ./
+COPY src ./src
+RUN npm run build
 
-# Copy the rest of the application
-COPY . .
+# ====== Production runtime ======
+FROM node:20-alpine AS runtime
 
-# Expose the API port
-EXPOSE 5000
+ENV NODE_ENV=production
+WORKDIR /app
 
-# Start the application
-CMD ["npm", "run", "dev"]
+# Install only production dependencies
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund
+
+# Copy build artifacts
+COPY --from=build /app/dist ./dist
+
+# Copy source for Swagger (swagger-jsdoc parses annotations in src)
+COPY src ./src
+
+# Optional config
+COPY nodemon.json ./nodemon.json
+
+# Expose app port via env PORT (default 3000)
+ENV PORT=3000
+EXPOSE 3000
+
+CMD ["node", "dist/server.js"]
+
+

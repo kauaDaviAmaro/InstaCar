@@ -1,16 +1,21 @@
-FROM cirrusci/flutter:stable
+# Build Flutter web and serve with Nginx
 
-# Set working directory
+FROM ghcr.io/cirruslabs/flutter:stable AS build
 WORKDIR /app
 
-# Copy the Flutter project files
-COPY . .
+# Enable Flutter web
+RUN flutter config --enable-web
 
-# Install dependencies
+COPY pubspec.yaml pubspec.lock ./
 RUN flutter pub get
 
-# Expose the web server port
-EXPOSE 8080
+COPY . .
+RUN flutter build web --release
 
-# Run the Flutter web server
-CMD ["flutter", "run", "-d", "web-server", "--web-port", "8080", "--web-hostname", "0.0.0.0"]
+FROM nginx:alpine
+COPY --from=build /app/build/web /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+

@@ -10,7 +10,20 @@ export const register = async (
 ): Promise<void> => {
   try {
     console.log('Registering user:', req.body);
-    const newUser = await createUser(req.body);
+    const anyBody: any = req.body as any;
+    const newUser = await createUser({
+      name: anyBody.name ?? anyBody.nome,
+      email: anyBody.email,
+      password: anyBody.password ?? anyBody.senha,
+      fotoPerfil: anyBody.fotoPerfil,
+      verificationCode: anyBody.verificationCode,
+      codeExpires: anyBody.codeExpires,
+      birthDate: anyBody.birthDate,
+      phone: anyBody.phone,
+      cep: anyBody.cep,
+      number: anyBody.number,
+      gender: anyBody.gender,
+    });
     res
       .status(201)
       .json({ message: MESSAGES.USER.SUCCESS, userId: newUser.id });
@@ -34,6 +47,7 @@ export const updateUser = async (req: IAuthRequest, res: Response) => {
 
     res.status(200).json({ message: 'Usuário atualizado com sucesso', updatedUser });
   } catch (error) {
+    console.error('Error updating user:', error);
     res.status(500).json({ error: 'Erro ao atualizar usuário' });
   }
 };
@@ -61,6 +75,7 @@ export const getUser = async (
       }
     });
   } catch (error) {
+    console.error('Error getting user:', error);
     res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR });
   }
 };

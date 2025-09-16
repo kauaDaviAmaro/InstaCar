@@ -1,4 +1,3 @@
-import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +5,7 @@ import 'package:go_router/go_router.dart';
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
 
-  const BottomNavBar({Key? key, required this.selectedIndex}) : super(key: key);
+  const BottomNavBar({super.key, required this.selectedIndex});
 
   static const List<TabItem> items = [
     TabItem(icon: Icons.home, title: 'Home'),
