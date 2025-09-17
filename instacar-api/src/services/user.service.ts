@@ -3,9 +3,9 @@ import User from '../models/User';
 import { IUser } from '../types';
 
 export const createUser = async (userData: IUser) => {
-  const { name, email, password, birthDate, phone, cep, number } = userData;
+  const { name, email, password, birthDate, phone, cep, number, gender } = userData;
 
-  if (!password || !email || !password) {
+  if (!name || !email || !password) {
     throw new Error('INVALID_USER');
   }
 
@@ -19,6 +19,7 @@ export const createUser = async (userData: IUser) => {
     phone,
     cep,
     number,
+    gender,
   });
 };
 

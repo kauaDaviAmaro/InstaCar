@@ -7,9 +7,10 @@ import 'package:instacar/presentation/widgets/BottomNavigationBar.dart';
 import 'package:instacar/presentation/widgets/create_ride_page.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:instacar/presentation/pages/chat/chat_page.dart';
 
 class CaronasPage extends StatefulWidget {
-  const CaronasPage({Key? key}) : super(key: key);
+  const CaronasPage({super.key});
 
   @override
   State<CaronasPage> createState() => _CaronasPageState();
@@ -82,20 +83,41 @@ class _CaronasPageState extends State<CaronasPage> {
                           child: ListTile(
                             title: Text('${carona["from"]} → ${carona["to"]}'),
                             subtitle: Text('Data: ${carona["date"]}'),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () async {
-                                final updated = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (_) => EditCaronaPage(carona: carona),
-                                  ),
-                                );
-                                if (updated == true) {
-                                  fetchCaronas(); // Recarrega caronas após edição
-                                }
-                              },
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.chat),
+                                  onPressed: () {
+                                    // Navigate to chat with the carona creator
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                          receiveName: carona["driverName"] ?? "Usuário",
+                                          userId: "1", // Current user ID - should be dynamic
+                                          receiverId: carona["driverId"] ?? carona["userId"],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () async {
+                                    final updated = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (_) => EditCaronaPage(carona: carona),
+                                      ),
+                                    );
+                                    if (updated == true) {
+                                      fetchCaronas(); // Recarrega caronas após edição
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -106,17 +128,20 @@ class _CaronasPageState extends State<CaronasPage> {
       ),
       bottomNavigationBar: BottomNavBar(selectedIndex: currentIndex),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => {
-              showBarModalBottomSheet(
-                context: context,
-                builder: (context) => CreateRidePage(),
-              ),
-            },
+        onPressed: () async {
+          final result = await showBarModalBottomSheet(
+            context: context,
+            builder: (context) => CreateRidePage(),
+          );
+          // Se a carona foi criada com sucesso, recarrega a lista
+          if (result == true) {
+            fetchCaronas();
+          }
+        },
         backgroundColor: Colors.blue, // Blue background
-        foregroundColor: Colors.white, // White icon color
+        foregroundColor: Colors.white,
+        splashColor: Colors.blue, // White icon color
         child: Icon(Icons.add),
-        splashColor: Colors.blue,
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pinput/pinput.dart';
 
 class PasswordReset extends StatefulWidget {
   const PasswordReset({super.key});

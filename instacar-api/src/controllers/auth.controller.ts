@@ -15,10 +15,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     res.json({ message: MESSAGES.AUTH.LOGIN_SUCCESS, token });
   } catch (error: any) {
-    if (error.message === 'INVALID_CREDENTIALS') {
+    if (error.message === 'INVALID_CREDENTIALS' || error.message === 'INVALID_USER') {
       res.status(401).json({ message: MESSAGES.AUTH.INVALID_CREDENTIALS });
       return;
     }
+    console.error('Error authenticating user:', error);
     res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR, error });
   }
 };

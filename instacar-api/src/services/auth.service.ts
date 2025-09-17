@@ -9,11 +9,12 @@ export const authenticateUser = async (email: string, senha: string) => {
     throw new Error('INVALID_CREDENTIALS');
   }
 
-  const token = jwt.sign(
-    { userId: user.id },
-    process.env.JWT_SECRET as string,
-    { expiresIn: '1h' }
-  );
+  const jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret';
+  if (!process.env.JWT_SECRET) {
+    console.warn('JWT_SECRET is not set. Using an insecure development default.');
+  }
+
+  const token = jwt.sign({ userId: user.id }, jwtSecret, { expiresIn: '1h' });
 
   return token;
 };
