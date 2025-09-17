@@ -12,6 +12,7 @@ class RideModel {
   final int totalSpots;
   final int takenSpots;
   final String observation;
+  final String motoristaId;
 
   RideModel({
     required this.id,
@@ -27,6 +28,7 @@ class RideModel {
     required this.totalSpots,
     required this.takenSpots,
     required this.observation,
+    required this.motoristaId,
   });
 
   factory RideModel.fromJson(Map<String, dynamic> json) {
@@ -44,6 +46,7 @@ class RideModel {
       totalSpots: json['totalSpots'],
       takenSpots: json['takenSpots'],
       observation: json['observation'],
+      motoristaId: json['motoristaId'] ?? json['id'], // fallback para id se motoristaId não existir
     );
   }
 }

@@ -12,6 +12,7 @@ import '../presentation/pages/auth/forgot_password_page.dart';
 import '../presentation/pages/auth/code_page.dart';
 import '../presentation/pages/auth/set_password.dart';
 import '../presentation/pages/main/profile_page.dart';
+import '../core/services/user_service.dart';
 
 import '../presentation/pages/main/edit_profile_page.dart';
 import '../presentation/pages/main/terms_page.dart';
@@ -127,7 +128,17 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/chat',
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: ChatListPage(userId: "current_user"),
+        child: FutureBuilder<String?>(
+          future: UserService.getCurrentUserId(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            return ChatListPage(userId: snapshot.data ?? "unknown");
+          },
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: animation.drive(

@@ -4,12 +4,20 @@ import Conversation from "../models/conversation.model";
 import Message from "../models/message.model";
 
 export const getOrCreateConversation = async (user1Id: string, user2Id: string): Promise<Model & { id: string }> => {
+  if (!user1Id || !user2Id) {
+    throw new Error('user1Id and user2Id are required');
+  }
+
   const [conversation] = await Conversation.findOrCreate({
     where: {
       [Op.or]: [
         { user1Id, user2Id },
         { user1Id: user2Id, user2Id: user1Id },
       ],
+    },
+    defaults: {
+      user1Id,
+      user2Id,
     },
   });
 
@@ -38,6 +46,7 @@ export const listUserConversations = async (userId: string) => {
     },
     include: [{
       model: Message,
+      as: 'Messages',
       order: [['createdAt', 'DESC']],
       limit: 1,
     }],
@@ -46,7 +55,7 @@ export const listUserConversations = async (userId: string) => {
   return conversations;
 };
 
-export const getConversationMessages = async (conversationId: string) => {
+export const getConversationMessages = async (conversationId: string, currentUserId?: string) => {
   const messages = await Message.findAll({
     where: {
       conversationId: conversationId,
@@ -54,5 +63,13 @@ export const getConversationMessages = async (conversationId: string) => {
     order: [['createdAt', 'ASC']],
   });
 
-  return messages;
+  const result = messages.map(m => {
+    const plain = m.get({ plain: true });
+    return {
+      ...plain,
+      isMe: currentUserId ? String(plain.senderId) === String(currentUserId) : undefined,
+    };
+  });
+
+  return result;
 };

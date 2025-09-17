@@ -9,7 +9,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:create": "sequelize db:create",
-    "db:migrate": "sequelize db:migrate"
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "ts-node src/seeders/seed.ts",
+    "db:seed:all": "ts-node -e \"require('./src/seeders/index').runAllSeeders()\"",
+    "db:seed:users": "ts-node -e \"require('./src/seeders/index').seedUsers()\"",
+    "db:seed:caronas": "ts-node -e \"require('./src/seeders/index').seedCaronas()\"",
+    "db:seed:conversations": "ts-node -e \"require('./src/seeders/index').seedConversations()\"",
+    "db:reset": "npm run db:seed:all",
+    "test:seeding": "node test-seeding.js",
+    "test:mysql": "node test-mysql.js"
   },
   "keywords": [],
   "author": "",

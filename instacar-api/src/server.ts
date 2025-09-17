@@ -5,7 +5,7 @@ import { app, server } from './app';
 import { initializeDatabase } from './config/db';
 import { setupSwagger } from './config/swagger';
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Initialize database before starting the server
 initializeDatabase().then(() => {

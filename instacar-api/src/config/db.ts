@@ -5,8 +5,8 @@ const envDialect = process.env.DB_DIALECT as Dialect | undefined;
 const dialect: Dialect = envDialect ?? 'mysql';
 
 const defaultPort = dialect === 'postgres' ? '5432' : '3306';
-const defaultUser = dialect === 'postgres' ? 'postgres' : 'root';
-const defaultPassword = dialect === 'postgres' ? 'postgres' : 'root';
+const defaultUser = dialect === 'postgres' ? 'postgres' : 'user';
+const defaultPassword = dialect === 'postgres' ? 'postgres' : 'password';
 
 const sequelizeWithoutDB = new Sequelize({
   dialect,
@@ -30,7 +30,7 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || defaultPort),
   username: process.env.DB_USER || defaultUser,
-  password: process.env.DB_PASSWORD || (dialect === 'postgres' ? 'postgres' : 'password'),
+  password: process.env.DB_PASSWORD || defaultPassword,
   database: process.env.DB_NAME || 'instacar',
   retry: {
     max: 3,
@@ -59,6 +59,7 @@ export const initializeDatabase = async () => {
         await sequelizeWithoutDB.query(`CREATE DATABASE "${dbName}"`);
       }
     } else {
+      // MySQL - create database if not exists
       await sequelizeWithoutDB.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
     }
     console.log(`✅ Database '${dbName}' is ready!`);
@@ -78,8 +79,8 @@ export const initializeDatabase = async () => {
     const Carona = require('../models/carona').default;
     
     // Set up associations
-    Conversation.hasMany(Message, { foreignKey: 'conversationId' });
-    Message.belongsTo(Conversation, { foreignKey: 'conversationId' });
+    Conversation.hasMany(Message, { foreignKey: 'conversationId', as: 'Messages' });
+    Message.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'Conversation' });
     
     // Sync all models
     console.log('Synchronizing database models...');
@@ -90,6 +91,20 @@ export const initializeDatabase = async () => {
     // Feedback model removed
     
     console.log('✅ Database synchronized successfully!');
+    
+    // Run seeders automatically in development
+    if (process.env.NODE_ENV === 'development' || process.env.AUTO_SEED === 'true') {
+      try {
+        console.log('🌱 Running automatic database seeding...');
+        const { runAllSeeders } = require('../seeders/index');
+        await runAllSeeders();
+        console.log('✅ Automatic seeding completed!');
+      } catch (seedError) {
+        console.warn('⚠️ Automatic seeding failed:', seedError);
+        // Don't throw error here to avoid breaking the app startup
+      }
+    }
+    
     console.log('🎉 Database initialization completed!');
   } catch (error) {
     console.error('❌ Error in database initialization:', error);
