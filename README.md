@@ -113,12 +113,6 @@ flutter run -d chrome
 flutter build web --release
 ```
 
-Observação: há URLs hardcoded `http://localhost:3000` no Flutter. Em Docker, o Nginx substitui por `http://api:3000`. Para um controle melhor, centralize `API_BASE_URL` em configuração e use variável em tempo de build.
-
-## Problemas comuns
-- Docker não iniciado: mensagens envolvendo `dockerDesktopLinuxEngine` indicam que o Docker Desktop não está rodando.
-- Portas em uso: altere mapeamentos no `docker-compose.yml` se `3000` ou `8080` estiverem ocupadas.
-
 ## Comandos úteis
 ```powershell
 docker compose build api
@@ -126,8 +120,3 @@ docker compose up -d web
 docker compose exec api sh
 docker compose config
 ```
-
-## Licença
-Defina a licença conforme a necessidade do projeto.
-
-
