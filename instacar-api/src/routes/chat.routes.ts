@@ -21,6 +21,8 @@ router.post("/conversation", authenticateToken, async (req: IAuthRequest, res) =
       return;
     }
 
+    console.log(`mensagem de ${user1Id} para ${user2Id}`);
+
     const conversation = await getOrCreateConversation(user1Id, user2Id);
     res.json(conversation);
   } catch (error) {
@@ -75,7 +77,7 @@ router.get("/conversations", authenticateToken, async (req: IAuthRequest, res) =
 router.get("/conversation/:conversationId/messages", authenticateToken, async (req: IAuthRequest, res) => {
   try {
     const { conversationId } = req.params;
-    const messages = await getConversationMessages(conversationId);
+    const messages = await getConversationMessages(conversationId, req.user?.userId);
     res.json(messages);
   } catch (error) {
     console.error("Error fetching messages:", error);

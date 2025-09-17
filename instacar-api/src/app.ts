@@ -26,11 +26,33 @@ io.on("connection", (socket) => {
   console.log(`Usuário conectado: ${userId} (${socket.id})`);
 
   socket.on("sendMessage", async ({ senderId, receiverId, message }) => {
-    const savedMessage = await sendMessage(senderId, receiverId, message);
-    const receiverSocketId = users[receiverId];
+    try {
+      const savedMessage = await sendMessage(senderId, receiverId, message);
+      const receiverSocketId = users[receiverId];
+      const senderSocketId = users[senderId];
 
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("receiveMessage", savedMessage);
+      // Enviar para o destinatário
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("receiveMessage", {
+          senderId: savedMessage.get('senderId'),
+          receiverId: receiverId,
+          message: savedMessage.get('message'),
+          createdAt: savedMessage.get('createdAt'),
+        });
+      }
+
+      // Enviar de volta para o remetente (confirmação)
+      if (senderSocketId) {
+        io.to(senderSocketId).emit("messageSent", {
+          senderId: savedMessage.get('senderId'),
+          receiverId: receiverId,
+          message: savedMessage.get('message'),
+          createdAt: savedMessage.get('createdAt'),
+        });
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      socket.emit("messageError", { error: "Failed to send message" });
     }
   });
 

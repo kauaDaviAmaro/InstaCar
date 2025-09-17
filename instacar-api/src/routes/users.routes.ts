@@ -1,10 +1,12 @@
 import express from 'express';
-import { register, getUser, updateUser } from '../controllers/user.controller';
+import { register, getUser, updateUser, getUserByIdHandler, getCurrentUserProfileHandler } from '../controllers/user.controller';
 import authMiddleware from '../middlewares/Auth';
 
 const router = express.Router();
 
 router.put('/', authMiddleware, updateUser);
+router.get('/profile', authMiddleware, getCurrentUserProfileHandler);
+router.get('/:userId', authMiddleware, getUserByIdHandler);
 
 /**
  * @swagger

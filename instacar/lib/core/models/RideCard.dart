@@ -1,6 +1,8 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:instacar/core/services/FavoritesService.dart';
+import 'package:instacar/core/services/user_service.dart';
+import 'package:instacar/presentation/pages/chat/chat_page.dart';
 
 class RideCard extends StatefulWidget {
   final String id;
@@ -16,6 +18,7 @@ class RideCard extends StatefulWidget {
   final int totalSpots;
   final int takenSpots;
   final String observation;
+  final String motoristaId;
 
   const RideCard({
     super.key,
@@ -32,6 +35,7 @@ class RideCard extends StatefulWidget {
     required this.totalSpots,
     required this.takenSpots,
     required this.observation,
+    required this.motoristaId,
   });
 
   @override
@@ -41,11 +45,29 @@ class RideCard extends StatefulWidget {
 class _RideCardState extends State<RideCard> {
   bool isExpanded = false;
   bool isFavorite = false;
+  String? currentUserId;
 
   @override
   void initState() {
     super.initState();
     checkFavorite();
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    try {
+      print('Tentando obter ID do usuário atual...');
+      final userId = await UserService.getCurrentUserId();
+      print('ID do usuário obtido: $userId');
+      setState(() {
+        currentUserId = userId;
+      });
+    } catch (e) {
+      print('Erro ao obter ID do usuário: $e');
+      setState(() {
+        currentUserId = null;
+      });
+    }
   }
 
   Future<void> checkFavorite() async {
@@ -223,8 +245,48 @@ class _RideCardState extends State<RideCard> {
                       Text("Vagas ${widget.takenSpots}/${widget.totalSpots}"),
                       InkWell(
                         borderRadius: BorderRadius.circular(8),
-                        onTap: () {
-                          // Navegar para o chat, se desejar
+                        onTap: () async {
+                          print('Botão de chat clicado');
+                          print('currentUserId: $currentUserId');
+                          print('motoristaId: ${widget.motoristaId}');
+                          
+                          if (currentUserId != null && currentUserId!.isNotEmpty) {
+                            try {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    receiveName: widget.name,
+                                    userId: currentUserId!,
+                                    receiverId: widget.motoristaId,
+                                  ),
+                                ),
+                              );
+                            } catch (e) {
+                              print('Erro ao navegar para o chat: $e');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Erro ao abrir chat: $e'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          } else {
+                            print('Usuário não autenticado ou ID vazio');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Erro: Usuário não autenticado. Faça login novamente.'),
+                                backgroundColor: Colors.red,
+                                action: SnackBarAction(
+                                  label: 'OK',
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    // Pode adicionar navegação para tela de login aqui
+                                  },
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

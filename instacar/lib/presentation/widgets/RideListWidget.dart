@@ -89,6 +89,7 @@ class _RideListWidgetState extends State<RideListWidget> {
               totalSpots: ride.totalSpots,
               takenSpots: ride.takenSpots,
               observation: ride.observation,
+              motoristaId: ride.motoristaId,
             );
           },
         );

@@ -67,6 +67,7 @@ const caronaController = {
           totalSpots: carona.vagas,
           takenSpots: carona.vagas - (carona.vagasDisponiveis || 0),
           observation: carona.observacao || "",
+          motoristaId: carona.motoristaId,
         };
       });
 

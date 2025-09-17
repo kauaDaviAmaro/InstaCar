@@ -56,14 +56,14 @@ class _ChatListPageState extends State<ChatListPage> {
               : null;
           
           chatList.add({
-            "userId": otherUserId,
+            "userId": otherUserId.toString(),
             "name": userDetails['name'] ?? 'Usuário',
             "LastMessage": lastMessage?['message'] ?? 'Nenhuma mensagem',
             "lastMessageTime": lastMessage != null 
                 ? _formatTime(DateTime.parse(lastMessage['createdAt']))
                 : '',
             "initials": _getInitials(userDetails['name'] ?? 'U'),
-            "conversationId": conversation['id'],
+            "conversationId": conversation['id'].toString(),
           });
           print('Added chat: ${userDetails['name']}');
         } catch (e) {

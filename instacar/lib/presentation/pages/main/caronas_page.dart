@@ -8,6 +8,7 @@ import 'package:instacar/presentation/widgets/create_ride_page.dart';
 import 'package:instacar/presentation/widgets/navbar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:instacar/presentation/pages/chat/chat_page.dart';
+import 'package:instacar/core/services/user_service.dart';
 
 class CaronasPage extends StatefulWidget {
   const CaronasPage({super.key});
@@ -21,11 +22,20 @@ class _CaronasPageState extends State<CaronasPage> {
   String searchQuery = '';
   List<dynamic> caronas = [];
   bool isLoading = true;
+  String? currentUserId;
 
   @override
   void initState() {
     super.initState();
+    _loadCurrentUser();
     fetchCaronas();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final userId = await UserService.getCurrentUserId();
+    setState(() {
+      currentUserId = userId;
+    });
   }
 
   Future<void> fetchCaronas() async {
@@ -88,19 +98,19 @@ class _CaronasPageState extends State<CaronasPage> {
                               children: [
                                 IconButton(
                                   icon: Icon(Icons.chat),
-                                  onPressed: () {
+                                  onPressed: currentUserId != null ? () {
                                     // Navigate to chat with the carona creator
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatPage(
-                                          receiveName: carona["driverName"] ?? "Usuário",
-                                          userId: "1", // Current user ID - should be dynamic
-                                          receiverId: carona["driverId"] ?? carona["userId"],
+                                          receiveName: carona["driverName"] ?? carona["name"] ?? "Usuário",
+                                          userId: currentUserId!,
+                                          receiverId: carona["driverId"] ?? carona["motoristaId"] ?? carona["userId"],
                                         ),
                                       ),
                                     );
-                                  },
+                                  } : null,
                                 ),
                                 IconButton(
                                   icon: Icon(Icons.edit),
