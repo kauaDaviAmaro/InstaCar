@@ -17,6 +17,7 @@ import '../core/services/user_service.dart';
 import '../presentation/pages/main/edit_profile_page.dart';
 import '../presentation/pages/main/terms_page.dart';
 import '../presentation/pages/main/pricing_page.dart';
+import '../presentation/pages/main/ride_details_page.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
@@ -258,6 +259,24 @@ final GoRouter appRouter = GoRouter(
           );
         },
       ),
+    ),
+    GoRoute(
+      path: '/ride-details/:rideId',
+      pageBuilder: (context, state) {
+        final rideId = state.pathParameters['rideId']!;
+        return CustomTransitionPage(
+          child: RideDetailsPage(rideId: rideId),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: animation.drive(
+                Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                    .chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+          },
+        );
+      },
     ),
   ],
 );

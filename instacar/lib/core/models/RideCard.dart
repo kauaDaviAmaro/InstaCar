@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instacar/core/services/FavoritesService.dart';
 import 'package:instacar/core/services/user_service.dart';
 import 'package:instacar/presentation/pages/chat/chat_page.dart';
+import 'package:instacar/presentation/pages/main/ride_details_page.dart';
 
 class RideCard extends StatefulWidget {
   final String id;
@@ -110,11 +111,22 @@ class _RideCardState extends State<RideCard> {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          // Navegar para a página de detalhes da carona
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RideDetailsPage(rideId: widget.id),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             // Top Row: Name + Age + Date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -310,6 +322,7 @@ class _RideCardState extends State<RideCard> {
           ],
         ),
       ),
+    ),
     );
   }
 }

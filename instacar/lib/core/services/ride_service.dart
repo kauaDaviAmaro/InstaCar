@@ -16,4 +16,15 @@ class RideService {
       throw Exception('Falha ao carregar caronas');
     }
   }
+
+  Future<RideModel> fetchRideById(String id) async {
+    final response = await http.get(Uri.parse('$baseUrl/$id'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return RideModel.fromJson(jsonData);
+    } else {
+      throw Exception('Falha ao carregar detalhes da carona');
+    }
+  }
 }

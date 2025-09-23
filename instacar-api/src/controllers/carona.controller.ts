@@ -89,7 +89,29 @@ const caronaController = {
         return;
       }
 
-      res.json(carona);
+      // Formatar os dados da mesma forma que getCaronas
+      const motorista = carona.motorista;
+      const idade = motorista?.birthDate ? calcularIdade(motorista.birthDate) : 0;
+      const idadeTexto = idade > 0 ? `${idade} anos` : "Idade não informada";
+      
+      const formatted = {
+        id: carona.id,
+        name: motorista?.name || "Motorista",
+        genderAge: `${motorista?.gender || "Gênero não informado"}, ${idadeTexto}`,
+        date: formatarDataHora(carona.dataHora),
+        from: carona.origem,
+        to: carona.destino,
+        type: motorista?.tipoVeiculo || "Tipo não informado",
+        model: motorista?.modeloVeiculo || "Modelo não informado",
+        color: motorista?.corVeiculo || "Cor não informada",
+        plate: motorista?.placa || "Placa não informada",
+        totalSpots: carona.vagas,
+        takenSpots: carona.vagas - (carona.vagasDisponiveis || 0),
+        observation: carona.observacao || "",
+        motoristaId: carona.motoristaId,
+      };
+
+      res.json(formatted);
     } catch (error) {
       console.error('Error fetching carona:', error);
       res.status(500).json({ message: MESSAGES.GENERAL.SERVER_ERROR });

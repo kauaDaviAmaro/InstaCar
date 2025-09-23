@@ -17,7 +17,15 @@ const CaronaService: ICaronaService = {
   },
 
   async getCaronaById(id: string): Promise<Carona | null> {
-    const carona = await Carona.findByPk(id);
+    const carona = await Carona.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: "motorista",
+          attributes: ["id", "name", "email", "fotoPerfil", "birthDate", "gender", "tipoVeiculo", "modeloVeiculo", "corVeiculo", "placa"],
+        },
+      ],
+    });
     return carona;
   },
 

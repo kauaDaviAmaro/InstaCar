@@ -168,7 +168,7 @@ const caronaRoutes = Router();
 
 caronaRoutes.get("/", caronaController.getCaronas);
 
-caronaRoutes.get("/:id", authMiddleware, caronaController.getCaronaById);
+caronaRoutes.get("/:id", caronaController.getCaronaById);
 
 caronaRoutes.get("/near/:latitude/:longitude", authMiddleware, caronaController.getNearCaronas);
 
