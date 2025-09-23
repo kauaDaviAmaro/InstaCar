@@ -13,7 +13,14 @@ class PricingPage extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.go('/login'),
+          onPressed: () {
+            // Tenta voltar no histórico, se não conseguir vai para login
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/login');
+            }
+          },
         ),
         title: const Text(
           'Planos',

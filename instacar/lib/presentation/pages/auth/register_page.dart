@@ -180,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: Colors.green,
           ),
         );
-        GoRouter.of(context).go('/login');
+        context.go('/login');
       } else {
         final responseData = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -213,7 +213,14 @@ class _RegisterPageState extends State<RegisterPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.go('/pricing'),
+          onPressed: () {
+            // Tenta voltar no histórico, se não conseguir vai para pricing
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/pricing');
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -488,7 +495,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Text("Já tem uma conta?"),
                   TextButton(
                     onPressed: () {
-                      GoRouter.of(context).go('/login');
+                      context.go('/login');
                     },
                     child: Text("Fazer Login", style: TextStyle(color: Colors.blue)),
                   ),
