@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instacar/core/models/RideCard.dart';
 import 'package:instacar/core/models/RideModel.dart';
 import 'package:instacar/core/services/ride_service.dart';
+import 'package:instacar/core/services/user_service.dart';
 
 class RideListWidget extends StatefulWidget {
   final String searchQuery;
@@ -31,11 +32,26 @@ class RideListWidget extends StatefulWidget {
 
 class _RideListWidgetState extends State<RideListWidget> {
   late Future<List<RideModel>> _futureRides;
+  String? _currentUserId;
 
   @override
   void initState() {
     super.initState();
     _futureRides = RideService().fetchRides();
+    _getCurrentUserId();
+  }
+
+  Future<void> _getCurrentUserId() async {
+    try {
+      final userId = await UserService.getCurrentUserId();
+      if (mounted) {
+        setState(() {
+          _currentUserId = userId;
+        });
+      }
+    } catch (e) {
+      print('Error getting current user ID: $e');
+    }
   }
 
   // Helper method to extract age from genderAge string
@@ -72,6 +88,11 @@ class _RideListWidgetState extends State<RideListWidget> {
 
         // Filtro por favoritos, busca e outros critérios
         final filteredRides = rides.where((ride) {
+          // Filtro para não mostrar a própria corrida do usuário
+          if (_currentUserId != null && ride.motoristaId == _currentUserId) {
+            return false;
+          }
+
           // Filtro de busca
           final matchesSearch = ride.name.toLowerCase().contains(query) ||
               ride.from.toLowerCase().contains(query) ||
