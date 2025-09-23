@@ -5,6 +5,8 @@ import 'package:instacar/core/services/ride_service.dart';
 import 'package:instacar/core/services/FavoritesService.dart';
 import 'package:instacar/core/services/user_service.dart';
 import 'package:instacar/presentation/pages/chat/chat_page.dart';
+import 'package:instacar/core/services/solicitacao_service.dart';
+import 'package:instacar/presentation/widgets/request_ride_dialog.dart';
 
 class RideDetailsPage extends StatefulWidget {
   final String rideId;
@@ -22,6 +24,8 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
   late Future<RideModel> _futureRide;
   bool isFavorite = false;
   String? currentUserId;
+  String? solicitacaoStatus;
+  bool isLoadingSolicitacao = false;
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
     _futureRide = RideService().fetchRideById(widget.rideId);
     _loadCurrentUser();
     _checkFavorite();
+    _checkSolicitacaoStatus();
   }
 
   Future<void> _loadCurrentUser() async {
@@ -43,6 +48,35 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
         currentUserId = null;
       });
     }
+  }
+
+  Future<void> _checkSolicitacaoStatus() async {
+    try {
+      final status = await SolicitacaoService.getStatusSolicitacao(widget.rideId);
+      setState(() {
+        solicitacaoStatus = status;
+      });
+    } catch (e) {
+      print('Erro ao verificar status da solicitação: $e');
+    }
+  }
+
+  void _showRequestRideDialog(RideModel ride) {
+    if (currentUserId == null || currentUserId!.isEmpty) return;
+    if (currentUserId == ride.motoristaId) return;
+
+    showDialog(
+      context: context,
+      builder: (context) => RequestRideDialog(
+        rideId: widget.rideId,
+        motoristaId: ride.motoristaId,
+        motoristaName: ride.name,
+      ),
+    ).then((result) {
+      if (result == true) {
+        _checkSolicitacaoStatus();
+      }
+    });
   }
 
   Future<void> _checkFavorite() async {
@@ -365,6 +399,15 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 12),
+                      // Botão Pedir Carona (full width)
+                      if (currentUserId != null &&
+                          currentUserId!.isNotEmpty &&
+                          currentUserId != ride.motoristaId)
+                        SizedBox(
+                          width: double.infinity,
+                          child: _buildRequestRideButton(ride),
+                        ),
                     ],
                   ),
                 );
@@ -372,6 +415,59 @@ class _RideDetailsPageState extends State<RideDetailsPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildRequestRideButton(RideModel ride) {
+    Color buttonColor;
+    String buttonText;
+    IconData buttonIcon;
+    VoidCallback? onPressed;
+
+    switch (solicitacaoStatus) {
+      case 'pendente':
+        buttonColor = const Color(0xFFF6AD55);
+        buttonText = 'Solicitação Enviada';
+        buttonIcon = Icons.hourglass_empty;
+        onPressed = null;
+        break;
+      case 'aceita':
+        buttonColor = const Color(0xFF48BB78);
+        buttonText = 'Aceita';
+        buttonIcon = Icons.check_circle;
+        onPressed = null;
+        break;
+      case 'rejeitada':
+        buttonColor = const Color(0xFFE53E3E);
+        buttonText = 'Rejeitada';
+        buttonIcon = Icons.cancel;
+        onPressed = () => _showRequestRideDialog(ride);
+        break;
+      case 'cancelada':
+        buttonColor = const Color(0xFF718096);
+        buttonText = 'Cancelada';
+        buttonIcon = Icons.cancel_outlined;
+        onPressed = () => _showRequestRideDialog(ride);
+        break;
+      default:
+        buttonColor = const Color(0xFF48BB78);
+        buttonText = 'Pedir Carona';
+        buttonIcon = Icons.directions_car;
+        onPressed = () => _showRequestRideDialog(ride);
+    }
+
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(buttonIcon, color: Colors.white, size: 24),
+      label: Text(buttonText),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+        minimumSize: const Size.fromHeight(60),
+        backgroundColor: buttonColor,
+        foregroundColor: Colors.white,
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
