@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChoiceChipWidgetVehicle extends StatefulWidget {
-  const ChoiceChipWidgetVehicle({super.key});
+  final Function(String?)? onSelectionChanged;
+  
+  const ChoiceChipWidgetVehicle({super.key, this.onSelectionChanged});
 
   @override
   _ChoiceChipWidgetState createState() => _ChoiceChipWidgetState();
@@ -31,8 +33,10 @@ class _ChoiceChipWidgetState extends State<ChoiceChipWidgetVehicle> {
               setState(() {
                 if (selected) {
                   _selectedIndex = index; // Define o índice selecionado
+                  widget.onSelectionChanged?.call(_optionsVehicle[index]);
                 } else {
                   _selectedIndex = null; // Desmarcar a seleção
+                  widget.onSelectionChanged?.call(null);
                 }
               });
             },

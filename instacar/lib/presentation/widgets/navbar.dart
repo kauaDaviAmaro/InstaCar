@@ -6,12 +6,14 @@ class TopNavbar extends StatefulWidget {
   final Function(String) onSearchChanged;
   final String title;
   final bool showFilter; // New parameter
+  final Function(Map<String, dynamic>)? onFilterApplied; // New parameter for filter callback
 
   const TopNavbar({
     super.key,
     required this.onSearchChanged,
     required this.title,
     this.showFilter = true, // Default is true
+    this.onFilterApplied,
   });
 
   @override
@@ -102,7 +104,9 @@ class _TopNavbarState extends State<TopNavbar> {
                         onPressed: () {
                           showBarModalBottomSheet(
                             context: context,
-                            builder: (context) => HomeModalAdd(),
+                            builder: (context) => HomeModalAdd(
+                              onFilterApplied: widget.onFilterApplied,
+                            ),
                           );
                         },
                       ),

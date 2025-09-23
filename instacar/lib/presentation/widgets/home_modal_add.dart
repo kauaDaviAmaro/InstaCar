@@ -8,7 +8,9 @@ import 'package:instacar/presentation/widgets/filter_range_age.dart';
 import 'package:instacar/presentation/widgets/tittle_generator.dart';
 
 class HomeModalAdd extends StatefulWidget {
-  const HomeModalAdd({super.key});
+  final Function(Map<String, dynamic>)? onFilterApplied;
+  
+  const HomeModalAdd({super.key, this.onFilterApplied});
 
   @override
   State<HomeModalAdd> createState() => _HomeModalAddState();
@@ -16,6 +18,14 @@ class HomeModalAdd extends StatefulWidget {
 
 class _HomeModalAddState extends State<HomeModalAdd> {
   get floatingActionButton => null;
+  
+  // Filter state
+  String? selectedVehicleType;
+  String? selectedGender;
+  int? selectedSpots;
+  String? selectedSortOrder;
+  int? minAge;
+  int? maxAge;
 
   @override
   Widget build(BuildContext context) {
@@ -30,32 +40,76 @@ class _HomeModalAddState extends State<HomeModalAdd> {
               children: [
                 //Opções para selecao de Veiculos
                 TittleGenerator(context, 'Tipo de veículo:'),
-                ChoiceChipWidgetVehicle(),
+                ChoiceChipWidgetVehicle(
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      selectedVehicleType = value;
+                    });
+                  },
+                ),
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
                 //Range de idade
                 TittleGenerator(context, 'Faixa etária:'),
-                CustomThumbShapeRangeSlider(),
+                CustomThumbShapeRangeSlider(
+                  onRangeChanged: (min, max) {
+                    setState(() {
+                      minAge = min;
+                      maxAge = max;
+                    });
+                  },
+                ),
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
                 TittleGenerator(context, 'Gênero:'),
                 //Opções para selecao de Gênero
-                ChoiceChipWidget(),
+                ChoiceChipWidget(
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      selectedGender = value;
+                    });
+                  },
+                ),
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
                 //Opções para selecao de Vagas no carro
                 TittleGenerator(context, 'Vagas no carro:'),
-                ChoiceChipWidgetSpace(),
+                ChoiceChipWidgetSpace(
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      selectedSpots = value;
+                    });
+                  },
+                ),
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
                 //Opções para ordenar o filtro
                 TittleGenerator(context, 'Ordenar Filtro por:'),
-                ChoiceChipFilterOrder(),
+                ChoiceChipFilterOrder(
+                  onSelectionChanged: (value) {
+                    setState(() {
+                      selectedSortOrder = value;
+                    });
+                  },
+                ),
 
                 Divider(),
                 Padding(padding: EdgeInsets.only(bottom: 25)),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Apply filters and close modal
+                    if (widget.onFilterApplied != null) {
+                      widget.onFilterApplied!({
+                        'vehicleType': selectedVehicleType,
+                        'gender': selectedGender,
+                        'spots': selectedSpots,
+                        'sortOrder': selectedSortOrder,
+                        'minAge': minAge,
+                        'maxAge': maxAge,
+                      });
+                    }
+                    Navigator.of(context).pop();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(100, 141, 219, 1),
                   ),

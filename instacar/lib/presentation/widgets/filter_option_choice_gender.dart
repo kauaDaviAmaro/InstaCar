@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 
 class ChoiceChipWidget extends StatefulWidget {
-  const ChoiceChipWidget({super.key});
+  final Function(String?)? onSelectionChanged;
+  
+  const ChoiceChipWidget({super.key, this.onSelectionChanged});
 
   @override
   _ChoiceChipWidgetState createState() => _ChoiceChipWidgetState();
@@ -34,6 +36,12 @@ class _ChoiceChipWidgetState extends State<ChoiceChipWidget> {
                   _selectedIndices.add(index);
                 } else {
                   _selectedIndices.remove(index);
+                }
+                // Notify parent of selection change
+                if (_selectedIndices.isNotEmpty) {
+                  widget.onSelectionChanged?.call(_options[_selectedIndices.first]);
+                } else {
+                  widget.onSelectionChanged?.call(null);
                 }
               });
             },

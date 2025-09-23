@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
 class CustomThumbShapeRangeSlider extends StatefulWidget {
-  const CustomThumbShapeRangeSlider({super.key});
+  final Function(int?, int?)? onRangeChanged;
+  
+  const CustomThumbShapeRangeSlider({super.key, this.onRangeChanged});
 
   @override
   State<CustomThumbShapeRangeSlider> createState() =>
@@ -65,6 +67,11 @@ class _CustomThumbShapeRangeSliderState extends State<CustomThumbShapeRangeSlide
               _lowerValue = lowerValue;
               _upperValue = upperValue;
             });
+            // Notify parent of range change
+            widget.onRangeChanged?.call(
+              lowerValue.toInt(),
+              upperValue.toInt(),
+            );
           },
         ),
       ],

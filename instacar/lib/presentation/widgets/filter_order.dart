@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChoiceChipFilterOrder extends StatefulWidget {
-  const ChoiceChipFilterOrder({super.key});
+  final Function(String?)? onSelectionChanged;
+  
+  const ChoiceChipFilterOrder({super.key, this.onSelectionChanged});
 
   @override
   _ChoiceChipWidgetState createState() => _ChoiceChipWidgetState();
@@ -31,8 +33,10 @@ class _ChoiceChipWidgetState extends State<ChoiceChipFilterOrder> {
               setState(() {
                 if (selected) {
                   _selectedIndex = index; // Define o índice selecionado
+                  widget.onSelectionChanged?.call(_optionsFilter[index]);
                 } else {
                   _selectedIndex = null; // Desmarcar a seleção
+                  widget.onSelectionChanged?.call(null);
                 }
               });
             },
