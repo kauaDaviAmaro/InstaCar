@@ -334,8 +334,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                   if (picked != null) {
                     birthDateController.text = DateFormat('dd/MM/yyyy').format(picked);
+                    setState(() {
+                      _birthDateErrorText = null;
+                    });
                   }
-                },
+                                },
               ),
               SizedBox(height: 12),
 
