@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final String? selectedPlan;
+  
+  const RegisterPage({super.key, this.selectedPlan});
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -211,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => GoRouter.of(context).go('/login'),
+          onPressed: () => GoRouter.of(context).go('/pricing'),
         ),
       ),
       body: SingleChildScrollView(
@@ -231,6 +233,47 @@ class _RegisterPageState extends State<RegisterPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              SizedBox(height: 16),
+              
+              // Exibir plano selecionado
+              if (widget.selectedPlan != null)
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: widget.selectedPlan == 'premium' 
+                        ? Color(0xFF4A90E2).withOpacity(0.1)
+                        : Colors.grey.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: widget.selectedPlan == 'premium' 
+                          ? Color(0xFF4A90E2)
+                          : Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: widget.selectedPlan == 'premium' 
+                            ? Color(0xFF4A90E2)
+                            : Colors.grey,
+                        size: 20,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Plano ${widget.selectedPlan == 'premium' ? 'Premium' : 'Básico'} selecionado',
+                        style: TextStyle(
+                          color: widget.selectedPlan == 'premium' 
+                              ? Color(0xFF4A90E2)
+                              : Colors.grey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               SizedBox(height: 32),
               
               // Nome

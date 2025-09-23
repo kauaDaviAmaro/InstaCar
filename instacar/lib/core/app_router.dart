@@ -16,6 +16,7 @@ import '../core/services/user_service.dart';
 
 import '../presentation/pages/main/edit_profile_page.dart';
 import '../presentation/pages/main/terms_page.dart';
+import '../presentation/pages/main/pricing_page.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
@@ -152,18 +153,21 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: "/register",
-      pageBuilder: (context, state) => CustomTransitionPage(
-        child: RegisterPage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SlideTransition(
-            position: animation.drive(
-              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
-                  .chain(CurveTween(curve: Curves.easeInOut)),
-            ),
-            child: child,
-          );
-        },
-      ),
+      pageBuilder: (context, state) {
+        final plan = state.uri.queryParameters['plan'];
+        return CustomTransitionPage(
+          child: RegisterPage(selectedPlan: plan),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: animation.drive(
+                Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                    .chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/home',
@@ -229,6 +233,21 @@ final GoRouter appRouter = GoRouter(
       path: '/caronas',
       pageBuilder: (context, state) => CustomTransitionPage(
         child: CaronasPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: animation.drive(
+              Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
+                  .chain(CurveTween(curve: Curves.easeInOut)),
+            ),
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: '/pricing',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const PricingPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: animation.drive(
