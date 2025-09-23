@@ -213,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => GoRouter.of(context).go('/pricing'),
+          onPressed: () => context.go('/pricing'),
         ),
       ),
       body: SingleChildScrollView(
