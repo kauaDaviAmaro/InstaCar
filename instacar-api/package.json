@@ -16,6 +16,7 @@
     "db:seed:caronas": "ts-node -e \"require('./src/seeders/index').seedCaronas()\"",
     "db:seed:conversations": "ts-node -e \"require('./src/seeders/index').seedConversations()\"",
     "db:reset": "npm run db:seed:all",
+    "db:sync": "ts-node src/scripts/sync-db.ts",
     "test:seeding": "node test-seeding.js",
     "test:mysql": "node test-mysql.js"
   },

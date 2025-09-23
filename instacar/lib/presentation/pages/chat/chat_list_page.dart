@@ -17,7 +17,7 @@ class ChatListPage extends StatefulWidget {
 
 class _ChatListPageState extends State<ChatListPage> {
   List<Map<String, dynamic>> chats = [];
-  int currentIndex = 3;
+  int currentIndex = 4;
   String searchQuery = '';
   bool isLoading = true;
 

@@ -62,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex = 4;
+    int currentIndex = 5;
 
     return Scaffold(
       body: Container(
@@ -228,6 +228,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 16),
                         _buildMenuItem(
+                          icon: Icons.notifications_outlined,
+                          text: "Minhas Solicitações",
+                          subtitle: "Veja suas solicitações de carona",
+                          onTap: () => navigateToMinhasSolicitacoes(context),
+                        ),
+                        const SizedBox(height: 16),
+                        _buildMenuItem(
                           icon: Icons.description,
                           text: "Termos de serviço",
                           subtitle: "Leia nossos termos",
@@ -388,4 +395,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
+
+void navigateToMinhasSolicitacoes(BuildContext context) {
+  GoRouter.of(context).go('/minhas-solicitacoes');
 }

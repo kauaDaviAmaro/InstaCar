@@ -2,8 +2,10 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:instacar/core/services/FavoritesService.dart';
 import 'package:instacar/core/services/user_service.dart';
+import 'package:instacar/core/services/solicitacao_service.dart';
 import 'package:instacar/presentation/pages/chat/chat_page.dart';
 import 'package:instacar/presentation/pages/main/ride_details_page.dart';
+import 'package:instacar/presentation/widgets/request_ride_dialog.dart';
 
 class RideCard extends StatefulWidget {
   final String id;
@@ -47,12 +49,15 @@ class _RideCardState extends State<RideCard> {
   bool isExpanded = false;
   bool isFavorite = false;
   String? currentUserId;
+  String? solicitacaoStatus;
+  bool isLoadingSolicitacao = false;
 
   @override
   void initState() {
     super.initState();
     checkFavorite();
     _loadCurrentUser();
+    _checkSolicitacaoStatus();
   }
 
   Future<void> _loadCurrentUser() async {
@@ -76,6 +81,17 @@ class _RideCardState extends State<RideCard> {
     setState(() {
       isFavorite = fav;
     });
+  }
+
+  Future<void> _checkSolicitacaoStatus() async {
+    try {
+      final status = await SolicitacaoService.getStatusSolicitacao(widget.id);
+      setState(() {
+        solicitacaoStatus = status;
+      });
+    } catch (e) {
+      print('Erro ao verificar status da solicitação: $e');
+    }
   }
 
   void toggleFavorite() async {
@@ -142,6 +158,132 @@ class _RideCardState extends State<RideCard> {
             overflow: TextOverflow.ellipsis,
           ),
         ],
+      ),
+    );
+  }
+
+  void _showRequestRideDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => RequestRideDialog(
+        rideId: widget.id,
+        motoristaId: widget.motoristaId,
+        motoristaName: widget.name,
+      ),
+    ).then((result) {
+      if (result == true) {
+        // Atualizar o status da solicitação após enviar
+        _checkSolicitacaoStatus();
+      }
+    });
+  }
+
+  Widget _buildRequestRideButton() {
+    if (currentUserId == null || currentUserId!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Se o usuário é o motorista, não mostrar o botão
+    if (currentUserId == widget.motoristaId) {
+      return const SizedBox.shrink();
+    }
+
+    // Se já solicitou, mostrar status
+    if (solicitacaoStatus != null) {
+      Color buttonColor;
+      String buttonText;
+      IconData buttonIcon;
+      
+      switch (solicitacaoStatus) {
+        case 'pendente':
+          buttonColor = const Color(0xFFF6AD55);
+          buttonText = 'Solicitação Enviada';
+          buttonIcon = Icons.hourglass_empty;
+          break;
+        case 'aceita':
+          buttonColor = const Color(0xFF48BB78);
+          buttonText = 'Aceita';
+          buttonIcon = Icons.check_circle;
+          break;
+        case 'rejeitada':
+          buttonColor = const Color(0xFFE53E3E);
+          buttonText = 'Rejeitada';
+          buttonIcon = Icons.cancel;
+          break;
+        case 'cancelada':
+          buttonColor = const Color(0xFF718096);
+          buttonText = 'Cancelada';
+          buttonIcon = Icons.cancel_outlined;
+          break;
+        default:
+          buttonColor = const Color(0xFF48BB78);
+          buttonText = 'Pedir Carona';
+          buttonIcon = Icons.directions_car;
+      }
+
+      return Container(
+        decoration: BoxDecoration(
+          color: buttonColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: solicitacaoStatus == 'pendente' ? null : _showRequestRideDialog,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(buttonIcon, color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    buttonText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Botão padrão para solicitar carona
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF48BB78),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: _showRequestRideDialog,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.directions_car, color: Colors.white, size: 20),
+                SizedBox(width: 8),
+                Text(
+                  "Pedir Carona",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -472,6 +614,11 @@ class _RideCardState extends State<RideCard> {
                           ),
                           
                           const Spacer(),
+                          
+                          // Request Ride button
+                          _buildRequestRideButton(),
+                          
+                          const SizedBox(width: 12),
                           
                           // Favorite button
                           Container(

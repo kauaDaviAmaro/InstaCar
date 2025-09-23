@@ -77,10 +77,14 @@ export const initializeDatabase = async () => {
     const Conversation = require('../models/conversation.model').default;
     const Message = require('../models/message.model').default;
     const Carona = require('../models/carona').default;
+    const SolicitacaoCarona = require('../models/solicitacao-carona').default;
     
     // Set up associations
     Conversation.hasMany(Message, { foreignKey: 'conversationId', as: 'Messages' });
     Message.belongsTo(Conversation, { foreignKey: 'conversationId', as: 'Conversation' });
+    
+    // Carona associations
+    Carona.hasMany(SolicitacaoCarona, { foreignKey: 'caronaId', as: 'solicitacoes' });
     
     // Sync all models
     console.log('Synchronizing database models...');
@@ -88,6 +92,7 @@ export const initializeDatabase = async () => {
     await Conversation.sync({ alter: true });
     await Message.sync({ alter: true });
     await Carona.sync({ alter: true });
+    await SolicitacaoCarona.sync({ alter: true });
     // Feedback model removed
     
     console.log('✅ Database synchronized successfully!');

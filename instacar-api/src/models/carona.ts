@@ -109,4 +109,7 @@ Carona.belongsTo(Usuario, {
   as: "motorista",
 });
 
+// Relacionamento com solicitações (será definido após a importação do modelo)
+// Carona.hasMany(SolicitacaoCarona, { foreignKey: "caronaId", as: "solicitacoes" });
+
 export default Carona;
